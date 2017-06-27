@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace必须是DAO接口的全类名  -->
+
+<mapper namespace="com.mlycan.main.mapper.MemberMapper">
+	<resultMap type="com.mlycan.main.entity.Member" id="memberResultMap"> 
+        <id property="memberId" column="member_id"/> 
+        <result property="nickname" column="nickname"/> 
+        <result property="gender" column="gender"/> 
+        <result property="birthday" column="birthday"   /> 
+        <result property="intro" column="intro"/> 
+        <result property="comefrom" column="comefrom"/> 
+        <result property="qq" column="qq"/> 
+        <result property="email" column="email"/> 
+        <result property="phone" column="phone"/> 
+        <result property="mobile" column="mobile"/> 
+        <result property="portrait" column="portrait"/> 
+        <result property="signature" column="signature"/>
+        <result property="province" column="province"/>
+        <result property="city" column="city"/>
+        <result property="street" column="street"/>
+        <result property="country" column="country"/>
+        <result property="zipcode" column="zipcode"/>
+        
+    </resultMap>
+	<select id="findMemberByid" parameterType="java.lang.Integer"   resultMap="memberResultMap">
+		<![CDATA[
+		   select member_id,nickname,gender,birthday,intro,comefrom,qq,email,phone,mobile,portrait,signature
+		        ,province,city,street,country,zipcode
+		      from mly_member 
+		      where  member_id=#{memberId} 
+			]]>
+	</select>
+	<update id="updateMemberByid" parameterType="com.mlycan.main.entity.Member"   >
+		<![CDATA[
+		   update  mly_member mem
+		   set mem.nickname =#{nickname},
+		       mem.gender =#{gender},
+		       mem.birthday =#{birthday},
+		       mem.intro =#{intro},
+		       mem.comefrom =#{comefrom},
+		       mem.qq =#{qq},
+		       mem.email =#{email},
+		       mem.phone =#{phone},
+		       mem.mobile =#{mobile},
+		       mem.portrait =#{portrait},
+		       mem.signature =#{signature},
+		       mem.province=#{province},
+		       mem.city = #{city},
+		       mem.street=#{street},
+		       mem.country=#{country},
+		       mem.zipcode=#{zipcode}
+		      where  mem.member_id=#{memberId} 
+			]]>
+	</update>
+	<insert id="saveMember"  >
+	<![CDATA[
+		   insert into  mly_member(member_id,nickname,gender,birthday,intro,comefrom,qq,email,phone,mobile,portrait,signature)
+		    VALUES(#{memberId},#{nickname},#{gender},#{birthday},#{intro},
+		    #{comefrom},#{qq},#{email},#{phone},#{mobile},#{portrait},#{signature})
+			]]>
+	</insert>
+	<delete id="deleteMemberByid">
+	<![CDATA[
+	         delete 
+	         from mly_member 
+	         where member_id=#{memberId} 
+			]]>
+	</delete>
+
+</mapper>
