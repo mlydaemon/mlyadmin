@@ -65,14 +65,16 @@
 					<span class="arrow "></span>
 					</a>
 				</li> --%>
-				<li class="last ${((channel eq 'channel')or(channel eq 'department')or(channel eq 'position')or(channel eq 'user'))?'active':''}">
+				<li class="last ${((channel eq 'channel')or(channel eq 'menu')or(channel eq 'function')or(channel eq 'department')or(channel eq 'position')or(channel eq 'user'))?'active':''}">
 					<a href="charts.html">
 					<i class="icon-cogs"></i> 
 					<span class="title">系统设置</span>
 					<span class="arrow open"></span>
 					</a>
 					<ul class="sub-menu">
-						<li class="${channel eq 'channel'?'active':''}"><a href="${basePath}/admin/channel/list.html">功能管理</a></li>
+						<li class="${channel eq 'channel'?'active':''}"><a href="${basePath}/admin/channel/list.html">栏目管理</a></li>
+						<li class="${channel eq 'function'?'active':''}"><a href="${basePath}/admin/function/list.html">功能管理</a></li>
+						<li class="${channel eq 'menu'?'active':''}"><a href="${basePath}/admin/menu/list.html">菜单管理</a></li>
 						<li class="${channel eq 'department'?'active':''}"><a href="${basePath}/admin/department/list.html">部门管理</a></li>
 						<li class="${channel eq 'position'?'active':''}"><a href="${basePath}/admin/position/list.html">职位管理</a></li>
 						<li class="${channel eq 'user'?'active':''}"><a href="${basePath}/admin/user/list.html">用户管理</a></li>
