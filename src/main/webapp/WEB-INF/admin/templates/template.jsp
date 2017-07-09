@@ -41,6 +41,18 @@
 						<li class="${channel eq 'riddle'?'active':''}"><a href="${basePath}/admin/riddle/list.html">谜语管理</a></li>
 					</ul>
 				</li>
+				<li class="start ${((channel eq 'channel')or(channel eq 'question')or(channel eq 'answer'))?'active':''}">
+					<a href="charts.html">
+					<!-- <a href="${basePath}/admin/task/list.html"> -->
+					<i class="icon-cogs"></i> 
+					<span class="title">机器人管理</span>
+					<span class="selected arrow "></span>
+					</a>
+						 <ul class="sub-menu">
+						<li class="${channel eq 'question'?'active':''}"><a href="${basePath}/admin/question/list.html">语义管理</a></li>
+						<li class="${channel eq 'answer'?'active':''}"><a href="${basePath}/admin/answer/list.html">应答管理</a></li>
+					    </ul> 
+				</li>
 				<li class="start ${channel eq 'customer'?'active':''}">
 				
 					<a href="${basePath}/admin/customer/list.html">
