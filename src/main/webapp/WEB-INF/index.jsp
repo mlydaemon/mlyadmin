@@ -21,7 +21,7 @@
 				</div>
 				<!-- END PAGE HEADER-->
 				<div id="dashboard">
-                         hhkjkjhkjkjhkj
+                        <p style="color:red">欢迎来到萌兔体验中心！</p>
 				</div>
 			</div>
 			<!-- END PAGE CONTAINER-->    

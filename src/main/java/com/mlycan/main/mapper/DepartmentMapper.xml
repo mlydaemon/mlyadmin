@@ -31,8 +31,8 @@
 	</select>
 	<select id="findAllCount"   resultType="java.lang.Integer">
 		 <![CDATA[ 
-		   select count(ch.channel_id) as value
-		     from mly_channel ch 
+		   select count(dep.department_id) as value
+		     from mly_department dep 
 		 	]]> 
 	</select>
 	<select id="findDepartment"   resultMap="departmentResultMap">

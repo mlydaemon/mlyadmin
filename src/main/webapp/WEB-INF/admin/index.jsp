@@ -1,4 +1,4 @@
-
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 			<!-- BEGIN PAGE CONTAINER-->
 			<div class="container-fluid">
 				<!-- BEGIN PAGE HEADER-->
@@ -21,7 +21,7 @@
 				</div>
 				<!-- END PAGE HEADER-->
 				<div id="dashboard">
-                         hhkjkjhkjkjhkj
+                          <h1 style="color:green">欢迎来到萌兔体验中心！</h1>
 				</div>
 			</div>
 			<!-- END PAGE CONTAINER-->    

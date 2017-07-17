@@ -4,7 +4,6 @@
 package com.mlycan.main.entity;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * @author sean

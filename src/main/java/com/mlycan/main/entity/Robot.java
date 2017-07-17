@@ -1,0 +1,81 @@
+/**
+ * 
+ */
+package com.mlycan.main.entity;
+
+import java.io.Serializable;
+
+/**
+ * @author sean
+ *
+ */
+public class Robot implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Integer robotId;//身份ID
+	private String  account;//机器人账号
+	private String  nickname;//昵称
+	private Integer speciesId;//类型
+	private Long    birthday;//生日
+	private Integer gender;//性别
+	private String  comefrom;//出生地
+	private String  intro;//介绍
+	private String  comment;//备注
+	public String getAccount() {
+		return account;
+	}
+	public void setAccount(String account) {
+		this.account = account;
+	}
+	public Long getBirthday() {
+		return birthday;
+	}
+	public void setBirthday(Long birthday) {
+		this.birthday = birthday;
+	}
+	public Integer getGender() {
+		return gender;
+	}
+	public void setGender(Integer gender) {
+		this.gender = gender;
+	}
+	public String getComefrom() {
+		return comefrom;
+	}
+	public void setComefrom(String comefrom) {
+		this.comefrom = comefrom;
+	}
+	public String getIntro() {
+		return intro;
+	}
+	public void setIntro(String intro) {
+		this.intro = intro;
+	}
+	public String getComment() {
+		return comment;
+	}
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+	public Integer getRobotId() {
+		return robotId;
+	}
+	public void setRobotId(Integer robotId) {
+		this.robotId = robotId;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+	public Integer getSpeciesId() {
+		return speciesId;
+	}
+	public void setSpeciesId(Integer speciesId) {
+		this.speciesId = speciesId;
+	}
+	
+}

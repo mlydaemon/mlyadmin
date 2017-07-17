@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace必须是DAO接口的全类名  -->
+
+<mapper namespace="com.mlycan.main.mapper.LogicMapper">
+	<resultMap type="com.mlycan.main.entity.Logic" id="logicResultMap"> 
+        <id property="logicId" column="logic_id"/> 
+        <result property="logicName" column="logic_name"/>
+        <result property="semantic" column="semantic"/>
+        <result property="code" column="code"/> 
+        <result property="comment" column="comment"/> 
+    </resultMap>
+	
+	<select id="findAll"   resultMap="logicResultMap">
+		   select  log.logic_id,
+				   log.logic_name,
+				   log.semantic,
+				   log.code,
+				   log.comment
+		     from mly_logic log
+	         <if test=" count!=null">  
+               limit #{curpage},#{count}
+             </if>
+	</select>
+	<select id="findAllCount"   resultType="java.lang.Integer">
+		 <![CDATA[ 
+		   select count(log.logic_id) as value
+		     from mly_logic log 
+		 	]]> 
+	</select>
+	<select id="findLogic"   resultMap="logicResultMap">
+		<![CDATA[
+		  select  log.logic_id,
+				   log.logic_name,
+				   log.semantic,
+				   log.code,
+				   log.comment
+		     from mly_logic log
+		     where log.logic_id = #{logicId}
+			]]>
+	</select>
+	<insert id="saveLogic"  >
+	<![CDATA[
+		   insert into  mly_logic(logic_id,logic_name,semantic,code,comment)
+		    VALUES(#{logicId},#{logicName},#{semantic},#{code},#{comment})
+			]]>
+	</insert>
+	<update id="updateLogic"  parameterType="com.mlycan.main.entity.Logic"   >
+		<![CDATA[
+		   update mly_logic log
+		      set 
+		          log.logic_id=#{logicId},
+		          log.logic_name=#{logicName},
+		          log.semantic=#{semantic},
+		          log.code=#{code},
+		          log.comment=#{comment}
+		      where  log.logic_id=#{logicId} 
+			]]>
+	</update>
+	<delete id="deleteLogic">
+	<![CDATA[
+	         delete 
+	         from mly_logic 
+	         where logic_id=#{logicId} 
+			]]>
+	</delete>
+	
+</mapper>

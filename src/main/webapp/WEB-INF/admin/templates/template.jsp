@@ -30,7 +30,7 @@
 					<h2 style="background:blue;color:#fff"><span class="title">我的账户中心</span></h2>
 					<!-- END RESPONSIVE QUICK SEARCH FORM -->
 				</li>
-				<li class="start ${((channel eq 'channel')or(channel eq 'riddle'))?'active':''}">
+				<li class="start ${((channel eq 'riddle'))?'active':''}">
 					<a href="charts.html">
 					<!-- <a href="${basePath}/admin/task/list.html"> -->
 					<i class="icon-cogs"></i> 
@@ -41,7 +41,7 @@
 						<li class="${channel eq 'riddle'?'active':''}"><a href="${basePath}/admin/riddle/list.html">谜语管理</a></li>
 					</ul>
 				</li>
-				<li class="start ${((channel eq 'channel')or(channel eq 'question')or(channel eq 'answer'))?'active':''}">
+				<li class="start ${((channel eq 'question')or(channel eq 'sceneLogic')or(channel eq 'logic')or(channel eq 'application')or(channel eq 'scene')or(channel eq 'robot')or(channel eq 'species')or(channel eq 'answer'))?'active':''}">
 					<a href="charts.html">
 					<!-- <a href="${basePath}/admin/task/list.html"> -->
 					<i class="icon-cogs"></i> 
@@ -49,8 +49,14 @@
 					<span class="selected arrow "></span>
 					</a>
 						 <ul class="sub-menu">
+						<li class="${channel eq 'species'?'active':''}"><a href="${basePath}/admin/species/list.html">种类管理</a></li>
+						<li class="${channel eq 'robot'?'active':''}"><a href="${basePath}/admin/robot/list.html">信息管理</a></li>
+						<li class="${channel eq 'scene'?'active':''}"><a href="${basePath}/admin/scene/list.html">场景管理</a></li>
+						<li class="${channel eq 'logic'?'active':''}"><a href="${basePath}/admin/logic/list.html">逻辑管理</a></li>
+						<li class="${channel eq 'sceneLogic'?'active':''}"><a href="${basePath}/admin/sceneLogic/list.html">场景逻辑管理</a></li>
 						<li class="${channel eq 'question'?'active':''}"><a href="${basePath}/admin/question/list.html">语义管理</a></li>
 						<li class="${channel eq 'answer'?'active':''}"><a href="${basePath}/admin/answer/list.html">应答管理</a></li>
+						<li class="${channel eq 'application'?'active':''}"><a href="${basePath}/admin/application/list.html">应用管理</a></li>
 					    </ul> 
 				</li>
 				<li class="start ${channel eq 'customer'?'active':''}">

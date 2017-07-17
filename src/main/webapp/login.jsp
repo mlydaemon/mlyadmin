@@ -61,7 +61,8 @@ A img{border: none;}
 				<div id="top"><img src="images/login-logo.jpg" width="100%" height="100px"></img></div>
 				<div id="bottom" align="center">
 					<div id="msg"><font color="red">${message}</font></div>
-					<form id=loginform method=post name=loginform action="login.do?main">
+					<form id=loginform method=post name=loginform action="admin/">
+					<!-- <form id=loginform method=post name=loginform action="login.do?main"> -->
 						用户名：<input type=text id=userName name=usercode class="input_border" maxlength=16/> <p/>
 						密<span style="visibility:hidden">码</span>码：<input type=password id=password name=password class="input_border"/></p><%--
 						验证码：<input type=text id=j_checkcode name=j_checkcode maxlength=4 style="width:85px;height:17px;"/>&nbsp;<a href="" onClick="document.getElementById('CheckPic').src='<%=request.getContextPath()%>/verifycode?a='+Math.random()"><img  id="CheckPic" src="<%=request.getContextPath()%>/verifycode" style="vertical-align:middle"/></a><br/>--%><br/>

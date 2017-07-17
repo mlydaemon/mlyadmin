@@ -101,5 +101,4 @@
 	         where channel_id=#{channelId} 
 			]]>
 	</delete>
-	
 </mapper>

@@ -50,7 +50,8 @@
 							<td></td>
 							<td class="hidden-phone">${channel.channelPath}</td>
 							<td>${channel.link}</td>
-							<td><c:choose> 
+							<td>
+							<c:choose> 
 							  <c:when test="${channel.display == 0}">   
 							    功能  
 							  </c:when>

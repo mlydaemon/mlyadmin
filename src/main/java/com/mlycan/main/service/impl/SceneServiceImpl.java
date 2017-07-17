@@ -1,0 +1,83 @@
+/**
+ * 
+ */
+package com.mlycan.main.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.mlycan.main.entity.Scene;
+import com.mlycan.main.mapper.SceneMapper;
+import com.mlycan.main.service.SceneService;
+
+/**
+ * @author sean
+ *
+ */
+@Service
+public class SceneServiceImpl implements SceneService{
+    @Autowired
+    private SceneMapper sceneMapper;
+	
+	@Override
+	public List<Scene> findAll(Integer count, Integer curpage) {
+		// TODO Auto-generated method stub
+		Integer currentCount = 0;
+		if(count!=null && curpage!= null){
+			currentCount = (curpage-1)*count;
+		}
+		return sceneMapper.findAll(count, currentCount);
+	}
+
+	public Integer findAllCount(){
+		return sceneMapper.findAllCount();
+	}
+	
+	@Override
+	public Scene findScene(Integer sceneId) {
+		// TODO Auto-generated method stub
+		return sceneMapper.findScene(sceneId);
+	}
+	
+	@Override
+	public Integer saveScene(String sceneName,String application,String semantic,Integer active,String comment) {
+		Scene scene = new Scene();
+		scene.setSceneName(sceneName);
+		scene.setApplication(application);
+		scene.setSemantic(semantic);
+		scene.setActive(active);
+		scene.setComment(comment);
+		return sceneMapper.saveScene(scene);
+	}
+	@Override
+	public Integer updateScene(Integer sceneId,String sceneName,String application,String semantic,Integer active,String comment) {
+		
+		Scene scene = sceneMapper.findScene(sceneId);
+		if(scene == null){
+			return null;
+		}
+		if(sceneName != null ){
+			scene.setSceneName(sceneName);
+		}
+		if(scene !=null){
+			scene.setApplication(application);
+		}
+		if(semantic !=null){
+			scene.setSemantic(semantic);
+		}
+		if(active !=null){
+			scene.setActive(active);
+		}
+		if(comment !=null){
+			scene.setComment(comment);
+		}
+		return sceneMapper.updateScene(scene);
+	}
+	@Override
+	public Integer deleteScene(Integer sceneId) {
+		return sceneMapper.deleteScene(sceneId);
+	}
+
+}

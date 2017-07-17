@@ -35,7 +35,7 @@ public class Main {
 			   //ResourceService mss= context.getBean("resourceService",ResourceService.class);
 			   
 			   //Integer Id= mss.saveResource("sds", "sds", "sds", "sds", "sds", "sds", "sds");
-			   System.out.println((int)Math.ceil((double)3/2));
+				
 	}
 
 }
