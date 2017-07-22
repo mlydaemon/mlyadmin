@@ -17,7 +17,7 @@ public class BaseController {
      * @since v1.0
      */
 
-    private static Logger logger = Logger.getLogger(BaseController.class);
+    protected static Logger logger = Logger.getLogger(BaseController.class);
     
 	/**
      * 
@@ -32,9 +32,10 @@ public class BaseController {
      */
     public void writeObject(HttpServletResponse response,Object obj)
     {
+    	 response.setHeader("Content-type", "text/html;charset=UTF-8"); 
+         response.setCharacterEncoding("UTF-8");
         try
         {
-        	response.setCharacterEncoding("UTF-8");
             ObjectMapper mapper = new ObjectMapper();
             mapper.writeValue(System.out,obj);  
             mapper.writeValue(response.getWriter(),obj);

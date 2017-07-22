@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace必须是DAO接口的全类名  -->
+
+<mapper namespace="com.mlycan.main.mapper.DepartmentMapper">
+	<resultMap type="com.mlycan.main.entity.Department" id="departmentResultMap"> 
+        <id property="departmentId" column="department_id"/> 
+        <result property="departmentName" column="department_name"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="parentName" column="parent_name"/> 
+        <result property="link" column="link"/> 
+        <result property="priority" column="priority"/> 
+        <result property="display" column="is_display"/> 
+    </resultMap>
+	
+	<select id="findAll"   resultMap="departmentResultMap">
+		   select  dep.department_id,
+				   dep.department_name,
+				   pdep.department_id as parent_id,
+				   pdep.department_name as parent_name,
+				   dep.link,
+				   dep.priority,
+				   dep.is_display
+		     from mly_department dep
+		     left join mly_department pdep on(dep.parent_id = pdep.department_id)
+	         <if test=" count!=null">  
+               limit #{curpage},#{count}
+             </if>
+	</select>
+	<select id="findAllCount"   resultType="java.lang.Integer">
+		 <![CDATA[ 
+		   select count(dep.department_id) as value
+		     from mly_department dep 
+		 	]]> 
+	</select>
+	<select id="findDepartment"   resultMap="departmentResultMap">
+		<![CDATA[
+		  select  dep.department_id,
+				   dep.department_name,
+				   pdep.department_id as parent_id,
+				   pdep.department_name as parent_name,
+				   dep.link,
+				   dep.priority,
+				   dep.is_display
+		     from mly_department dep
+		     left join mly_department pdep on(dep.parent_id = pdep.department_id)
+		     where dep.department_id = #{departmentId}
+			]]>
+	</select>
+	<insert id="saveDepartment"  >
+	<![CDATA[
+		   insert into  mly_department(department_name,parent_id,link,priority,is_display)
+		    VALUES(#{departmentName},#{parentId},#{link},#{priority},#{display})
+			]]>
+	</insert>
+	<update id="updateDepartment"  parameterType="com.mlycan.main.entity.Department"   >
+		<![CDATA[
+		   update mly_department dep
+		      set 
+		          dep.department_name=#{departmentName},
+		          dep.parent_id=#{parentId},
+		          dep.link=#{link},
+		          dep.priority=#{priority},
+		          dep.is_display=#{display}
+		      where  dep.department_id=#{departmentId} 
+			]]>
+	</update>
+	<delete id="deleteDepartment">
+	<![CDATA[
+	         delete 
+	         from mly_department 
+	         where department_id=#{departmentId} 
+			]]>
+	</delete>
+	
+</mapper>

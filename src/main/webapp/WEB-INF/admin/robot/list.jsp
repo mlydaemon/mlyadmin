@@ -32,14 +32,15 @@
 			<table class="table table-striped table-bordered table-advance table-hover">
 				<thead>
 					<tr>
-						<th><i class="icon-briefcase"></i>身份ID</th>
-						<th><i class="icon-briefcase"></i>机器人账号</th>
-						<th><i class="icon-bookmark"></i>昵称</th>
-						 <th><i class="icon-bookmark"></i>类型</th>
-						 <th><i class="icon-bookmark"></i>生日</th>
-						 <th><i class="icon-bookmark"></i>性别</th>
-						 <th><i class="icon-bookmark"></i>出生地</th>
-						 <th><i class="icon-bookmark"></i>介绍</th>
+						<!-- <th><i class="icon-briefcase"></i>身份ID</th> -->
+						<th><i class="icon-briefcase"></i>昵称</th>
+						<th></th>
+						<th><i class="icon-bookmark"></i>机器人账号</th>
+						 <!-- <th><i class="icon-bookmark"></i>类型</th> -->
+						 <!-- <th><i class="icon-bookmark"></i>生日</th> -->
+						 <!-- <th><i class="icon-bookmark"></i>性别</th>
+						 <th><i class="icon-bookmark"></i>出生地</th> -->
+						 <th></th>
 						 <!-- <th><i class="icon-bookmark"></i>备注</th> -->
 						<th></th>
 					</tr>
@@ -47,18 +48,31 @@
 				<tbody>
 					<c:forEach var="robot" items="${beans}"> 
 					    <tr>
-							<td><a href="#">${robot.robotId}</a></td>
-							<td><a href="#">${robot.account}</a></td>
-							<td>${robot.nickname}</td>
-							 <td>${robot.speciesId}</td> 
+							<%-- <td><a href="#">${robot.robotId}</a></td> --%>
+							 <td><a href="javascript:display(${robot.robotId})">${robot.nickname}(${robot.speciesName})</a></td>
+							 <td></td>
+							 <td>${robot.account}</td>
+							 <%-- <td>${robot.speciesId}</td> 
 							 <td>${robot.birthday}</td> 
 							 <td>${robot.gender}</td> 
 							 <td>${robot.comefrom}</td> 
-							 <td>${robot.intro}</td> 
+							 <td>${robot.intro}</td>  --%>
 							 <%-- <td>${robot.comment}</td>  --%>
+							 <td></td>
 							<td><a class="btn mini green-stripe" href="${basePath}/admin/robot/edit?robotId=${robot.robotId}">编辑</a>|
 							<a class="btn mini green-stripe" href="${basePath}/admin/robot/delete?robotId=${robot.robotId}">删除</a></td>
 						</tr>
+						<div class="childChannels" style="display: hidden;">
+							<c:forEach var="scene" items="${robot.scenes}">
+								<tr class="scene${robot.robotId}  hiddendiv">
+								     <td></td>
+									 <td><a href="${basePath}/admin/robot/trainSceneCore?application=${scene.application}&robotAccount=${robot.account}&semantic=${scene.semantic}">${scene.sceneName}</a></td>
+									 <td>${scene.application}</td>
+									 <td><c:forEach var="logic" items="${scene.logics}"><a href="${basePath}/admin/robot/trainLogicCore?application=${scene.application}&robotAccount=${robot.account}&semantic=${logic.semantic}">${logic.logicName}</a>|</c:forEach></td>
+									 <td></td>
+								 </tr>
+							</c:forEach>
+						</div>
 					</c:forEach>
 					
 				</tbody>
@@ -118,4 +132,16 @@
 	</div>
 </div>
 <!-- END PAGE CONTAINER-->    
-		
+<script>
+function display(classtag){
+	$('.scene'+classtag).each(function(i){		 
+		 if($(this).hasClass('showdiv')){
+			 $(this).removeClass('showdiv');
+			 $(this).addClass('hiddendiv');
+		 }else if($(this).hasClass('hiddendiv')){
+			 $(this).addClass('showdiv');
+			 $(this).removeClass('hiddendiv');
+		 }
+	});
+}
+</script>			

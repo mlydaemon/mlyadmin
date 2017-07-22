@@ -10,6 +10,7 @@
         <result property="account" column="account"/>
         <result property="nickname" column="nickname"/>
         <result property="speciesId" column="species_id"/> 
+        <result property="speciesName" column="species_name"/> 
         <result property="birthday" column="birthday"/> 
         <result property="gender" column="gender"/> 
         <result property="comefrom" column="comefrom"/> 
@@ -18,16 +19,16 @@
     </resultMap>
 	
 	<select id="findAll"   resultMap="robotResultMap">
-		   select  rob.robot_id,
-				   rob.account,
-				   rob.nickname,
-				   rob.species_id,
-				   rob.birthday,
-				   rob.gender,
-				   rob.comefrom,
-				   rob.intro,
-				   rob.comment,
-				   spe.species_name
+		   select  rob.robot_id  as robot_id,
+				   rob.account   as account,
+				   rob.nickname  as nickname,
+				   rob.species_id as  species_id,
+				   rob.birthday as birthday,
+				   rob.gender   as gender,
+				   rob.comefrom  as comefrom,
+				   rob.intro     as intro,
+				   rob.comment   as comment,
+				   spe.species_name as species_name
 		     from mly_robot rob left join mly_species spe
 		      on  rob.species_id=spe.species_id 
 		      <if test=" parentId!=null">  

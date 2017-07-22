@@ -15,7 +15,20 @@
         <result property="nextclassify" column="nextclassify"/> 
         <result property="pattern" column="pattern"/> 
     </resultMap>
-	
+	<select id="findQuestionForTrain"   resultMap="questionResultMap">
+		   select  que.question_id,
+				   que.account,
+				   que.application,
+				   que.content,
+				   que.command,
+				   que.classify,
+				   que.nextclassify,
+				   que.pattern
+		     from mly_question que
+	         where que.account = #{robotAccount}
+	         AND   que.application = #{application}
+	         AND   que.classify = #{semantic}
+	</select>
 	<select id="findAll"   resultMap="questionResultMap">
 		   select  que.question_id,
 				   que.account,
@@ -76,6 +89,16 @@
 	         delete 
 	         from mly_question 
 	         where question_id=#{questionId} 
+			]]>
+	</delete>
+	<delete id="deleteQuestionByparam">
+	<![CDATA[
+	        DELETE  FROM mly_question  
+             WHERE account = #{robotAccount}
+	         AND   application = #{application}
+	         AND   classify = #{semantic}
+             AND   content like  concat('%', #{questionContent}, '%')
+             AND   command like  concat('%', #{questionCommand}, '%')
 			]]>
 	</delete>
 	

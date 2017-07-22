@@ -14,25 +14,27 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mlycan.common.web.Constants;
 import com.mlycan.common.web.SessionProvider;
+import com.mlycan.main.controller.BaseController;
 import com.mlycan.main.entity.Logic;
 import com.mlycan.main.service.LogicService;
 
 @Controller
 @RequestMapping(value = { "logic"})
-public class LogicController {
+public class LogicController extends BaseController{
 	
 	@RequestMapping(value = { "/list"})
 	public String list(HttpServletRequest request,HttpServletResponse response, ModelMap model,
-			Integer count,Integer curpage) {
+			String sceneName,Integer count,Integer curpage) {
+		logger.debug("Enter LogicController:list;parameter:sceneName="+sceneName+",count="+count+",curpage="+curpage);
 		if(count ==null){
 			count = 10;
 		}
 		if(curpage ==null){
 			curpage = 1;
 		}
-		List<Logic> logics = logicService.findAll(count, curpage);
+		List<Logic> logics = logicService.findAll(sceneName,count, curpage);
 
-		Integer  total = logicService.findAllCount();
+		Integer  total = logicService.findAllCount(sceneName);
 		
 		model.addAttribute(Constants.BEANS, logics);
         
@@ -41,7 +43,7 @@ public class LogicController {
 		model.addAttribute(Constants.TALPAGE, (int)Math.ceil((double)total/count));
 
 		session.setAttribute(request, response, Constants.CHANNEL, "logic");
-		
+		logger.debug("Exit LogicController:list");
 		return "admin/logic/list";
 	}
 	@RequestMapping(value = { "/edit"})
@@ -54,16 +56,18 @@ public class LogicController {
 
 		session.setAttribute(request, response, Constants.CHANNEL, "logic");
 		
+		logger.debug("Exit LogicController:edit");
 		return "admin/logic/edit";
 	}
 	@RequestMapping(value = { "/update"},method = RequestMethod.POST)
 	public String update(HttpServletRequest request,HttpServletResponse response, ModelMap model,
-			Integer logicId,String logicName,String semantic,String code,String comment) {
-		
-		logicService.updateLogic(logicId,logicName,semantic,code,comment);
+			Integer logicId,Integer sceneId,String logicName,String command,String semantic,String code,String comment) {
+	
+		logicService.updateLogic(logicId,sceneId,logicName,command,semantic,code,comment);
 
 		session.setAttribute(request, response, Constants.CHANNEL, "logic");
 		
+		logger.debug("Exit LogicController:update");
 		return "redirect:/admin/logic/list";
 	}
 	@RequestMapping(value = { "/add"})
@@ -71,14 +75,14 @@ public class LogicController {
 
 		session.setAttribute(request, response, Constants.CHANNEL, "logic");
 		
-		
+		logger.debug("Exit LogicController:add");
 		return "admin/logic/add";
 	}
 	@RequestMapping(value = { "/save"},method = RequestMethod.POST)
 	public String save(HttpServletRequest request,HttpServletResponse response, ModelMap model,
-			String logicName,String semantic,String code,String comment) {
-		
-		logicService.saveLogic(logicName,semantic,code,comment);
+			Integer sceneId,String logicName,String command,String semantic,String code,String comment) {
+
+		logicService.saveLogic(sceneId,logicName,command,semantic,code,comment);
 
 		session.setAttribute(request, response, Constants.CHANNEL, "logic");
 		
@@ -92,6 +96,7 @@ public class LogicController {
 
 		session.setAttribute(request, response, Constants.CHANNEL, "logic");
 		
+		logger.debug("Exit LogicController:delete");
 		return "redirect:/admin/logic/list";
 	}
 	@Autowired

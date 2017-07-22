@@ -5,6 +5,7 @@ package com.mlycan.main.service.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -78,6 +79,22 @@ public class SceneServiceImpl implements SceneService{
 	@Override
 	public Integer deleteScene(Integer sceneId) {
 		return sceneMapper.deleteScene(sceneId);
+	}
+
+	@Override
+	public List<Scene> findByRobotAccount(String account) {
+		if(StringUtils.isBlank(account)){
+			return null;
+		}
+		return sceneMapper.findByRobotAccount(account);
+	}
+
+	@Override
+	public Scene findSceneForTrain(String application, String robotAccount) {
+		if(StringUtils.isBlank(robotAccount)||StringUtils.isBlank(application)){
+			return null;
+		}
+		return sceneMapper.findSceneForTrain(application, robotAccount);
 	}
 
 }

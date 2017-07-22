@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace必须是DAO接口的全类名  -->
+
+<mapper namespace="com.mlycan.main.mapper.ChannelMapper">
+	<resultMap type="com.mlycan.main.entity.Channel" id="channelResultMap"> 
+        <id property="channelId" column="channel_id"/> 
+        <result property="parentId" column="parent_id"/>
+        <result property="parentName" column="parent_name"/>
+        <result property="channelName" column="channel_name"/>        
+        <result property="channelPath" column="channel_path"/> 
+        <result property="link" column="link"/> 
+        <result property="priority" column="priority"/> 
+        <result property="content" column="has_content"/>  
+        <result property="display" column="is_display"/>
+         
+    </resultMap>
+	<select id="findForMenu" parameterType="java.lang.Integer"   resultMap="channelResultMap">
+		<![CDATA[
+		   select ch.channel_id,ch.channel_name,ch.channel_path,link,priority,has_content,is_display
+		     from mly_channel ch
+		     left join mly_channel_user uc on(ch.channel_id = uc.channel_id)
+		      where  uc.user_id=#{0} 
+			]]>
+	</select>
+	<select id="findAll"   resultMap="channelResultMap">
+		   select ch.channel_id as channel_id,
+		          ch.channel_name as channel_name,
+		          mch.channel_name as parent_name,
+		          ch.channel_path as channel_path,
+		          ch.link as link,
+		          ch.priority as priority,
+		          ch.has_content as has_content,
+		          ch.parent_id as parent_id,
+		          ch.is_display as is_display
+		     from mly_channel ch 
+		      left join mly_channel mch on (mch.channel_id = ch.parent_id)
+		       <if test=" parentId!=null">  
+                where ch.parent_id = #{parentId}
+               </if>
+               <if test=" parentId==null">  
+                where ch.parent_id = 0
+               </if>  
+		      <if test=" count!=null">  
+                limit #{curpage},#{count}
+              </if>
+              
+		      
+	</select>
+	<select id="findAllCount"   resultType="java.lang.Integer">
+		   select count(ch.channel_id) as value
+		     from mly_channel ch
+	        <if test=" parentId!=null">  
+               where ch.parent_id = #{parentId}
+            </if>
+            <if test=" parentId==null">  
+                where ch.parent_id = 0
+            </if>  
+	</select>
+	<select id="findChannel"   resultMap="channelResultMap">
+		<![CDATA[
+		   select ch.channel_id,
+		          ch.parent_id,
+		          ch.channel_name,
+		          ch.channel_path,
+		          ch.link,
+		          ch.priority,
+		          ch.has_content,
+		          ch.is_display
+		     from mly_channel ch
+		     where ch.channel_id = #{channelId}
+			]]>
+	</select>
+	<insert id="saveChannel"  >
+	<![CDATA[
+		   insert into  mly_channel(channel_id,parent_id,channel_name,channel_path,link,priority,has_content,is_display)
+		    VALUES(#{channelId},#{parentId},#{channelName},#{channelPath},#{link},#{priority},
+		    #{content},#{display})
+			]]>
+	</insert>
+	<update id="updateChannel"  parameterType="com.mlycan.main.entity.Channel"   >
+		<![CDATA[
+		   update mly_channel ch
+		      set 
+		          ch.channel_name=#{channelName},
+		          ch.parent_id=#{parentId},
+		          ch.channel_path=#{channelPath},
+		          ch.link=#{link},
+		          ch.priority=#{priority},
+		          ch.has_content=#{content},
+		          ch.is_display=#{display}
+		      where  ch.channel_id=#{channelId} 
+			]]>
+	</update>
+	<delete id="deleteChannel">
+	<![CDATA[
+	         delete 
+	         from mly_channel 
+	         where channel_id=#{channelId} 
+			]]>
+	</delete>
+</mapper>

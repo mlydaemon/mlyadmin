@@ -4,6 +4,7 @@
 package com.mlycan.main.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author sean
@@ -18,11 +19,14 @@ public class Robot implements Serializable{
 	private String  account;//机器人账号
 	private String  nickname;//昵称
 	private Integer speciesId;//类型
+	private String  speciesName;//备注
 	private Long    birthday;//生日
 	private Integer gender;//性别
 	private String  comefrom;//出生地
 	private String  intro;//介绍
 	private String  comment;//备注
+	
+	private List<Scene> scenes;
 	public String getAccount() {
 		return account;
 	}
@@ -76,6 +80,18 @@ public class Robot implements Serializable{
 	}
 	public void setSpeciesId(Integer speciesId) {
 		this.speciesId = speciesId;
+	}
+	public List<Scene> getScenes() {
+		return scenes;
+	}
+	public void setScenes(List<Scene> scenes) {
+		this.scenes = scenes;
+	}
+	public String getSpeciesName() {
+		return speciesName;
+	}
+	public void setSpeciesName(String speciesName) {
+		this.speciesName = speciesName;
 	}
 	
 }

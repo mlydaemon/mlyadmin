@@ -20,4 +20,5 @@ public interface AnswerMapper {
 	
 	public Integer deleteAnswer(@Param("answerId")Integer answerId);
 	
+	public Integer deleteAnswerByparam(@Param("robotAccount")String robotAccount,@Param("application")String application,@Param("questionContent")String questionContent, @Param("answerContent")String answerContent, @Param("answerCommand")String answerCommand) ;
 }

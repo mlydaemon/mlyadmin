@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace必须是DAO接口的全类名  -->
+
+<mapper namespace="com.mlycan.main.mapper.ResourceMapper">
+	<resultMap type="com.mlycan.main.entity.Resource" id="resourceResultMap"> 
+        <id property="resourceId" column="resource_id"/> 
+        <result property="storePath" column="store_path"/> 
+        <result property="resourceName" column="resource_name"/> 
+        <result property="title" column="title"/> 
+        <result property="keywords" column="keywords"/> 
+        <result property="description" column="description"/> 
+        <result property="mediaType" column="media_type"/>
+        <result property="contentType" column="content_type"/>
+    </resultMap>
+	<select id="findResource" parameterType="java.lang.Integer"   resultMap="resourceResultMap">
+		<![CDATA[
+		   select resource_id,store_path,resource_name,title,keywords,description,media_type,content_type
+		    from mly_resource 
+		    where  resource_id = #{resourceId}
+			]]>
+	</select>
+	<insert id="saveResource" parameterType="com.mlycan.main.entity.Resource"  useGeneratedKeys="true" keyProperty="resourceId" >
+		<![CDATA[
+		insert into 
+		mly_resource(store_path,resource_name,title,keywords,description,media_type,content_type) 
+		values(#{storePath},#{resourceName},#{title},#{keywords},#{description},#{mediaType},#{contentType})
+			]]>
+	</insert>
+	<delete id="deleteResource">
+	<![CDATA[
+	         delete 
+	         from mly_resource 
+	         where  resource_id = #{resourceId}
+			]]>
+	</delete>
+</mapper>

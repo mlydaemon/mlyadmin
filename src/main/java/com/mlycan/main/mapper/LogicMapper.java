@@ -5,12 +5,15 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.mlycan.main.entity.Logic;
+import com.mlycan.main.entity.Scene;
 
 public interface LogicMapper {
+    
+	public List<Logic> findList(@Param("sceneId")Integer sceneId);
+	
+	public List<Logic>  findAll(@Param("sceneName")String sceneName,@Param("count")Integer count,@Param("curpage")Integer curpage);
 
-	public List<Logic>  findAll(@Param("count")Integer count,@Param("curpage")Integer curpage);
-
-	public Integer findAllCount();
+	public Integer findAllCount(@Param("sceneName")String sceneName);
 	
 	public Logic  findLogic(@Param("logicId")Integer logicId);
 	
@@ -19,5 +22,7 @@ public interface LogicMapper {
 	public Integer updateLogic(Logic logic);
 	
 	public Integer deleteLogic(@Param("logicId")Integer logicId);
-	
+	//机器人场景逻辑词库训练
+	public Logic  findLogicForTrain(@Param("robotAccount")String robotAccount,@Param("application")String application,@Param("semantic")String semantic);
+		
 }

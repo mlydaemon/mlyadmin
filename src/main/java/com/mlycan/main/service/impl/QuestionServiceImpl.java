@@ -91,4 +91,13 @@ public class QuestionServiceImpl implements QuestionService{
 		return questionMapper.deleteQuestion(questionId);
 	}
 
+	@Override
+	public List<Question> findQuestionForTrain(String robotAccount, String application, String semantic) {
+		// TODO Auto-generated method stub
+		if(StringUtils.isBlank(robotAccount)||StringUtils.isBlank(application)||StringUtils.isBlank(semantic)){
+			return null;
+		}
+		return questionMapper.findQuestionForTrain(robotAccount, application, semantic);
+	}
+
 }

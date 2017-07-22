@@ -20,5 +20,9 @@ public interface QuestionMapper {
 	public Integer updateQuestion(Question question);
 	
 	public Integer deleteQuestion(@Param("questionId")Integer questionId);
+	//语义库训练机器人账号，场景编码，语义库标识
+	public List<Question> findQuestionForTrain(@Param("robotAccount")String robotAccount,@Param("application")String application,@Param("semantic")String semantic);
 	
+	public Integer deleteQuestionByparam(@Param("robotAccount")String robotAccount,@Param("application")String application,@Param("semantic")String semantic
+			,@Param("questionCommand")String questionCommand,@Param("questionContent")String questionContent) ;
 }

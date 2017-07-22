@@ -1,6 +1,8 @@
 package com.mlycan.main.controller.admin;
 
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mlycan.common.web.Constants;
 import com.mlycan.common.web.SessionProvider;
+import com.mlycan.main.entity.Channel;
+import com.mlycan.main.entity.Logic;
 import com.mlycan.main.entity.Scene;
+import com.mlycan.main.service.LogicService;
 import com.mlycan.main.service.SceneService;
 
 @Controller
@@ -30,8 +35,14 @@ public class SceneController {
 		if(curpage ==null){
 			curpage = 1;
 		}
+		List<Scene> sceness = new ArrayList<Scene>();
 		List<Scene> scenes = sceneService.findAll(count, curpage);
-
+		 for(Iterator it2 = scenes.iterator();it2.hasNext();){
+			 Scene scene = (com.mlycan.main.entity.Scene) it2.next();
+             List<Logic> logics = logicService.findList(scene.getSceneId());
+             scene.setLogics(logics);
+             sceness.add(scene);
+		 }
 		Integer  total = sceneService.findAllCount();
 		
 		model.addAttribute(Constants.BEANS, scenes);
@@ -94,6 +105,8 @@ public class SceneController {
 		
 		return "redirect:/admin/scene/list";
 	}
+	@Autowired
+	private LogicService logicService;
 	@Autowired
 	private SceneService sceneService;
 	@Autowired

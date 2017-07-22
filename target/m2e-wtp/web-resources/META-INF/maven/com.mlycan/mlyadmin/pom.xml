@@ -5,7 +5,7 @@
   <artifactId>mlyadmin</artifactId>
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
-  <name>mlyadmin Maven Webapp</name>
+  <name>mlyadmin Maven </name>
   <url>http://maven.apache.org</url>
    <properties> 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -273,6 +273,24 @@
     <build>
         <!-- war包包名定义 -->
     	<finalName>mlyadmin</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
         <plugins>
         	<plugin>
 				<groupId>org.mybatis.generator</groupId>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace必须是DAO接口的全类名  -->
+
+<mapper namespace="com.mlycan.main.mapper.SpeciesMapper">
+	<resultMap type="com.mlycan.main.entity.Species" id="speciesResultMap"> 
+        <id property="speciesId" column="species_id"/> 
+        <result property="parentId" column="parent_id"/>
+        <result property="speciesName" column="species_name"/>
+        <result property="avtive" column="avtive"/> 
+        <result property="comment" column="comment"/> 
+    </resultMap>
+	
+	<select id="findAll"   resultMap="speciesResultMap">
+		   select  spe.species_id,
+				   spe.parent_id,
+				   spe.species_name,
+				   spe.active,
+				   spe.comment
+		     from mly_species spe 
+		     <if test=" parentId!=null">  
+                where spe.parent_id = #{parentId}
+               </if>
+               <if test=" parentId==null">  
+                where spe.parent_id = 0
+               </if> 
+	         <if test=" count!=null">  
+                limit #{curpage},#{count}
+             </if>
+	</select>
+	<select id="findAllCount"   resultType="java.lang.Integer">
+		 <![CDATA[ 
+		   select count(spe.species_id) as value
+		     from mly_species spe 
+		 	]]> 
+	</select>
+	<select id="findSpecies"   resultMap="speciesResultMap">
+		<![CDATA[
+		 select  spe.species_id,
+				   spe.parent_id,
+				   spe.species_name,
+				   spe.active,
+				   spe.comment
+		     from mly_species spe
+		     where spe.species_id = #{speciesId}
+			]]>
+	</select>
+	<select id="findSpeciesByPid"   resultMap="speciesResultMap">
+		<![CDATA[
+		 select  spe.species_id,
+				   spe.parent_id,
+				   spe.species_name,
+				   spe.active,
+				   spe.comment
+		     from mly_species spe 
+			]]>
+			<if test=" parentId!=null">  
+                where spe.parent_id = #{parentId}
+               </if>
+               <if test=" parentId==null">  
+                where spe.parent_id = 0
+               </if> 
+	</select>
+	<insert id="saveSpecies"  >
+	<![CDATA[
+		   insert into  mly_species(species_id,parent_id,species_name,active,comment)
+		    VALUES(#{speciesId},#{parentId},#{speciesName},#{active},#{comment})
+			]]>
+	</insert>
+	<update id="updateSpecies"  parameterType="com.mlycan.main.entity.Species"   >
+		<![CDATA[
+		   update mly_species spe
+		      set 
+		          spe.species_id=#{speciesId},
+		           spe.parent_id=#{parentId},
+				   spe.species_name=#{speciesName},
+				   spe.active=#{active},
+				   spe.comment=#{comment}
+		      where  spe.species_id=#{speciesId} 
+			]]>
+	</update>
+	<delete id="deleteSpecies">
+	<![CDATA[
+	         delete 
+	         from mly_species 
+	         where species_id=#{speciesId} 
+			]]>
+	</delete>
+	
+</mapper>

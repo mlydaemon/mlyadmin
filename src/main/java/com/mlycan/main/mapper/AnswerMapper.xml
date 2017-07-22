@@ -74,5 +74,14 @@
 	         where answer_id=#{answerId} 
 			]]>
 	</delete>
-	
+	<delete id="deleteAnswerByparam">
+	<![CDATA[
+             DELETE  FROM mly_answer  ans
+             WHERE ans.account = #{robotAccount}
+	         AND   ans.application = #{application}
+	         AND   ans.question like  concat('%', #{questionContent}, '%')
+             AND   ans.content like  concat('%', #{answerContent}, '%')
+             AND   ans.command like  concat('%', #{answerCommand}, '%') 
+			]]>
+	</delete>
 </mapper>

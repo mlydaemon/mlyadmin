@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace必须是DAO接口的全类名  -->
+
+<mapper namespace="com.mlycan.main.mapper.QuestionMapper">
+	<resultMap type="com.mlycan.main.entity.Question" id="questionResultMap"> 
+        <id property="questionId" column="question_id"/> 
+        <result property="account" column="account"/>
+        <result property="application" column="application"/>
+        <result property="content" column="content"/> 
+        <result property="command" column="command"/> 
+        <result property="classify" column="classify"/> 
+        <result property="nextclassify" column="nextclassify"/> 
+        <result property="pattern" column="pattern"/> 
+    </resultMap>
+	
+	<select id="findAll"   resultMap="questionResultMap">
+		   select  que.question_id,
+				   que.account,
+				   que.application,
+				   que.content,
+				   que.command,
+				   que.classify,
+				   que.nextclassify,
+				   que.pattern
+		     from mly_question que
+	         <if test=" count!=null">  
+               limit #{curpage},#{count}
+             </if>
+	</select>
+	<select id="findAllCount"   resultType="java.lang.Integer">
+		 <![CDATA[ 
+		   select count(ch.channel_id) as value
+		     from mly_channel ch 
+		 	]]> 
+	</select>
+	<select id="findQuestion"   resultMap="questionResultMap">
+		<![CDATA[
+		  select  que.question_id,
+				   que.account,
+				   que.application,
+				   que.content,
+				   que.command,
+				   que.classify,
+				   que.nextclassify,
+				   que.pattern
+		     from mly_question que
+		     where que.question_id = #{questionId}
+			]]>
+	</select>
+	<insert id="saveQuestion"  >
+	<![CDATA[
+		   insert into  mly_question(question_id,account,application,content,command,classify,nextclassify, pattern)
+		    VALUES(#{questionId},#{account},#{application},#{content},#{command},#{classify},#{nextclassify},#{pattern})
+			]]>
+	</insert>
+	<update id="updateQuestion"  parameterType="com.mlycan.main.entity.Question"   >
+		<![CDATA[
+		   update mly_question que
+		      set 
+		          que.question_id=#{questionId},
+		          que.account=#{account},
+		          que.application=#{application},
+		          que.content=#{content},
+		          que.command=#{command},
+		          que.classify=#{classify},
+		          que.nextclassify=#{nextclassify},
+		          que.pattern=#{pattern}
+		      where  que.question_id=#{questionId} 
+			]]>
+	</update>
+	<delete id="deleteQuestion">
+	<![CDATA[
+	         delete 
+	         from mly_question 
+	         where question_id=#{questionId} 
+			]]>
+	</delete>
+	
+</mapper>

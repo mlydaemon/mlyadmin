@@ -1,6 +1,8 @@
 package com.mlycan.main.controller.admin;
 
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,9 +16,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mlycan.common.web.Constants;
 import com.mlycan.common.web.SessionProvider;
+import com.mlycan.main.entity.Logic;
+import com.mlycan.main.entity.Question;
 import com.mlycan.main.entity.Robot;
+import com.mlycan.main.entity.Scene;
 import com.mlycan.main.entity.Species;
+import com.mlycan.main.service.LogicService;
+import com.mlycan.main.service.QuestionService;
 import com.mlycan.main.service.RobotService;
+import com.mlycan.main.service.SceneService;
 import com.mlycan.main.service.SpeciesService;
 
 @Controller
@@ -33,10 +41,23 @@ public class RobotController {
 			curpage = 1;
 		}
 		List<Robot> robots = robotService.findAll(count, curpage,null);
-
+		List<Robot> robotlist = new ArrayList<Robot>();
+		for(Iterator it2 = robots.iterator();it2.hasNext();){
+			Robot robot = (Robot) it2.next();
+			List<Scene> sceness = new ArrayList<Scene>();
+			List<Scene> scenes = sceneService.findByRobotAccount(robot.getAccount());
+			for(Iterator it3 = scenes.iterator();it3.hasNext();){
+				 Scene scene = (com.mlycan.main.entity.Scene) it3.next();
+	             List<Logic> logics = logicService.findList(scene.getSceneId());
+	             scene.setLogics(logics);
+	             sceness.add(scene);
+			 }
+			robot.setScenes(sceness);
+			robotlist.add(robot);
+		}
 		Integer  total = robotService.findAllCount();
 		
-		model.addAttribute(Constants.BEANS, robots);
+		model.addAttribute(Constants.BEANS, robotlist);
         
 		model.addAttribute(Constants.CURPAGE, curpage);
 		
@@ -46,12 +67,30 @@ public class RobotController {
 		
 		return "admin/robot/list";
 	}
+	@RequestMapping(value = { "/trainLogicCore"})
+	public String trainLogicCore(HttpServletRequest request,HttpServletResponse response, ModelMap model,
+			String robotAccount,String application,String semantic) {
+		Logic Logic = logicService.findLogicForTrain(robotAccount, application, semantic);
+		//List<Question> questions = questionService.findQuestionForTrain(robotAccount,application ,semantic);
+		model.addAttribute(Constants.BEAN, Logic);
+		//model.addAttribute(Constants.BEANS, questions);
+		return "admin/robot/trainLogicCore";
+	}
+	@RequestMapping(value = { "/trainSceneCore"})
+	public String trainSceneCore(HttpServletRequest request,HttpServletResponse response, ModelMap model,
+			String robotAccount,String application,String semantic) {
+		Scene scene = sceneService.findSceneForTrain(application,robotAccount);
+		//List<Question> questions = questionService.findQuestionForTrain(robotAccount,application ,semantic);
+		model.addAttribute(Constants.BEAN, scene);
+		//model.addAttribute(Constants.BEANS, questions);
+		return "admin/robot/trainSceneCore";
+	}
 	@RequestMapping(value = { "/edit"})
 	public String edit(HttpServletRequest request,HttpServletResponse response, ModelMap model,
 			Integer robotId) {
 		
 		Robot robot = robotService.findRobot(robotId);
-
+       
 		model.addAttribute(Constants.BEAN, robot);
 
 		session.setAttribute(request, response, Constants.CHANNEL, "robot");
@@ -99,6 +138,12 @@ public class RobotController {
 		
 		return "redirect:/admin/robot/list";
 	}
+	@Autowired
+	private QuestionService questionService;
+	@Autowired
+	private LogicService logicService;
+	@Autowired
+	private SceneService sceneService;
 	@Autowired
 	private SpeciesService speciesService;
 	@Autowired

@@ -8,11 +8,44 @@
 	<resultMap type="com.mlycan.main.entity.Scene" id="sceneResultMap"> 
         <id property="sceneId" column="scene_id"/> 
         <result property="sceneName" column="scene_name"/>
+        <result property="robotName" column="nickname"/>
+        <result property="robotAccount" column="account"/>
         <result property="application" column="application"/>
         <result property="semantic" column="semangtic"/>
         <result property="active" column="active"/> 
         <result property="comment" column="comment"/> 
     </resultMap>
+    <select id="findSceneForTrain"   resultMap="sceneResultMap">
+		   select  scen.scene_id,
+				   scen.scene_name,
+				   robot.nickname  as nickname,
+				   robot.account    as account,
+				   scen.application,
+				   scen.semantic,
+				   scen.active,
+				   scen.comment
+		     from mly_scene scen
+		     left join mly_robot_scene rc on(rc.scene_id = scen.scene_id)
+		     left join mly_robot  robot on(robot.robot_id = rc.robot_id)
+	         where robot.account = #{robotAccount}
+	            AND scen.application = #{application}
+	           <!--  <if test="semantic==null">  
+                 AND scen.semantic = #{semantic}
+               </if> -->
+	            
+	</select>
+	<select id="findByRobotAccount"   resultMap="sceneResultMap">
+		   select  scen.scene_id,
+				   scen.scene_name,
+				   scen.application,
+				   scen.semantic,
+				   scen.active,
+				   scen.comment
+		     from mly_scene scen
+		     left join mly_robot_scene rc on(rc.scene_id = scen.scene_id)
+		     left join mly_robot  robot on(robot.robot_id = rc.robot_id)
+	         where robot.account = #{account}
+	</select>
 	
 	<select id="findAll"   resultMap="sceneResultMap">
 		   select  scen.scene_id,

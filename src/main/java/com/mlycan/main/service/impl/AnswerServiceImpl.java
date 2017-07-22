@@ -47,7 +47,7 @@ public class AnswerServiceImpl implements AnswerService{
 		Answer answer = new Answer();
 		answer.setAccount(account);
 		answer.setApplication(application);
-		answer.setContent(question);
+		answer.setQuestion(question);
 		answer.setContent(content);
 		answer.setCommand(command);
 		answer.setPattern(pattern);

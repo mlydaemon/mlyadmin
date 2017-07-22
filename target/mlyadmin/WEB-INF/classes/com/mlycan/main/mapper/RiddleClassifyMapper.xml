@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace必须是DAO接口的全类名  -->
+<mapper namespace="com.mlycan.main.mapper.RiddleClassifyMapper">
+	<resultMap type="com.mlycan.main.entity.RiddleClassify" id="riddleClassifyResultMap"> 
+	    <id property="riddleClassifyId" column="riddle_classify_id"/> 
+        <result property="parentId" column="parent_id"/>
+        <result property="classify" column="classify"/>
+        <result property="priority" column="priority"/>        
+        <result property="hascontent" column="has_content"/> 
+        <result property="display" column="display"/>
+         
+    </resultMap>
+    
+   <select id="findAll"   resultMap="riddleClassifyResultMap">
+		   select  rcy.riddle_classify_id,
+				   rcy.parent_id,
+				   rcy.classify,
+				   rcy.priority,
+				   rcy.has_content,
+				   rcy.display
+		     from mly_riddle_classify rcy
+	         <if test=" count!=null">  
+               limit #{curpage},#{count}
+             </if>
+	</select>
+	<select id="findAllCount"   resultType="java.lang.Integer">
+		 <![CDATA[ 
+		   select count(rcy.riddle_classify_id) as value
+		     from mly_riddle_classify  rcy
+		 	]]> 
+	</select>
+	<select id="findRiddleClassify"   resultMap="riddleClassifyResultMap">
+		<![CDATA[
+		   select  rcy.riddle_classify_id,
+				   rcy.parent_id,
+				   rcy.classify,
+				   rcy.priority,
+				   rcy.has_content,
+				   rcy.display
+		     from mly_riddle_classify rcy
+		     where rcy.riddle_classify_id = #{riddleClassifyId}
+			]]>
+	</select>
+	<insert id="saveRiddleClassify"  >
+	<![CDATA[
+		   insert into  mly_riddle_classify(parent_id,classify,priority,has_content,display)
+		    VALUES(#{parentId},#{classify},#{priority},#{hascontent},#{display})
+			]]>
+	</insert>
+	<update id="updateRiddleClassify"  parameterType="com.mlycan.main.entity.RiddleClassify"   >
+		<![CDATA[
+		   update mly_riddle_classify rcy
+		      set 
+		          rcy.parent_id=#{parentId},
+		          rcy.classify=#{classify},
+		          rcy.priority=#{priority},
+		          rcy.has_content=#{hascontent},
+		          rcy.display=#{display}
+		      where rcy.riddle_classify_id=#{riddleClassifyId} 
+			]]>
+	</update>
+	<delete id="deleteRiddleClassify">
+	<![CDATA[
+	         delete 
+	         from mlysmoon.mly_riddle_classify 
+	         where riddle_classify_id=#{riddleClassifyId} 
+			]]>
+	</delete>
+	
+</mapper>
