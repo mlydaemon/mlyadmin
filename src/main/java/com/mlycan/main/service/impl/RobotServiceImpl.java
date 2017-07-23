@@ -43,7 +43,7 @@ public class RobotServiceImpl implements RobotService{
 	}
 	
 	@Override
-	public Integer saveRobot(String account,String nickname,Integer speciesId,Long birthday,Integer gender,String comefrom,String intro,String comment) {
+	public Integer saveRobot(String account,String nickname,Integer speciesId,Long birthday,Integer gender,String comefrom,String hobby,String comment) {
 		Robot robot = new Robot();
 		robot.setAccount(account);
 		robot.setNickname(nickname);
@@ -51,12 +51,12 @@ public class RobotServiceImpl implements RobotService{
 		robot.setBirthday(birthday);
 		robot.setGender(gender);
 		robot.setComefrom(comefrom);
-		robot.setIntro(intro);
+		robot.setHobby(hobby);
 		robot.setComment(comment);
 		return robotMapper.saveRobot(robot);
 	}
 	@Override
-	public Integer updateRobot(Integer robotId,String account,String nickname,Integer speciesId,Long birthday,Integer gender,String comefrom,String intro,String comment) {
+	public Integer updateRobot(Integer robotId,String account,String nickname,Integer speciesId,Long birthday,Integer gender,String comefrom,String hobby,String comment) {
 		
 		Robot robot = robotMapper.findRobot(robotId);
 		if(robot == null){
@@ -80,8 +80,8 @@ public class RobotServiceImpl implements RobotService{
 		if(comefrom !=null){
 			robot.setComefrom(comefrom);
 		}
-		if(intro !=null){
-			robot.setIntro(intro);
+		if(hobby !=null){
+			robot.setHobby(hobby);
 		}
 		if(comment !=null){
 			robot.setComment(comment);

@@ -182,8 +182,6 @@ function deleteKnowledge(questionId,answerId){
 	         url: 'http://localhost:9999/mlyadmin/admin/knowledge/delete' ,  
 	         type: 'POST',  
 	         data: formData,  
-	         async: false,  
-	         cache: false,  
 	         contentType: false,  
 	         processData: false,  
 	         success: function (returndata) {  
@@ -212,8 +210,6 @@ function loadKnowledges(){
         url: 'http://localhost:9999/mlyadmin/admin/knowledge/achieve/'+robotAccount+'/'+application+'/'+semantic ,  
         type: 'GET',  
         data: formData,  
-        async: false,  
-        cache: false,  
         contentType: false,  
         processData: false,  
         success: function (returndata) {  
@@ -261,8 +257,6 @@ function sendQuestion(){
          url: 'http://localhost:9999/mlyadmin/admin/knowledge/recquestion' ,  
          type: 'POST',  
          data: formData,  
-         async: false,  
-         cache: false,  
          contentType: false,  
          processData: false,  
          success: function (returndata) {  
@@ -301,8 +295,6 @@ function sendAnswer(){
          url: 'http://localhost:9999/mlyadmin/admin/knowledge/recanswer' ,  
          type: 'POST',  
          data: formData,  
-         async: false,  
-         cache: false,  
          contentType: false,  
          processData: false,  
          success: function (returndata) {  

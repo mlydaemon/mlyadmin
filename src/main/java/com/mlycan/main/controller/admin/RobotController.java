@@ -99,8 +99,8 @@ public class RobotController {
 	}
 	@RequestMapping(value = { "/update"},method = RequestMethod.POST)
 	public String update(HttpServletRequest request,HttpServletResponse response, ModelMap model,
-			Integer robotId,String account,String nickname,Integer speciesId,Long birthday,Integer gender,String comefrom,String intro,String comment) {
-		robotService.updateRobot(robotId,account,nickname,speciesId,birthday,gender,comefrom,intro,comment);
+			Integer robotId,String account,String nickname,Integer speciesId,Long birthday,Integer gender,String comefrom,String hobby,String comment) {
+		robotService.updateRobot(robotId,account,nickname,speciesId,birthday,gender,comefrom,hobby,comment);
 
 		session.setAttribute(request, response, Constants.CHANNEL, "robot");
 		return "redirect:/admin/robot/list";
@@ -120,9 +120,9 @@ public class RobotController {
 	}
 	@RequestMapping(value = { "/save"},method = RequestMethod.POST)
 	public String save(HttpServletRequest request,HttpServletResponse response, ModelMap model,
-			String account,String nickname,Integer speciesId,Long birthday,Integer gender,String comefrom,String intro,String comment) {
+			String account,String nickname,Integer speciesId,Long birthday,Integer gender,String comefrom,String hobby,String comment) {
 		
-		robotService.saveRobot(account,nickname,speciesId,birthday,gender,comefrom,intro,comment);
+		robotService.saveRobot(account,nickname,speciesId,birthday,gender,comefrom,hobby,comment);
 
 		session.setAttribute(request, response, Constants.CHANNEL, "robot");
 		

@@ -34,8 +34,13 @@ public class BaseController {
     {
     	 response.setHeader("Content-type", "text/html;charset=UTF-8"); 
          response.setCharacterEncoding("UTF-8");
+     	 response.setHeader("Access-Control-Allow-Origin", "*");
+   		 response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+   		 response.setHeader("Access-Control-Max-Age", "3600");
+   		 response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
         try
         {
+        	
             ObjectMapper mapper = new ObjectMapper();
             mapper.writeValue(System.out,obj);  
             mapper.writeValue(response.getWriter(),obj);

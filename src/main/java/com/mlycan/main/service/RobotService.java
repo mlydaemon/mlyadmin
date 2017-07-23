@@ -12,9 +12,9 @@ public interface RobotService {
 		
 		public Robot  findRobot(Integer robotId);
 		
-		public Integer saveRobot(String account,String nickname,Integer speciesId,Long birthday,Integer gender,String comefrom,String intro,String comment);
+		public Integer saveRobot(String account,String nickname,Integer speciesId,Long birthday,Integer gender,String comefrom,String hobby,String comment);
 		
-		public Integer updateRobot(Integer  robotId,String account,String nickname,Integer speciesId,Long birthday,Integer gender,String comefrom,String intro,String comment);
+		public Integer updateRobot(Integer  robotId,String account,String nickname,Integer speciesId,Long birthday,Integer gender,String comefrom,String hobby,String comment);
 		
 		public Integer deleteRobot(Integer robotId);
 		

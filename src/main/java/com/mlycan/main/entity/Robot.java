@@ -23,7 +23,7 @@ public class Robot implements Serializable{
 	private Long    birthday;//生日
 	private Integer gender;//性别
 	private String  comefrom;//出生地
-	private String  intro;//介绍
+	private String  hobby;//介绍
 	private String  comment;//备注
 	
 	private List<Scene> scenes;
@@ -51,11 +51,12 @@ public class Robot implements Serializable{
 	public void setComefrom(String comefrom) {
 		this.comefrom = comefrom;
 	}
-	public String getIntro() {
-		return intro;
+	
+	public String getHobby() {
+		return hobby;
 	}
-	public void setIntro(String intro) {
-		this.intro = intro;
+	public void setHobby(String hobby) {
+		this.hobby = hobby;
 	}
 	public String getComment() {
 		return comment;

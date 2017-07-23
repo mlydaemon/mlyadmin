@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace必须是DAO接口的全类名  -->
+<mapper namespace="com.mlycan.main.mapper.KnowledgeMapper">
+	<resultMap type="com.mlycan.main.entity.Knowledge" id="knowledgeResultMap"> 
+        <result property="questionId" column="question_id"/>
+        <result property="answerId" column="answer_id"/>
+        <result property="account" column="account"/>
+        <result property="application" column="application"/>
+        <result property="semantic" column="semantic"/> 
+        <result property="questionCommand" column="questionCommand"/> 
+        <result property="questionContent" column="questionContent"/> 
+        <result property="answerContent" column="answerContent"/> 
+        <result property="answerCommand" column="answerCommand"/> 
+    </resultMap>
+	<select id="findKnowledges"   resultMap="knowledgeResultMap">
+		    select que.question_id as question_id,
+		           ans.answer_id   as answer_id, 
+		           que.account     as account,
+				   que.application as application,
+				   que.classify    as semantic ,
+				   que.content     as questionContent,
+		           que.command     as questionCommand,
+		           ans.command     as answerCommand,
+		           ans.content     as  answerContent
+		     from mly_question que
+             left join mly_answer ans on(que.account = ans.account and que.application =ans.application and que.content = ans.question)
+	         where que.account = #{robotAccount}
+	         AND   (ans.command like  concat(que.command, '%') or ans.command is null)
+	         AND   que.application = #{application}
+	         AND   que.classify = #{semantic}
+	</select>
+</mapper>

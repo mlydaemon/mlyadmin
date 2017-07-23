@@ -98,9 +98,9 @@
 						<div class="row-fluid">
 							 <div class="span6 ">
 								<div class="control-group">
-									<label class="control-label" >介绍</label>
+									<label class="control-label" >爱好</label>
 									<div class="controls">
-										<input type="text"  name="intro"  class="m-wrap span12" placeholder="dd/mm/yyyy">
+										<input type="text"  name="hobby"  class="m-wrap span12" placeholder="dd/mm/yyyy">
 									</div>
 								</div>
 							</div> 

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- BEGIN PAGE CONTAINER-->
 <div class="container-fluid">
 	<!-- BEGIN PAGE HEADER-->
@@ -70,20 +71,18 @@
 						</div>
 						<!--/row-->
 						<div class="row-fluid">
-						
-							<div class="span6 ">
+						   <div class="span6 ">
 								<div class="control-group">
 									<label class="control-label" >性别</label>
-									<select name="gender" class="span12 m-wrap" tabindex="1">
-										    <option value="0">请选择</option>
-											<option  <c:if test="${bean.gender == 0}">selected = "selected"</c:if> value="0">女</option>
-											<option  <c:if test="${bean.gender == 1}">selected = "selected"</c:if>value="1">男</option>
-									</select>
-									<%-- <div class="controls">
-										<input type="text"  name="gender"  value="${bean.gender}"  class="m-wrap span12" placeholder="dd/mm/yyyy">
-									</div> --%>
+										<div class="controls">
+											<select name="gender" class="span12 m-wrap" tabindex="1">
+											    <option value="">请选择</option>
+												<option <c:if test="${bean.gender == 0}">selected = "selected"</c:if> value="0">女</option>
+												<option <c:if test="${bean.gender == 1}">selected = "selected"</c:if> value="1">男</option>
+											</select>
+										</div>
 								</div>
-							</div>
+							</div> 
 							<div class="span6 ">
 								<div class="control-group">
 									<label class="control-label">出生地</label>
@@ -93,16 +92,15 @@
 								</div>
 							</div>
 							<!--/span-->
-							<!--/span-->
 						</div>
 						<!--/row-->
 						<div class="row-fluid">
 						
 							<div class="span6 ">
 								<div class="control-group">
-									<label class="control-label" >介绍</label>
+									<label class="control-label" >爱好</label>
 									<div class="controls">
-										<input type="text"  name="intro"  value="${bean.intro}"  class="m-wrap span12" placeholder="dd/mm/yyyy">
+										<input type="text"  name="hobby"  value="${bean.hobby}"  class="m-wrap span12" placeholder="看电视">
 									</div>
 								</div>
 							</div>

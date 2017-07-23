@@ -49,7 +49,7 @@
 					<c:forEach var="robot" items="${beans}"> 
 					    <tr>
 							<%-- <td><a href="#">${robot.robotId}</a></td> --%>
-							 <td><a href="#">${robot.nickname}</a></td>
+							 <td><a href="javascript:display(${robot.robotId})">${robot.nickname}(${robot.speciesName})</a></td>
 							 <td></td>
 							 <td>${robot.account}</td>
 							 <%-- <td>${robot.speciesId}</td> 
@@ -62,6 +62,17 @@
 							<td><a class="btn mini green-stripe" href="${basePath}/admin/robot/edit?robotId=${robot.robotId}">编辑</a>|
 							<a class="btn mini green-stripe" href="${basePath}/admin/robot/delete?robotId=${robot.robotId}">删除</a></td>
 						</tr>
+						<div class="childChannels" style="display: hidden;">
+							<c:forEach var="scene" items="${robot.scenes}">
+								<tr class="scene${robot.robotId}  hiddendiv">
+								     <td></td>
+									 <td><a href="${basePath}/admin/robot/trainSceneCore?application=${scene.application}&robotAccount=${robot.account}&semantic=${scene.semantic}">${scene.sceneName}</a></td>
+									 <td>${scene.application}</td>
+									 <td><c:forEach var="logic" items="${scene.logics}"><a href="${basePath}/admin/robot/trainLogicCore?application=${scene.application}&robotAccount=${robot.account}&semantic=${logic.semantic}">${logic.logicName}</a>|</c:forEach></td>
+									 <td></td>
+								 </tr>
+							</c:forEach>
+						</div>
 					</c:forEach>
 					
 				</tbody>
@@ -121,4 +132,16 @@
 	</div>
 </div>
 <!-- END PAGE CONTAINER-->    
-		
+<script>
+function display(classtag){
+	$('.scene'+classtag).each(function(i){		 
+		 if($(this).hasClass('showdiv')){
+			 $(this).removeClass('showdiv');
+			 $(this).addClass('hiddendiv');
+		 }else if($(this).hasClass('hiddendiv')){
+			 $(this).addClass('showdiv');
+			 $(this).removeClass('hiddendiv');
+		 }
+	});
+}
+</script>			

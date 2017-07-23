@@ -98,9 +98,9 @@
 						
 							<div class="span6 ">
 								<div class="control-group">
-									<label class="control-label" >介绍</label>
+									<label class="control-label" >爱好</label>
 									<div class="controls">
-										<input type="text"  name="intro"  value="${bean.intro}"  class="m-wrap span12" placeholder="dd/mm/yyyy">
+										<input type="text"  name="hobby"  value="${bean.hobby}"  class="m-wrap span12" placeholder="看电视">
 									</div>
 								</div>
 							</div>
