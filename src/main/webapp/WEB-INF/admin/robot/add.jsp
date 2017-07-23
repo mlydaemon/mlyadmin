@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<link href="${basePath}/media/css/datepicker.css" rel="stylesheet" type="text/css" />
+<link href="${basePath}/media/css/search.css" rel="stylesheet" type="text/css" />
 <!-- BEGIN PAGE CONTAINER-->
 <div class="container-fluid">
 	<!-- BEGIN PAGE HEADER-->
@@ -67,7 +69,10 @@
 								<div class="control-group">
 									<label class="control-label">生日</label>
 									<div class="controls">
-										<input type="text" name="birthday" class="m-wrap span12" placeholder="Chee Kin">
+									<div class="input-append date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+										<input style="height:34px" class="span9 m-wrap m-ctrl-medium date-picker" size="16" type="text" value="12-02-2012" /><span class="add-on"><i class="icon-calendar"></i></span>
+									</div>
+										<!-- <input type="text" name="birthday" class="m-wrap span12" placeholder="Chee Kin"> -->
 									</div>
 								</div>
 							</div>
@@ -125,6 +130,13 @@
 	</div>
 </div>
 <!-- END PAGE CONTAINER-->   
+<script src="${basePath}/media/js/search.js"></script> 
+<script src="${basePath}/media/js/bootstrap-datepicker.js"  type="text/javascript"></script>
+<script>
+	jQuery(document).ready(function() {    
+	   Search.init();
+	});
+</script>	
 <!-- <script type="text/javascript">
       $('#controls').datetimepicker({
         format: 'MM/dd/yyyy hh:mm',
