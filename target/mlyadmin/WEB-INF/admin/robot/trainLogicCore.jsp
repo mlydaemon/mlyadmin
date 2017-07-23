@@ -92,18 +92,18 @@
 								<div class="control-group">
 									<label class="control-label" >提问语义</label>
 									<div class="controls">
-										<input type="text"  id="questionCommand"   class="m-wrap span12" placeholder="例如：咨询">
+										<input type="text"  id="questionCommand"   class="m-wrap span12" value="${bean.logicName}">
 									</div>
 							 	</div>
 							  </div>
 							  <!--/span-->
 							  <div class="span2 ">
-								<div class="control-group">
-									<!-- <label class="control-label" >提交</label>
-									<div class="controls"> -->
-									     <span class="control-label"  onclick = "sendQuestion()">发送</span>
-									<!-- </div> -->
-							 	</div>
+								 <div class="control-group">
+										<label class="control-label" >&nbsp;</label>
+										<div class="controls">
+										    <button class="btn blue btn-block"  onclick = "sendQuestion()">提交 <i class="m-icon-swapright m-icon-white"></i></button>
+										</div>
+								  </div>
 							  </div>
 							  <!--/span-->
 						</div> 
@@ -122,18 +122,18 @@
 								<div class="control-group">
 									<label class="control-label" >应答语义</label>
 									<div class="controls">
-										<input type="text"  id="answerCommand"   class="m-wrap span12" placeholder="例如：咨询">
+										<input type="text"  id="answerCommand"   class="m-wrap span12"  value="${bean.logicName}">
 									</div>
 							 	</div>
 							  </div>
 							  <!--/span-->
 							  <div class="span2 ">
 								<div class="control-group">
-									<!-- <label class="control-label" >提交</label>
-									<div class="controls"> -->
-									     <span class="control-label"  onclick = "sendAnswer()">发送</span>
-									<!-- </div> -->
-							 	</div>
+									<label class="control-label" >&nbsp;</label>
+									<div class="controls">
+									    <button class="btn blue btn-block"  onclick = "sendAnswer()">提交 <i class="m-icon-swapright m-icon-white"></i></button>
+									</div>
+							 	</div> 
 							  </div>
 							  <!--/span-->
 						</div> 
@@ -190,8 +190,6 @@ function deleteKnowledge(questionId,answerId){
 	         url: 'http://localhost:9999/mlyadmin/admin/knowledge/delete' ,  
 	         type: 'POST',  
 	         data: formData,  
-	         async: false,  
-	         cache: false,  
 	         contentType: false,  
 	         processData: false,  
 	         success: function (returndata) {  
@@ -220,8 +218,6 @@ function loadKnowledges(){
         url: 'http://localhost:9999/mlyadmin/admin/knowledge/achieve/'+robotAccount+'/'+application+'/'+semantic ,  
         type: 'GET',  
         data: formData,  
-        async: false,  
-        cache: false,  
         contentType: false,  
         processData: false,  
         success: function (returndata) {  
@@ -236,7 +232,8 @@ function loadKnowledges(){
 		     str+='<td>'+value.questionCommand+'</td>';
 		     str+='<td>'+value.answerCommand+'</td> ';
 		     str+='<td>'+value.answerContent+'</td> ';
-		     str+='<td><a class="btn mini green-stripe" href="javascript:void(0);" onclick="deleteKnowledge(\''+value.questionId+'\',\''+value.answerId+'\')">删除</a></td>';
+		     str+='<td><a class="btn mini green-stripe" href="javascript:void(0);" onclick="deleteKnowledge(\''+value.questionId+'\',\'null\')">删除提问</a>|';
+		     str+='<a class="btn mini green-stripe" href="javascript:void(0);" onclick="deleteKnowledge(\'null\',\''+value.answerId+'\')">删除应答</a></td>';
 		     str+='</tr>';
 		     $("#knowledges").append(str);
        	});
@@ -269,8 +266,6 @@ function sendQuestion(){
          url: 'http://localhost:9999/mlyadmin/admin/knowledge/recquestion' ,  
          type: 'POST',  
          data: formData,  
-         async: false,  
-         cache: false,  
          contentType: false,  
          processData: false,  
          success: function (returndata) {  
@@ -309,8 +304,6 @@ function sendAnswer(){
          url: 'http://localhost:9999/mlyadmin/admin/knowledge/recanswer' ,  
          type: 'POST',  
          data: formData,  
-         async: false,  
-         cache: false,  
          contentType: false,  
          processData: false,  
          success: function (returndata) {  

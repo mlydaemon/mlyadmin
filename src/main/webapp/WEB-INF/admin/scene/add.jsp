@@ -65,8 +65,8 @@
 									<div class="controls">
 								       <select name="active" class="span12 m-wrap" tabindex="1">
 										    <option value="">请选择</option>
-											<option  value="0">启用</option>
-											<option  value="1">禁用</option>
+											<option  value="1">启用</option>
+											<option  value="0">禁用</option>
 										</select>
 									</div>
 								</div>

@@ -67,8 +67,8 @@
 									<div class="controls">
 									   <select name="active" class="span12 m-wrap" tabindex="1">
 										    <option value="">请选择</option>
-											<option <c:if test="${bean.active eq 0}">selected="selected"</c:if>  value="0">启用</option>
-											<option <c:if test="${bean.active eq 1}">selected="selected"</c:if>  value="1">禁用</option>
+											<option <c:if test="${bean.active eq 1}">selected="selected"</c:if>  value="1">启用</option>
+											<option <c:if test="${bean.active eq 0}">selected="selected"</c:if>  value="0">禁用</option>
 										</select>
 									</div>
 								</div>

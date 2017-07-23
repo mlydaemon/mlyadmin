@@ -74,15 +74,17 @@ public class RobotController {
 		//List<Question> questions = questionService.findQuestionForTrain(robotAccount,application ,semantic);
 		model.addAttribute(Constants.BEAN, Logic);
 		//model.addAttribute(Constants.BEANS, questions);
+		session.setAttribute(request, response, Constants.CHANNEL, "robot");
 		return "admin/robot/trainLogicCore";
 	}
 	@RequestMapping(value = { "/trainSceneCore"})
 	public String trainSceneCore(HttpServletRequest request,HttpServletResponse response, ModelMap model,
 			String robotAccount,String application,String semantic) {
 		Scene scene = sceneService.findSceneForTrain(application,robotAccount);
-		//List<Question> questions = questionService.findQuestionForTrain(robotAccount,application ,semantic);
-		model.addAttribute(Constants.BEAN, scene);
-		//model.addAttribute(Constants.BEANS, questions);
+		 List<Logic> logics = logicService.findList(scene.getSceneId());
+		 model.addAttribute(Constants.BEAN, scene);
+		 model.addAttribute(Constants.BEANS, logics);
+		 session.setAttribute(request, response, Constants.CHANNEL, "robot");
 		return "admin/robot/trainSceneCore";
 	}
 	@RequestMapping(value = { "/edit"})

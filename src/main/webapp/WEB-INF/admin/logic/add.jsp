@@ -43,8 +43,9 @@
 									<div class="controls">
 										<select name="sceneId"  class="span12 m-wrap" tabindex="1">
 										   <option value="0">请选择</option>
-									       <option value="1">猜字谜</option>
-									       <option value="2">主导</option>
+										   <option  value="1">监控器</option>
+									       <option  value="2">简况信息</option>
+									       <option  value="3">猜字谜</option>
 										</select>
 									</div>
 								</div>

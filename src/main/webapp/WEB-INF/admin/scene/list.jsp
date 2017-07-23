@@ -50,7 +50,7 @@
 							 <td></td>
 							 <td>${scene.application}</td> 
 							 <td>${scene.semantic}</td> 
-							 <td>${scene.active==0?"启用":"禁用"}</td> 
+							 <td>${scene.active==1?"启用":"禁用"}</td> 
 							 <%-- <td>${scene.comment}</td>  --%>
 							<td><a class="btn mini green-stripe" href="${basePath}/admin/scene/edit?sceneId=${scene.sceneId}">编辑</a>|
 							<a class="btn mini green-stripe" href="${basePath}/admin/scene/delete?sceneId=${scene.sceneId}">删除</a></td>

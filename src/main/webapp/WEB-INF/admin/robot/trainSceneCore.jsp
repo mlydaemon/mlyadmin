@@ -68,7 +68,6 @@
 						</div>
 				   </div> 
 					<!--/row-fluid-->
-					<form action="${basePath}/admin/robot/update" method="POST">
 						<div class="row-fluid">
 						     <div class="span5 ">
 								<div class="control-group">
@@ -83,18 +82,24 @@
 								<div class="control-group">
 									<label class="control-label" >提问语义</label>
 									<div class="controls">
-										<input type="text"  id="questionCommand"   class="m-wrap span12" placeholder="例如：咨询">
+									   <select id="questionCommand"  class="span12 m-wrap" tabindex="1">
+										   <option value="0">请选择</option>
+										   <c:forEach var="logic" items="${beans}">
+										      <option value="${logic.logicName}">${logic.logicName}</option>
+									       </c:forEach>
+										</select>
 									</div>
+									
 							 	</div>
 							  </div>
 							  <!--/span-->
 							  <div class="span2 ">
-								<div class="control-group">
-									<!-- <label class="control-label" >提交</label>
-									<div class="controls"> -->
-									     <span class="control-label"  onclick = "sendQuestion()">发送</span>
-									<!-- </div> -->
-							 	</div>
+								  <div class="control-group">
+										<label class="control-label" >&nbsp;</label>
+										<div class="controls">
+										    <button class="btn blue btn-block"  onclick = "sendQuestion()">提交 <i class="m-icon-swapright m-icon-white"></i></button>
+										</div>
+								  </div>
 							  </div>
 							  <!--/span-->
 						</div> 
@@ -113,22 +118,26 @@
 								<div class="control-group">
 									<label class="control-label" >应答语义</label>
 									<div class="controls">
-										<input type="text"  id="answerCommand"   class="m-wrap span12" placeholder="例如：咨询">
+									   <select id="answerCommand"  class="span12 m-wrap" tabindex="1">
+										   <option value="0">请选择</option>
+										   <c:forEach var="logic" items="${beans}">
+										      <option value="${logic.logicName}">${logic.logicName}</option>
+									       </c:forEach>
+										</select>
 									</div>
 							 	</div>
 							  </div>
 							  <!--/span-->
 							  <div class="span2 ">
 								<div class="control-group">
-									<!-- <label class="control-label" >提交</label>
-									<div class="controls"> -->
-									     <span class="control-label"  onclick = "sendAnswer()">发送</span>
-									<!-- </div> -->
-							 	</div>
+									<label class="control-label" >&nbsp;</label>
+									<div class="controls">
+									    <button class="btn blue btn-block"  onclick = "sendAnswer()">提交 <i class="m-icon-swapright m-icon-white"></i></button>
+									</div>
+							 	</div> 
 							  </div>
 							  <!--/span-->
 						</div> 
-					</form>
 					<table class="table table-striped table-bordered table-advance table-hover">
 						<thead>
 							<tr>
@@ -177,11 +186,12 @@ function deleteKnowledge(questionId,answerId){
 	    if(answerId!='null'){
 	    	formData.append("answerId", answerId);
 		}
-	     
 	    $.ajax({  
-	         url: 'http://localhost:9999/mlyadmin/admin/knowledge/delete' ,  
+	         url: '${basePath}/admin/knowledge/delete' ,  
 	         type: 'POST',  
-	         data: formData,  
+	         data: formData,
+	         async:false, 
+	         cache:false, 
 	         contentType: false,  
 	         processData: false,  
 	         success: function (returndata) {  
@@ -190,7 +200,6 @@ function deleteKnowledge(questionId,answerId){
 	        	 if(results.success==1){
 	        		 loadKnowledges(); 
 	        	 }
-	        	 //window.location.href='${basePath}/admin/article/list';
 	         },  
 	         error: function (returndata) {  
 	             alert(returndata);  
@@ -203,13 +212,15 @@ function loadKnowledges(){
 	var semantic  = $("#semantic").val();
 	
     var formData = new FormData();
-    /* formData.append("robotAccount", robotAccount);
+    formData.append("robotAccount", robotAccount);
     formData.append("application", application);
-    formData.append("semantic", semantic); */
+    formData.append("semantic", semantic);
 	$.ajax({  
-        url: 'http://localhost:9999/mlyadmin/admin/knowledge/achieve/'+robotAccount+'/'+application+'/'+semantic ,  
+        url: '${basePath}/admin/knowledge/achieve/'+robotAccount+'/'+application+'/'+semantic ,  
         type: 'GET',  
-        data: formData,  
+        data: formData, 
+        async:false, 
+        cache:false,
         contentType: false,  
         processData: false,  
         success: function (returndata) {  
@@ -224,12 +235,12 @@ function loadKnowledges(){
 		     str+='<td>'+value.questionCommand+'</td>';
 		     str+='<td>'+value.answerCommand+'</td> ';
 		     str+='<td>'+value.answerContent+'</td> ';
-		     str+='<td><a class="btn mini green-stripe" href="javascript:void(0);" onclick="deleteKnowledge(\''+value.questionId+'\',\''+value.answerId+'\')">删除</a></td>';
+		     str+='<td><a class="btn mini green-stripe" href="javascript:void(0);" onclick="deleteKnowledge(\''+value.questionId+'\',\'null\')">删除提问</a>|';
+		     str+='<a class="btn mini green-stripe" href="javascript:void(0);" onclick="deleteKnowledge(\'null\',\''+value.answerId+'\')">删除应答</a></td>';
 		     str+='</tr>';
 		     $("#knowledges").append(str);
        	});
        
-       	 //window.location.href='${basePath}/admin/article/list';
         },  
         error: function (returndata) {  
             alert(returndata);  
@@ -254,9 +265,11 @@ function sendQuestion(){
     formData.append("answerCommand", answerCommand);
     formData.append("answerContent", answerContent);
     $.ajax({  
-         url: 'http://localhost:9999/mlyadmin/admin/knowledge/recquestion' ,  
+         url: '${basePath}/admin/knowledge/recquestion' ,  
          type: 'POST',  
-         data: formData,  
+         data: formData, 
+         async:false, 
+         cache:false,
          contentType: false,  
          processData: false,  
          success: function (returndata) {  
@@ -264,13 +277,10 @@ function sendQuestion(){
         	 console.log(results);
         	 if(results.success==1){
         		 loadKnowledges(); 
-        	 }else{
-        		 
         	 }
-        	 //window.location.href='${basePath}/admin/article/list';
          },  
          error: function (returndata) {  
-             alert(returndata);  
+             alert("sdsdsds");  
          }  
     });  
 }
@@ -292,9 +302,11 @@ function sendAnswer(){
     formData.append("answerCommand", answerCommand);
     formData.append("answerContent", answerContent);
     $.ajax({  
-         url: 'http://localhost:9999/mlyadmin/admin/knowledge/recanswer' ,  
+         url: '${basePath}/admin/knowledge/recanswer' ,  
          type: 'POST',  
-         data: formData,  
+         data: formData,
+         async:false, 
+         cache:false,
          contentType: false,  
          processData: false,  
          success: function (returndata) {  
@@ -302,10 +314,7 @@ function sendAnswer(){
         	 console.log(results);
         	 if(results.success==1){
         		 loadKnowledges(); 
-        	 }else{
-        		 
         	 }
-        	 //window.location.href='${basePath}/admin/article/list';
          },  
          error: function (returndata) {  
              alert(returndata);  

@@ -77,67 +77,65 @@
 						</div>
 				   </div> 
 					<!--/row-fluid-->
-					<form action="${basePath}/admin/robot/update" method="POST">
-						<div class="row-fluid">
-						     <div class="span5 ">
-								<div class="control-group">
-									<label class="control-label" >提问内容</label>
+					<div class="row-fluid">
+					     <div class="span5 ">
+							<div class="control-group">
+								<label class="control-label" >提问内容</label>
+								<div class="controls">
+									<input type="text"  id="questionContent"  class="m-wrap span12" placeholder="例如：你好">
+								</div>
+						 	</div>
+						  </div>
+						  <!--/span-->
+						  <div class="span5 ">
+							<div class="control-group">
+								<label class="control-label" >提问语义</label>
+								<div class="controls">
+									<input type="text"  id="questionCommand"   class="m-wrap span12" value="${bean.logicName}">
+								</div>
+						 	</div>
+						  </div>
+						  <!--/span-->
+						  <div class="span2 ">
+							 <div class="control-group">
+									<label class="control-label" >&nbsp;</label>
 									<div class="controls">
-										<input type="text"  id="questionContent"  class="m-wrap span12" placeholder="例如：你好">
+									    <button class="btn blue btn-block"  onclick = "sendQuestion()">提交 <i class="m-icon-swapright m-icon-white"></i></button>
 									</div>
-							 	</div>
 							  </div>
-							  <!--/span-->
-							  <div class="span5 ">
-								<div class="control-group">
-									<label class="control-label" >提问语义</label>
-									<div class="controls">
-										<input type="text"  id="questionCommand"   class="m-wrap span12" placeholder="例如：咨询">
-									</div>
-							 	</div>
-							  </div>
-							  <!--/span-->
-							  <div class="span2 ">
-								<div class="control-group">
-									<!-- <label class="control-label" >提交</label>
-									<div class="controls"> -->
-									     <span class="control-label"  onclick = "sendQuestion()">发送</span>
-									<!-- </div> -->
-							 	</div>
-							  </div>
-							  <!--/span-->
-						</div> 
-						<div class="row-fluid">
-						      <!--/span-->
-							  <div class="span5">
-								<div class="control-group">
-									<label class="control-label" >应答内容</label>
-									<div class="controls">
-										<input type="text"  id="answerContent"    class="m-wrap span12" placeholder="例如：你也好">
-									</div>
-							 	</div>
-							  </div>
-							  <!--/span-->
-							  <div class="span5">
-								<div class="control-group">
-									<label class="control-label" >应答语义</label>
-									<div class="controls">
-										<input type="text"  id="answerCommand"   class="m-wrap span12" placeholder="例如：咨询">
-									</div>
-							 	</div>
-							  </div>
-							  <!--/span-->
-							  <div class="span2 ">
-								<div class="control-group">
-									<!-- <label class="control-label" >提交</label>
-									<div class="controls"> -->
-									     <span class="control-label"  onclick = "sendAnswer()">发送</span>
-									<!-- </div> -->
-							 	</div>
-							  </div>
-							  <!--/span-->
-						</div> 
-					</form>
+						  </div>
+						  <!--/span-->
+					</div> 
+					<div class="row-fluid">
+					      <!--/span-->
+						  <div class="span5">
+							<div class="control-group">
+								<label class="control-label" >应答内容</label>
+								<div class="controls">
+									<input type="text"  id="answerContent"    class="m-wrap span12" placeholder="例如：你也好">
+								</div>
+						 	</div>
+						  </div>
+						  <!--/span-->
+						  <div class="span5">
+							<div class="control-group">
+								<label class="control-label" >应答语义</label>
+								<div class="controls">
+									<input type="text"  id="answerCommand"   class="m-wrap span12"  value="${bean.logicName}">
+								</div>
+						 	</div>
+						  </div>
+						  <!--/span-->
+						  <div class="span2 ">
+							<div class="control-group">
+								<label class="control-label" >&nbsp;</label>
+								<div class="controls">
+								    <button class="btn blue btn-block"  onclick = "sendAnswer()">提交 <i class="m-icon-swapright m-icon-white"></i></button>
+								</div>
+						 	</div> 
+						  </div>
+						  <!--/span-->
+					</div> 
 					<table class="table table-striped table-bordered table-advance table-hover">
 						<thead>
 							<tr>
@@ -187,7 +185,7 @@ function deleteKnowledge(questionId,answerId){
 	    	formData.append("answerId", answerId);
 		}
 	    $.ajax({  
-	         url: 'http://localhost:9999/mlyadmin/admin/knowledge/delete' ,  
+	         url: '${basePath}/admin/knowledge/delete' ,  
 	         type: 'POST',  
 	         data: formData,  
 	         contentType: false,  
@@ -215,7 +213,7 @@ function loadKnowledges(){
     formData.append("application", application);
     formData.append("semantic", semantic); */
 	$.ajax({  
-        url: 'http://localhost:9999/mlyadmin/admin/knowledge/achieve/'+robotAccount+'/'+application+'/'+semantic ,  
+        url: '${basePath}/admin/knowledge/achieve/'+robotAccount+'/'+application+'/'+semantic ,  
         type: 'GET',  
         data: formData,  
         contentType: false,  
@@ -232,7 +230,8 @@ function loadKnowledges(){
 		     str+='<td>'+value.questionCommand+'</td>';
 		     str+='<td>'+value.answerCommand+'</td> ';
 		     str+='<td>'+value.answerContent+'</td> ';
-		     str+='<td><a class="btn mini green-stripe" href="javascript:void(0);" onclick="deleteKnowledge(\''+value.questionId+'\',\''+value.answerId+'\')">删除</a></td>';
+		     str+='<td><a class="btn mini green-stripe" href="javascript:void(0);" onclick="deleteKnowledge(\''+value.questionId+'\',\'null\')">删除提问</a>|';
+		     str+='<a class="btn mini green-stripe" href="javascript:void(0);" onclick="deleteKnowledge(\'null\',\''+value.answerId+'\')">删除应答</a></td>';
 		     str+='</tr>';
 		     $("#knowledges").append(str);
        	});
@@ -262,7 +261,7 @@ function sendQuestion(){
     formData.append("answerCommand", answerCommand);
     formData.append("answerContent", answerContent);
     $.ajax({  
-         url: 'http://localhost:9999/mlyadmin/admin/knowledge/recquestion' ,  
+         url: '${basePath}/admin/knowledge/recquestion' ,  
          type: 'POST',  
          data: formData,  
          contentType: false,  
@@ -300,7 +299,7 @@ function sendAnswer(){
     formData.append("answerCommand", answerCommand);
     formData.append("answerContent", answerContent);
     $.ajax({  
-         url: 'http://localhost:9999/mlyadmin/admin/knowledge/recanswer' ,  
+         url: '${basePath}/admin/knowledge/recanswer' ,  
          type: 'POST',  
          data: formData,  
          contentType: false,  

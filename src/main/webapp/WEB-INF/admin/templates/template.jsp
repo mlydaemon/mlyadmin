@@ -27,7 +27,7 @@
 				</li>
 				<li>
 					<!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
-					<h2 style="background:blue;color:#fff"><span class="title">我的账户中心</span></h2>
+					<h2 style="background: #4d90fe;color:#fff;text-align:center;"><span class="title">管理后台</span></h2>
 					<!-- END RESPONSIVE QUICK SEARCH FORM -->
 				</li>
 				<li class="start ${((channel eq 'riddle'))?'active':''}">

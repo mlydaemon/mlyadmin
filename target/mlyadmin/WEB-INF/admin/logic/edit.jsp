@@ -46,8 +46,9 @@
 									<div class="controls">
 										<select name="sceneId"  class="span12 m-wrap" tabindex="1">
 										   <option value="0">请选择</option>
-									       <option <c:if test="${bean.sceneId eq 1}">selected="selected"</c:if> value="1">猜字谜</option>
-									       <option <c:if test="${bean.sceneId eq 2}">selected="selected"</c:if> value="2">主导</option>
+									       <option <c:if test="${bean.sceneId eq 1}">selected="selected"</c:if> value="1">监控器</option>
+									       <option <c:if test="${bean.sceneId eq 2}">selected="selected"</c:if> value="2">简况信息</option>
+									       <option <c:if test="${bean.sceneId eq 3}">selected="selected"</c:if> value="3">猜字谜</option>
 										</select>
 									</div>
 								</div>

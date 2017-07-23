@@ -30,6 +30,6 @@
 	         where que.account = #{robotAccount}
 	         AND   (ans.command like  concat(que.command, '%') or ans.command is null)
 	         AND   que.application = #{application}
-	         AND   que.classify = #{semantic}
+	         AND   (que.classify = #{semantic} or  que.classify = concat(#{application},'CORE'))
 	</select>
 </mapper>
