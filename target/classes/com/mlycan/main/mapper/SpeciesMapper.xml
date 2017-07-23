@@ -20,12 +20,12 @@
 				   spe.active,
 				   spe.comment
 		     from mly_species spe 
-		     <if test=" parentId!=null">  
+		      <if test=" parentId!=null">  
                 where spe.parent_id = #{parentId}
                </if>
                <if test=" parentId==null">  
                 where spe.parent_id = 0
-               </if> 
+               </if>  
 	         <if test=" count!=null">  
                 limit #{curpage},#{count}
              </if>
@@ -60,7 +60,7 @@
                 where spe.parent_id = #{parentId}
                </if>
                <if test=" parentId==null">  
-                where spe.parent_id = 0
+                where 1=1
                </if> 
 	</select>
 	<insert id="saveSpecies"  >

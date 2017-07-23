@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- BEGIN PAGE CONTAINER-->
 <div class="container-fluid">
 	<!-- BEGIN PAGE HEADER-->
@@ -28,15 +29,6 @@
 						
 						<h3 class="form-section">种类信息</h3>
 						<div class="row-fluid">
-							<div class="span6 ">
-								<div class="control-group">
-									<label class="control-label">父类ID</label>
-									<div class="controls">
-										<input type="text" name="parentId"  class="m-wrap span12" placeholder="Chee Kin">
-									</div>
-								</div>
-							</div>
-							<!--/span-->
 							 <div class="span6 ">
 								<div class="control-group">
 									<label class="control-label" >种类名称</label>
@@ -45,6 +37,21 @@
 									</div>
 								</div>
 							</div> 
+							<div class="span6 ">
+								<div class="control-group">
+									<label class="control-label">父类</label>
+									<div class="controls">
+										<select>
+										<option value="0">请选择</option>
+										<c:forEach var="species" items="${beans}"> 
+										       <option value="${species.speciesId}">${species.speciesName}</option>
+										　　</c:forEach>											
+										</select>
+										<!-- <input type="text" name="parentId"  class="m-wrap span12" placeholder="Chee Kin"> -->
+									</div>
+								</div>
+							</div>
+							<!--/span-->
 							<!--/span-->
 						</div>
 						<!--/row-->
@@ -54,7 +61,11 @@
 								<div class="control-group">
 									<label class="control-label">是否启用</label>
 									<div class="controls">
-										<input type="text" name="active" class="m-wrap span12" placeholder="Chee Kin">
+										<select name="active" class="span12 m-wrap">
+										    <option value="0">请选择</option>
+											<option value="1">启用</option>
+											<option value="0">不启用</option>
+										</select>
 									</div>
 								</div>
 							</div>

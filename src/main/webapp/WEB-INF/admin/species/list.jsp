@@ -32,7 +32,7 @@
 			<table class="table table-striped table-bordered table-advance table-hover">
 				<thead>
 					<tr>
-						<th><i class="icon-briefcase"></i>种类ID</th>
+						<!-- <th><i class="icon-briefcase"></i>种类ID</th> -->
 						<th><i class="icon-bookmark"></i>种类名称</th>
 						<th></th>
 						 <th><i class="icon-bookmark"></i>是否启用</th>
@@ -43,7 +43,7 @@
 				<tbody>
 					<c:forEach var="species" items="${beans}"> 
 					    <tr>
-							<td><a href="#">${species.speciesId}</a></td>
+							<%-- <td><a href="#">${species.speciesId}</a></td> --%>
 							<td><a href="javascript:display(${species.speciesId})">${species.speciesName}</a></td>
 							<td></td>
 							 <td>
@@ -63,11 +63,12 @@
 						<!-- 添加子查询，显示下一级 -->
 						<div class="childChannels" style="display: hidden;">
 						 <c:forEach var="child" items="${species.children}">
-				             <tr class="channel${species.specieslId}  hiddendiv">
+				             <tr class="species${species.speciesId}  hiddendiv">
 								<td></td>
-								<td><a href="#">${child.speciesId}</a></td>
+								<%-- <td><a href="#">${child.speciesId}</a></td> --%>
 								<td class="hidden-phone">${child.speciesName}</td>
-								<td><c:choose> 
+								<td>
+								<c:choose> 
 								  <c:when test="${child.active == 0}">不启用  </c:when>
 								  <c:when test="${child.active == 1}">启用</c:when> 
 								  </c:choose>
@@ -138,7 +139,7 @@
 <!-- END PAGE CONTAINER-->   
 <script>
 function display(classtag){
-	$('.channel'+classtag).each(function(i){		 
+	$('.species'+classtag).each(function(i){		 
 		 if($(this).hasClass('showdiv')){
 			 $(this).removeClass('showdiv');
 			 $(this).addClass('hiddendiv');
@@ -147,7 +148,6 @@ function display(classtag){
 			 $(this).removeClass('hiddendiv');
 		 }
 	});
-	
 }
 </script> 
 		
