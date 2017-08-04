@@ -14,7 +14,12 @@
 			<ul class="breadcrumb">
 				<li>
 					<i class="icon-home"></i>
-					<a href="#">感谢您注册**网</a> 
+					<a href="${basePath}/admin/index.html">DashBoard</a> 
+					<i class="icon-angle-right"></i>
+				</li>
+				<li>
+					<a href="${basePath}/admin/logic/list.html">逻辑列表</a>
+					<i class="icon-angle-right"></i>
 				</li>
 				<li class="pull-right no-text-shadow">
 					<i class="icon-calendar"></i>
@@ -63,9 +68,7 @@
             <div class="space5"></div>
             <div class="pagination pagination-right">
 				<ul>
-				<c:forEach begin="1" end="1" var = "page">
 					<li class=""><a href="${basePath}/admin/logic/list?curpage=1">首页</a></li> 
-				</c:forEach>
 				<c:choose>
 				   <c:when test="${curpage== '1'}">  
 				    <li><a href="${basePath}/admin/logic/list?curpage=1">Prev</a></li>     
@@ -74,7 +77,18 @@
 				   <li><a href="${basePath}/admin/logic/list?curpage=${curpage-1}">Prev</a></li>
 				   </c:otherwise>
 				</c:choose>
-				
+				<c:choose>
+				    <c:when test="${curpage+2>5}">
+						<c:forEach begin="1" end="${curpage-2>=5?5:curpage-3}" var = "page">
+							<li class="${curpage==page?'active':''}"><a href="${basePath}/admin/logic/list?curpage=${page}">${page}</a></li> 
+						</c:forEach>
+					</c:when>
+				</c:choose>
+				<c:choose>
+				    <c:when test="${curpage-2>5}">
+						<li class=""><a href="#">……</a></li> 
+					</c:when>
+				</c:choose>
 				<c:choose>
 						<c:when test="${curpage+2<5&&curpage-2<talpage-5&&talpage>5}">
 							<c:forEach begin="${curpage-2<1?1:curpage-2}" end="${curpage+2>=talpage?talpage:5}" var = "page">
@@ -97,17 +111,27 @@
 							</c:forEach>
 					</c:otherwise>
 				</c:choose>
-					<c:choose>
-					   <c:when test="${curpage== talpage}">  
-					      <li><a href="${basePath}/admin/logic/list?curpage=${talpage}">Next</a></li>     
-					   </c:when>
-					   <c:otherwise> 
-					      <li><a href="${basePath}/admin/logic/list?curpage=${curpage+1}">Next</a></li>
-					   </c:otherwise>
-					</c:choose>
-					<c:forEach begin="1" end="1" var = "page">
+				<c:choose>
+				    <c:when test="${curpage+2<talpage-5}">
+						<li class=""><a href="#">……</a></li> 
+					</c:when>
+				</c:choose>
+				<c:choose>
+				    <c:when test="${curpage+2<talpage}">
+						<c:forEach begin="${curpage+2<talpage-4?talpage-4:curpage+3}" end="${talpage}" var = "page">
+							<li class="${curpage==page?'active':''}"><a href="${basePath}/admin/riddle/list?curpage=${page}">${page}</a></li> 
+						</c:forEach>
+					</c:when>
+				</c:choose>
+				<c:choose>
+				   <c:when test="${curpage== talpage}">  
+				      <li><a href="${basePath}/admin/logic/list?curpage=${talpage}">Next</a></li>     
+				   </c:when>
+				   <c:otherwise> 
+				      <li><a href="${basePath}/admin/logic/list?curpage=${curpage+1}">Next</a></li>
+				   </c:otherwise>
+				</c:choose>
 					<li class=""><a href="${basePath}/admin/logic/list?curpage=${talpage}">尾页</a></li> 
-				</c:forEach>
 				</ul>
 			</div>
 		</div>

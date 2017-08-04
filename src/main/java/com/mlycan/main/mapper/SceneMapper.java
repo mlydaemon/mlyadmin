@@ -7,10 +7,13 @@ import org.apache.ibatis.annotations.Param;
 import com.mlycan.main.entity.Scene;
 
 public interface SceneMapper {
-    
+    //获取机器人开启的所有场景
 	public List<Scene>  findByRobotAccount(@Param("account")String account);
 	
-	public List<Scene>  findAll(@Param("count")Integer count,@Param("curpage")Integer curpage);
+	//获取所有场景用于机器人开启关闭
+	public List<Scene>  findForRobotSwitch(@Param("robotId")Integer robotId);
+	
+	public List<Scene>  findAll(@Param("count")Integer count,@Param("start")Integer start);
 
 	public Integer findAllCount();
 	

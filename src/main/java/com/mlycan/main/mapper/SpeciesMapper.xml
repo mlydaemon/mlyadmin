@@ -8,23 +8,26 @@
 	<resultMap type="com.mlycan.main.entity.Species" id="speciesResultMap"> 
         <id property="speciesId" column="species_id"/> 
         <result property="parentId" column="parent_id"/>
+        <result property="parentName" column="parent_name"/>
         <result property="speciesName" column="species_name"/>
         <result property="avtive" column="avtive"/> 
         <result property="comment" column="comment"/> 
     </resultMap>
 	
 	<select id="findAll"   resultMap="speciesResultMap">
-		   select  spe.species_id,
-				   spe.parent_id,
-				   spe.species_name,
-				   spe.active,
-				   spe.comment
+		   select  spe.species_id as species_id,
+				   spe.parent_id  as parent_id,
+				   pspe.species_name as parent_name,
+				   spe.species_name  as species_name,
+				   spe.active     as active,
+				   spe.comment    as comment
 		     from mly_species spe 
+		          left join mly_species pspe on(spe.parent_id = pspe.species_id)
 		      <if test=" parentId!=null">  
                 where spe.parent_id = #{parentId}
                </if>
                <if test=" parentId==null">  
-                where spe.parent_id = 0
+                where spe.parent_id =0
                </if>  
 	         <if test=" count!=null">  
                 limit #{curpage},#{count}
@@ -49,18 +52,21 @@
 	</select>
 	<select id="findSpeciesByPid"   resultMap="speciesResultMap">
 		<![CDATA[
-		 select  spe.species_id,
-				   spe.parent_id,
-				   spe.species_name,
-				   spe.active,
-				   spe.comment
+		  select  spe.species_id as species_id,
+				   spe.parent_id  as parent_id,
+				   pspe.species_name as parent_name,
+				   spe.species_name  as species_name,
+				   spe.active     as active,
+				   spe.comment    as comment
 		     from mly_species spe 
+		          left join mly_species pspe on(spe.parent_id = pspe.species_id)
 			]]>
+			 where 1=1
 			<if test=" parentId!=null">  
-                where spe.parent_id = #{parentId}
+                and spe.parent_id = #{parentId}
                </if>
                <if test=" parentId==null">  
-                where 1=1
+                and spe.parent_id !=0
                </if> 
 	</select>
 	<insert id="saveSpecies"  >

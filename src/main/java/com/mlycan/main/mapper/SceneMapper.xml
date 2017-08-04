@@ -9,6 +9,7 @@
         <id property="sceneId" column="scene_id"/> 
         <result property="sceneName" column="scene_name"/>
         <result property="robotName" column="nickname"/>
+        <result property="robotId" column="robot_id"/>
         <result property="robotAccount" column="account"/>
         <result property="application" column="application"/>
         <result property="semantic" column="semangtic"/>
@@ -34,15 +35,28 @@
                </if> -->
 	            
 	</select>
+	<select id="findForRobotSwitch"   resultMap="sceneResultMap">
+		   select  scen.scene_id,
+				   scen.scene_name,
+				   scen.application,
+                   rc.robot_id,
+				   scen.semantic,
+				   scen.active,
+				   scen.comment
+		     from mly_scene scen
+		     left join mly_robot_scene rc on(rc.scene_id = scen.scene_id and rc.robot_id = #{robotId} and rc.status = 1)
+	</select>
 	<select id="findByRobotAccount"   resultMap="sceneResultMap">
 		   select  scen.scene_id,
 				   scen.scene_name,
+				   robot.nickname  as nickname,
+				   robot.account    as account,
 				   scen.application,
 				   scen.semantic,
 				   scen.active,
 				   scen.comment
 		     from mly_scene scen
-		     left join mly_robot_scene rc on(rc.scene_id = scen.scene_id)
+		     left join mly_robot_scene rc on(rc.scene_id = scen.scene_id  and rc.status !=2)
 		     left join mly_robot  robot on(robot.robot_id = rc.robot_id)
 	         where robot.account = #{account}
 	</select>
@@ -55,8 +69,8 @@
 				   scen.active,
 				   scen.comment
 		     from mly_scene scen
-	         <if test=" count!=null">  
-               limit #{curpage},#{count}
+	         <if test="count!=null">  
+               limit #{start},#{count}
              </if>
 	</select>
 	<select id="findAllCount"   resultType="java.lang.Integer">

@@ -17,6 +17,7 @@ public class Species implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Integer speciesId;//种类ID
 	private Integer  parentId;//父类ID
+	private String  parentName;//父类ID
 	private String  speciesName;//种类名称
 	private Integer  active;//是否启用
 	private String  comment;//备注
@@ -58,6 +59,12 @@ public class Species implements Serializable{
 	}
 	public void setChildren(List children) {
 		this.children = children;
+	}
+	public String getParentName() {
+		return parentName;
+	}
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
 	}
 	
 }

@@ -28,6 +28,7 @@
 	         where que.account = #{robotAccount}
 	         AND   que.application = #{application}
 	         AND   que.classify = #{semantic}
+	         order by que.content,que.create_time
 	</select>
 	<select id="findAll"   resultMap="questionResultMap">
 		   select  que.question_id,
@@ -39,14 +40,16 @@
 				   que.nextclassify,
 				   que.pattern
 		     from mly_question que
+		     order by que.content,que.create_time
 	         <if test=" count!=null">  
-               limit #{curpage},#{count}
+               limit #{currentCount},#{count}
              </if>
+             
 	</select>
 	<select id="findAllCount"   resultType="java.lang.Integer">
 		 <![CDATA[ 
-		   select count(ch.channel_id) as value
-		     from mly_channel ch 
+		   select count(que.question_id) as value
+		     from mly_question que 
 		 	]]> 
 	</select>
 	<select id="findQuestion"   resultMap="questionResultMap">

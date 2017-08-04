@@ -68,7 +68,10 @@ public class ContentServiceImpl implements ContentService{
 		    content.setTitleImg(titleImg);
 		    content.setLink(link);
 		    content.setTxt(txt);
-		    Integer cid = contentMapper.saveContent(content);
+		    
+		    contentMapper.saveContent(content);
+		    
+		    Integer cid = content.getContentId();
 		    if(cid !=null && cid>0){
 		    	contentMapper.saveContentExt(content);
 		    }

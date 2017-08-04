@@ -17,6 +17,7 @@ public class Scene implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Integer sceneId;//场景ID	
 	private String sceneName;//场景名称
+	private Integer robotId;//机器人ID	
 	private String robotName;//机器人名称
 	private String robotAccount;//机器人账号
 	private String  application;//应用
@@ -78,6 +79,12 @@ public class Scene implements Serializable{
 	}
 	public void setRobotAccount(String robotAccount) {
 		this.robotAccount = robotAccount;
+	}
+	public Integer getRobotId() {
+		return robotId;
+	}
+	public void setRobotId(Integer robotId) {
+		this.robotId = robotId;
 	}
 	
 }

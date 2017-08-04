@@ -31,7 +31,7 @@ public class QuestionServiceImpl implements QuestionService{
 		if(count!=null && curpage!= null){
 			currentCount = (curpage-1)*count;
 		}
-		return questionMapper.findAll(count, currentCount);
+		return questionMapper.findAll(currentCount, count);
 	}
 
 	public Integer findAllCount(){

@@ -83,7 +83,7 @@
 									<label class="control-label" >提问语义</label>
 									<div class="controls">
 									   <select id="questionCommand"  class="span12 m-wrap" tabindex="1">
-										   <option value="0">请选择</option>
+										   <option value="">请选择</option>
 										   <c:forEach var="logic" items="${beans}">
 										      <option value="${logic.logicName}">${logic.logicName}</option>
 									       </c:forEach>
@@ -142,11 +142,11 @@
 						<thead>
 							<tr>
 								<!-- <th><i class="icon-briefcase"></i>语义ID</th> -->
-								<th><i class="icon-briefcase"></i>语义词库</th>
-								<th><i class="icon-bookmark"></i>提问</th>
-								 <th><i class="icon-bookmark"></i>提问语义</th>
-								 <th><i class="icon-bookmark"></i>应答语义</th>
-								 <th><i class="icon-bookmark"></i>应答内容</th>
+								<th class="span1"><i class="icon-briefcase"></i>语义词库</th>
+								<th class="span2"><i class="icon-bookmark"></i>提问</th>
+								 <th class="span2"><i class="icon-bookmark"></i>提问语义</th>
+								 <th class="span2"><i class="icon-bookmark"></i>应答语义</th>
+								 <th class="span5"><i class="icon-bookmark"></i>应答内容</th>
 								 <!-- <th><i class="icon-bookmark"></i>跳转词库</th> -->
 								 <!-- <th><i class="icon-bookmark"></i>模式</th> -->
 								<th></th>
@@ -210,14 +210,15 @@ function loadKnowledges(){
 	var robotAccount = $("#robotAccount").val();
 	var application  = $("#application").val();
 	var semantic  = $("#semantic").val();
-	
+	var questionCommand  = $("#questionCommand").val();
     var formData = new FormData();
     formData.append("robotAccount", robotAccount);
     formData.append("application", application);
     formData.append("semantic", semantic);
+    formData.append("questionCommand", questionCommand);
 	$.ajax({  
-        url: '${basePath}/admin/knowledge/achieve/'+robotAccount+'/'+application+'/'+semantic ,  
-        type: 'GET',  
+        url: '${basePath}/admin/knowledge/achieve',  
+        type: 'POST',  
         data: formData, 
         async:false, 
         cache:false,
@@ -230,11 +231,11 @@ function loadKnowledges(){
        	 $("#knowledges").empty();
        	 $.each(knowledges,function(index,value){
        		 var str='<tr >';
-		     str+='<td><a href="#">'+value.semantic+'</a></td>';
-		     str+='<td>'+value.questionContent+'</td> ';
-		     str+='<td>'+value.questionCommand+'</td>';
-		     str+='<td>'+value.answerCommand+'</td> ';
-		     str+='<td>'+value.answerContent+'</td> ';
+		     str+='<td class="span1"><a href="#">'+value.semantic+'</a></td>';
+		     str+='<td class="span2">'+value.questionContent+'</td> ';
+		     str+='<td class="span2">'+value.questionCommand+'</td>';
+		     str+='<td class="span2">'+value.answerCommand+'</td> ';
+		     str+='<td class="span5">'+value.answerContent+'</td> ';
 		     str+='<td><a class="btn mini green-stripe" href="javascript:void(0);" onclick="deleteKnowledge(\''+value.questionId+'\',\'null\')">删除提问</a>|';
 		     str+='<a class="btn mini green-stripe" href="javascript:void(0);" onclick="deleteKnowledge(\'null\',\''+value.answerId+'\')">删除应答</a></td>';
 		     str+='</tr>';

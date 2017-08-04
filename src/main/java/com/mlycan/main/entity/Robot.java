@@ -20,7 +20,7 @@ public class Robot implements Serializable{
 	private String  nickname;//昵称
 	private Integer speciesId;//类型
 	private String  speciesName;//备注
-	private Long    birthday;//生日
+	private String    birthday;//生日
 	private Integer gender;//性别
 	private String  comefrom;//出生地
 	private String  hobby;//介绍
@@ -33,10 +33,10 @@ public class Robot implements Serializable{
 	public void setAccount(String account) {
 		this.account = account;
 	}
-	public Long getBirthday() {
+	public String getBirthday() {
 		return birthday;
 	}
-	public void setBirthday(Long birthday) {
+	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
 	public Integer getGender() {
@@ -94,5 +94,4 @@ public class Robot implements Serializable{
 	public void setSpeciesName(String speciesName) {
 		this.speciesName = speciesName;
 	}
-	
 }

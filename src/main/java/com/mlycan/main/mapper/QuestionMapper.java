@@ -9,7 +9,7 @@ import com.mlycan.main.entity.Question;
 
 public interface QuestionMapper {
 
-	public List<Question>  findAll(@Param("count")Integer count,@Param("curpage")Integer curpage);
+	public List<Question>  findAll(@Param("currentCount")Integer currentCount,@Param("count")Integer count);
 
 	public Integer findAllCount();
 	

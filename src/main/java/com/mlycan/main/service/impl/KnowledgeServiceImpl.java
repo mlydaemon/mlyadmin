@@ -21,9 +21,9 @@ public class KnowledgeServiceImpl implements KnowledgeService{
 	 @Autowired
 	 private AnswerMapper answerMapper;
 	@Override
-	public List<Knowledge> findKnowledges(String robotAccount, String application, String semantic) {
+	public List<Knowledge> findKnowledges(String robotAccount, String application, String semantic, String questionCommand) {
 		// TODO Auto-generated method stub
-		return knowledgeMapper.findKnowledges(robotAccount, application, semantic);
+		return knowledgeMapper.findKnowledges(robotAccount, application, semantic,questionCommand);
 	}
 	@Override
 	public Integer deleteKnowledges(Integer questionId,Integer answerId) {

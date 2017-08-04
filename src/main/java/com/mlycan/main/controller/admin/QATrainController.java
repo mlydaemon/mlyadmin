@@ -26,15 +26,18 @@ import com.mlycan.main.service.RobotService;
 @Controller
 @RequestMapping(value = { "knowledge"})
 public class QATrainController extends BaseController {
-	@RequestMapping(value = { "/achieve/{robotAccount}/{application}/{semantic}" },method = RequestMethod.GET)
+	@RequestMapping(value = { "/achieve" },method = RequestMethod.POST)
 	public void achieve(HttpServletRequest request,HttpServletResponse response, ModelMap model,
-			@PathVariable String robotAccount,@PathVariable String application,@PathVariable String semantic) {
+			 String robotAccount, String application, String semantic, String questionCommand) {
 		Map<String,Object> remap = new HashMap<String,Object>();
 		if(StringUtils.isBlank(robotAccount)||StringUtils.isBlank(application)||StringUtils.isBlank(semantic)){
 			remap.put("success", 0);
 		}
+		if(StringUtils.isBlank(questionCommand)){
+			questionCommand = null;
+		}
 		remap.put("success", 1);
-		List<Knowledge>  knowledges = knowledgeService.findKnowledges(robotAccount, application, semantic);
+		List<Knowledge>  knowledges = knowledgeService.findKnowledges(robotAccount, application, semantic,questionCommand);
 		remap.put("knowledges", knowledges);
 		writeObject(response,remap);
 	}

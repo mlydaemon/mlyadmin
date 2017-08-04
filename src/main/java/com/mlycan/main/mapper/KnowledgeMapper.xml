@@ -28,8 +28,12 @@
 		     from mly_question que
              left join mly_answer ans on(que.account = ans.account and que.application =ans.application and que.content = ans.question)
 	         where que.account = #{robotAccount}
+	          <if test="questionCommand!=null or questionCommand==0">  
+               AND   que.command = #{questionCommand}
+             </if>
 	         AND   (ans.command like  concat(que.command, '%') or ans.command is null)
 	         AND   que.application = #{application}
 	         AND   (que.classify = #{semantic} or  que.classify = concat(#{application},'CORE'))
+	         order by que.content,que.create_time,ans.create_time
 	</select>
 </mapper>

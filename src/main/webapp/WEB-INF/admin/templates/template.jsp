@@ -5,10 +5,12 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title><tiles:insertAttribute name="title" /></title>
 <jsp:include page="include.jsp"></jsp:include>
 </head>
@@ -22,34 +24,48 @@
 		<div class="page-sidebar nav-collapse collapse">
 			<!-- BEGIN SIDEBAR MENU -->        
 			<ul class="page-sidebar-menu">
-				<li class="margin-top-20">
-					
+				<li>
+					<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+					<div class="sidebar-toggler hidden-phone"></div>
+					<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
 				</li>
 				<li>
 					<!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
-					<h2 style="background: #4d90fe;color:#fff;text-align:center;"><span class="title">管理后台</span></h2>
+					<form class="sidebar-search">
+						<div class="input-box">
+							<a href="javascript:;" class="remove"></a>
+							<input type="text" placeholder="Search..." />
+							<input type="button" class="submit" value=" " />
+						</div>
+					</form>
 					<!-- END RESPONSIVE QUICK SEARCH FORM -->
+				</li>
+
+				<li class="start ${channel eq 'dashboard'?'active':''}">
+					<a href="${basePath}/admin/index.html">
+					<i class="icon-home"></i> 
+					<span class="title">Dashboard</span>
+					</a>
 				</li>
 				<li class="start ${((channel eq 'riddle'))?'active':''}">
 					<a href="charts.html">
 					<!-- <a href="${basePath}/admin/task/list.html"> -->
-					<i class="icon-cogs"></i> 
+					<i class="icon-sitemap"></i> 
 					<span class="title">任务管理</span>
-					<span class="selected arrow "></span>
+					<span class=" arrow "></span>
 					</a>
 						<ul class="sub-menu">
 						<li class="${channel eq 'riddle'?'active':''}"><a href="${basePath}/admin/riddle/list.html">谜语管理</a></li>
 					</ul>
 				</li>
-				<li class="start ${((channel eq 'question')or(channel eq 'logic')or(channel eq 'scene')or(channel eq 'robot')or(channel eq 'species')or(channel eq 'answer'))?'active':''}">
+				<li class=" ${((channel eq 'question')or(channel eq 'logic')or(channel eq 'scene')or(channel eq 'robot')or(channel eq 'answer'))?'active':''}">
 					<a href="charts.html">
 					<!-- <a href="${basePath}/admin/task/list.html"> -->
-					<i class="icon-cogs"></i> 
+					<i class="icon-group"></i> 
 					<span class="title">机器人管理</span>
-					<span class="selected arrow "></span>
+					<span class=" arrow "></span>
 					</a>
 						 <ul class="sub-menu">
-						<li class="${channel eq 'species'?'active':''}"><a href="${basePath}/admin/species/list.html">种类管理</a></li>
 						<li class="${channel eq 'robot'?'active':''}"><a href="${basePath}/admin/robot/list.html">信息管理</a></li>
 						<li class="${channel eq 'scene'?'active':''}"><a href="${basePath}/admin/scene/list.html">场景管理</a></li>
 						<li class="${channel eq 'logic'?'active':''}"><a href="${basePath}/admin/logic/list.html">逻辑管理</a></li>
@@ -59,17 +75,17 @@
 						<%-- <li class="${channel eq 'application'?'active':''}"><a href="${basePath}/admin/application/list.html">应用管理</a></li> --%>
 					    </ul> 
 				</li>
-				<li class="start ${channel eq 'customer'?'active':''}">
+				<li class=" ${channel eq 'customer'?'active':''}">
 				
 					<a href="${basePath}/admin/customer/list.html">
-					<i class="icon-cogs"></i> 
+					<i class="icon-user"></i> 
 					<span class="title">会员管理</span>
-					<span class="selected arrow "></span>
+					<span class=" arrow "></span>
 					</a>
 				</li>
 				<li class="${channel eq 'article'?'active':''}">
 					<a href="${basePath}/admin/article/list.html">
-					<i class="icon-cogs"></i> 
+					<i class="icon-file-text"></i> 
 					<span class="title">内容管理</span>
 					<span class="arrow "></span>
 					</a>
@@ -88,13 +104,14 @@
 					<span class="arrow "></span>
 					</a>
 				</li> --%>
-				<li class="last ${((channel eq 'channel')or(channel eq 'menu')or(channel eq 'function')or(channel eq 'riddleClassify')or(channel eq 'department')or(channel eq 'position')or(channel eq 'user'))?'active':''}">
+				<li class="last ${((channel eq 'channel')or(channel eq 'species')or(channel eq 'menu')or(channel eq 'function')or(channel eq 'riddleClassify')or(channel eq 'department')or(channel eq 'position')or(channel eq 'user'))?'active':''}">
 					<a href="charts.html">
 					<i class="icon-cogs"></i> 
 					<span class="title">系统设置</span>
 					<span class="arrow open"></span>
 					</a>
 					<ul class="sub-menu">
+					    <li class="${channel eq 'species'?'active':''}"><a href="${basePath}/admin/species/list.html">机器人种类</a></li>
 						<li class="${channel eq 'channel'?'active':''}"><a href="${basePath}/admin/channel/list.html">栏目管理</a></li>
 						<li class="${channel eq 'function'?'active':''}"><a href="${basePath}/admin/function/list.html">功能管理</a></li>
 						<li class="${channel eq 'menu'?'active':''}"><a href="${basePath}/admin/menu/list.html">菜单管理</a></li>

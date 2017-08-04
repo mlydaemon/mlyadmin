@@ -24,6 +24,7 @@
 				   ans.command,
 				   ans.pattern
 		     from mly_answer ans
+		     order by ans.question,ans.create_time
 	         <if test=" count!=null">  
                limit #{curpage},#{count}
              </if>

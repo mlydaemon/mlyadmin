@@ -1,6 +1,6 @@
 <meta charset="utf-8" />
 	<title>Metronic | Admin Dashboard Template</title>
-	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<meta content="width=device-width,initial-scale=0.6" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
 	<!-- BEGIN GLOBAL MANDATORY STYLES -->
@@ -38,13 +38,7 @@
 	<script src="${basePath}/media/js/jquery.uniform.min.js" type="text/javascript" ></script>
 	<!-- END CORE PLUGINS -->
 	<!-- BEGIN PAGE LEVEL PLUGINS -->
-	<script src="${basePath}/media/js/jquery.vmap.js" type="text/javascript"></script>   
-	<script src="${basePath}/media/js/jquery.vmap.russia.js" type="text/javascript"></script>
-	<script src="${basePath}/media/js/jquery.vmap.world.js" type="text/javascript"></script>
-	<script src="${basePath}/media/js/jquery.vmap.europe.js" type="text/javascript"></script>
-	<script src="${basePath}/media/js/jquery.vmap.germany.js" type="text/javascript"></script>
-	<script src="${basePath}/media/js/jquery.vmap.usa.js" type="text/javascript"></script>
-	<script src="${basePath}/media/js/jquery.vmap.sampledata.js" type="text/javascript"></script>  
+	 
 	<script src="${basePath}/media/js/jquery.flot.js" type="text/javascript"></script>
 	<script src="${basePath}/media/js/jquery.flot.resize.js" type="text/javascript"></script>
 	<script src="${basePath}/media/js/jquery.pulsate.min.js" type="text/javascript"></script>
@@ -60,13 +54,12 @@
 	<!-- END PAGE LEVEL SCRIPTS --> 
 	<link href="${basePath}/media/css/bootstrap-fileupload.css" rel="stylesheet" type="text/css" /> 
 	<link href="${basePath}/media/css/chosen.css" rel="stylesheet" type="text/css">
-<link href="${basePath}/media/css/profile.css" rel="stylesheet" type="text/css">
-<!-- BEGIN PAGE LEVEL PLUGINS -->
-<script type="text/javascript" src="${basePath}/media/js/bootstrap-fileupload.js"></script>
-<script type="text/javascript" src="${basePath}/media/js/chosen.jquery.min.js"></script>
-<script type="text/javascript" src="${basePath}/media/js/jquery.multi-select.js"></script>
-<script src="${basePath}/media/js/form-components.js"></script> 
-<!-- END PAGE LEVEL PLUGINS -->
+	<link href="${basePath}/media/css/profile.css" rel="stylesheet" type="text/css">
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+	<script type="text/javascript" src="${basePath}/media/js/bootstrap-fileupload.js"></script>
+	<script type="text/javascript" src="${basePath}/media/js/chosen.jquery.min.js"></script>
+	<script type="text/javascript" src="${basePath}/media/js/jquery.multi-select.js"></script>
+    <!-- END PAGE LEVEL PLUGINS -->
 	<script>
 		jQuery(document).ready(function() {    
 		   App.init(); // initlayout and core plugins

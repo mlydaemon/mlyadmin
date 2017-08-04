@@ -12,7 +12,16 @@
 			<ul class="breadcrumb">
 				<li>
 					<i class="icon-home"></i>
-					<a href="#">感谢您注册**网</a> 
+					<a href="${basePath}/admin/index.html">DashBoard</a> 
+					<i class="icon-angle-right"></i>
+				</li>
+				<li>
+					<a href="${basePath}/admin/position/list.html">职位列表</a>
+					<i class="icon-angle-right"></i>
+				</li>
+				<li>
+					<a href="${basePath}/admin/position/add">创建职位</a>
+					<i class="icon-angle-right"></i>
 				</li>
 			</ul>
 			<!-- END PAGE TITLE & BREADCRUMB-->
@@ -27,7 +36,6 @@
 					<!-- BEGIN FORM-->
 					<form action="${basePath}/admin/position/save" method="POST" class="form-horizontal">
 						
-						<h3 class="form-section">基本信息</h3>
 						<div class="row-fluid">
 							<div class="span6 ">
 								<div class="control-group">

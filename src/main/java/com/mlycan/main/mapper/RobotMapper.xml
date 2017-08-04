@@ -23,7 +23,7 @@
 				   rob.account   as account,
 				   rob.nickname  as nickname,
 				   rob.species_id as  species_id,
-				   rob.birthday as birthday,
+				   date_format(rob.birthday,'%Y-%m-%d') as  birthday,
 				   rob.gender   as gender,
 				   rob.comefrom  as comefrom,
 				   rob.hobby     as hobby,
@@ -31,12 +31,10 @@
 				   spe.species_name as species_name
 		     from mly_robot rob left join mly_species spe
 		      on  rob.species_id=spe.species_id 
+		      where 1=1 
 		      <if test=" parentId!=null">  
                  and spe.parent_id = #{parentId}
                </if>
-               <if test=" parentId==null">  
-                 and  spe.parent_id = 0
-               </if> 
 	         <if test=" count!=null">  
                 limit #{curpage},#{count}
              </if>
@@ -53,21 +51,49 @@
 				   rob.account,
 				   rob.nickname,
 				   rob.species_id,
-				   rob.birthday,
+				   date_format(rob.birthday,'%Y-%m-%d') as  birthday,
 				   rob.gender,
 				   rob.comefrom,
 				   rob.hobby,
-				   rob.comment
+				   rob.comment,
+				   spe.species_name as species_name
 		     from mly_robot rob
+		     left join mly_species spe on  rob.species_id=spe.species_id
 		     where rob.robot_id = #{robotId}
 			]]>
 	</select>
-	<insert id="saveRobot"  >
+	<insert id="saveRobot"   useGeneratedKeys="true" keyProperty="robotId" >
 	<![CDATA[
 		   insert into  mly_robot(robot_id,account,nickname,species_id,birthday,gender,comefrom,hobby,comment)
-		    VALUES(#{robotId},#{account},#{nickname},#{speciesId},now(),#{gender},#{comefrom},#{hobby},#{comment})
+		    VALUES(#{robotId},#{account},#{nickname},#{speciesId},STR_TO_DATE(#{birthday},'%Y-%c-%d'),#{gender},#{comefrom},#{hobby},#{comment})
 			]]>
 	</insert>
+	<insert id="saveRobotSceneForInit"   >
+	<![CDATA[
+		   insert into  mly_robot_scene(robot_id,scene_id,status)
+		    VALUES(#{robotId},1,0),(#{robotId},2,0)
+			]]>
+	</insert>
+	<insert id="replaceRobotScene"   >
+	<![CDATA[
+		   replace into  mly_robot_scene(robot_id,scene_id,status)
+		    VALUES(#{robotId},#{sceneId},#{status})
+			]]>
+	</insert>
+	<insert id="replaceRobotApp"   >
+	<![CDATA[
+		   replace into  mly_robot_app(robot_id,robot_scene_id,status)
+		    VALUES(#{robotId},#{robotSceneId},#{status})
+			]]>
+	</insert>
+	
+	<delete id="updateRobotScene">
+	<![CDATA[
+	         update  mly_robot_scene
+	         set  status=#{status},
+	         where robot_id=#{robotId}  and scene_id=#{sceneId}
+			]]>
+	</delete>
 	<update id="updateRobot"  parameterType="com.mlycan.main.entity.Robot"   >
 		<![CDATA[
 		   update mly_robot rob
@@ -76,7 +102,7 @@
 		          rob.account=#{account},
 		          rob.nickname=#{nickname},
 		          rob.species_id=#{speciesId},
-		          rob.birthday=now(),
+		          rob.birthday=STR_TO_DATE(#{birthday},'%Y-%c-%d'),
 		          rob.gender=#{gender},
 		          rob.comefrom=#{comefrom},
 		          rob.hobby=#{hobby},

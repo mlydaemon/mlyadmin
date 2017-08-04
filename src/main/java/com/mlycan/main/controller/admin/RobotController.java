@@ -1,9 +1,13 @@
 package com.mlycan.main.controller.admin;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,20 +20,37 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mlycan.common.web.Constants;
 import com.mlycan.common.web.SessionProvider;
+import com.mlycan.main.controller.BaseController;
+import com.mlycan.main.entity.Application;
 import com.mlycan.main.entity.Logic;
-import com.mlycan.main.entity.Question;
 import com.mlycan.main.entity.Robot;
 import com.mlycan.main.entity.Scene;
 import com.mlycan.main.entity.Species;
+import com.mlycan.main.service.ApplicationService;
 import com.mlycan.main.service.LogicService;
-import com.mlycan.main.service.QuestionService;
 import com.mlycan.main.service.RobotService;
 import com.mlycan.main.service.SceneService;
 import com.mlycan.main.service.SpeciesService;
 
 @Controller
 @RequestMapping(value = { "robot"})
-public class RobotController {
+public class RobotController  extends BaseController {
+	@RequestMapping(value = { "/rcswitch" },method = RequestMethod.POST)
+	public void rcswitch(HttpServletRequest request,HttpServletResponse response, ModelMap model,
+			Integer robotId, Integer sceneId,Integer status) {
+		    Integer count =  robotService.saveRobotScene(robotId,sceneId,status);
+		    Map<String,Object> remap = new HashMap<String,Object>();
+		    remap.put("success", count);
+		    writeObject(response,remap);
+	}
+	@RequestMapping(value = { "/appswitch" },method = RequestMethod.POST)
+	public void appswitch(HttpServletRequest request,HttpServletResponse response, ModelMap model,
+			Integer robotId, Integer robotSceneId,Integer status) {
+		    Integer count =  robotService.saveRobotApp(robotId,robotSceneId,status);
+		    Map<String,Object> remap = new HashMap<String,Object>();
+		    remap.put("success", count);
+		    writeObject(response,remap);
+	}
 	
 	@RequestMapping(value = { "/list"})
 	public String list(HttpServletRequest request,HttpServletResponse response, ModelMap model,
@@ -92,16 +113,18 @@ public class RobotController {
 			Integer robotId) {
 		
 		Robot robot = robotService.findRobot(robotId);
-       
+        List<Species> species= speciesService.findSpeciesByPid(null);
+		model.addAttribute(Constants.BEANS, species);
 		model.addAttribute(Constants.BEAN, robot);
 
 		session.setAttribute(request, response, Constants.CHANNEL, "robot");
 		
 		return "admin/robot/edit";
 	}
-	@RequestMapping(value = { "/update"},method = RequestMethod.POST)
+	@RequestMapping(value = {"/update"},method = RequestMethod.POST)
 	public String update(HttpServletRequest request,HttpServletResponse response, ModelMap model,
-			Integer robotId,String account,String nickname,Integer speciesId,Long birthday,Integer gender,String comefrom,String hobby,String comment) {
+			Integer robotId,String account,String nickname,Integer speciesId,String birthday,Integer gender,String comefrom,String hobby,String comment) {
+		SimpleDateFormat  sdf = new SimpleDateFormat("dd-mm-yyyy");
 		robotService.updateRobot(robotId,account,nickname,speciesId,birthday,gender,comefrom,hobby,comment);
 
 		session.setAttribute(request, response, Constants.CHANNEL, "robot");
@@ -114,15 +137,13 @@ public class RobotController {
 		
 		model.addAttribute(Constants.BEANS, species);
 		
-		session.setAttribute(request, response, Constants.CHANNEL, "species");
 		session.setAttribute(request, response, Constants.CHANNEL, "robot");
-		
 		
 		return "admin/robot/add";
 	}
-	@RequestMapping(value = { "/save"},method = RequestMethod.POST)
+	@RequestMapping(value = {"/save"},method = RequestMethod.POST)
 	public String save(HttpServletRequest request,HttpServletResponse response, ModelMap model,
-			String account,String nickname,Integer speciesId,Long birthday,Integer gender,String comefrom,String hobby,String comment) {
+			String account,String nickname,Integer speciesId,String birthday,Integer gender,String comefrom,String hobby,String comment) {
 		
 		robotService.saveRobot(account,nickname,speciesId,birthday,gender,comefrom,hobby,comment);
 
@@ -140,8 +161,33 @@ public class RobotController {
 		
 		return "redirect:/admin/robot/list";
 	}
+	@RequestMapping(value = { "/scene"})
+	public String scene(HttpServletRequest request,HttpServletResponse response, ModelMap model,Integer robotId) {
+		
+		Robot robot = robotService.findRobot(robotId);
+		List<Scene> scenes = sceneService.findForRobotSwitch(robotId);
+		
+		model.addAttribute(Constants.BEANS, scenes);
+		model.addAttribute(Constants.BEAN, robot);
+
+		session.setAttribute(request, response, Constants.CHANNEL, "robot");
+		
+		return "admin/robot/scene";
+	}
+	@RequestMapping(value = { "/app"})
+	public String application(HttpServletRequest request,HttpServletResponse response, ModelMap model,Integer robotId) {
+		
+		Robot robot = robotService.findRobot(robotId);
+		List<Application> apps = applicationService.findAll(robot.getRobotId());
+		model.addAttribute(Constants.BEANS, apps);
+		model.addAttribute(Constants.BEAN, robot);
+
+		session.setAttribute(request, response, Constants.CHANNEL, "robot");
+		
+		return "admin/robot/app";
+	}
 	@Autowired
-	private QuestionService questionService;
+	private ApplicationService applicationService;
 	@Autowired
 	private LogicService logicService;
 	@Autowired

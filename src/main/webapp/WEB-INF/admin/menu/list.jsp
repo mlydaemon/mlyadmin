@@ -9,12 +9,17 @@
 		<div class="span12">
 			<!-- BEGIN PAGE TITLE & BREADCRUMB-->
 			<h3 class="page-title">
-				栏目列表
+				菜单列表
 			</h3>
 			<ul class="breadcrumb">
 				<li>
 					<i class="icon-home"></i>
-					<a href="#">感谢您注册**网</a> 
+					<a href="${basePath}/admin/index.html">DashBoard</a> 
+					<i class="icon-angle-right"></i>
+				</li>
+				<li>
+					<a href="${basePath}/admin/menu/list.html">菜单列表</a>
+					<i class="icon-angle-right"></i>
 				</li>
 				<%-- <li class="pull-right no-text-shadow">
 					<i class="icon-calendar"></i>
@@ -93,6 +98,7 @@
             <div class="space5"></div>
             <div class="pagination pagination-right">
 				<ul>
+					<li class=""><a href="${basePath}/admin/menu/list?curpage=1">首页</a></li> 
 				<c:choose>
 				   <c:when test="${curpage== '1'}">  
 				    <li><a href="${basePath}/admin/menu/list?curpage=1">Prev</a></li>     
@@ -101,31 +107,66 @@
 				   <li><a href="${basePath}/admin/menu/list?curpage=${curpage-1}">Prev</a></li>
 				   </c:otherwise>
 				</c:choose>
-					<c:forEach begin="1" end="${talpage}" var="page" >
-					    
-					    <c:choose>
-					   <c:when test="${page== curpage}">  
-					     <li class="active"><a href="${basePath}/admin/menu/list?curpage=${page}">${page}</a></li>     
-					   </c:when>
-					   <c:otherwise> 
-					      <li><a href="${basePath}/admin/menu/list?curpage=${page}">${page}</a></li>
-					   </c:otherwise>
-					</c:choose>
-					</c:forEach>
-					
-					<c:choose>
-					   <c:when test="${curpage== talpage}">  
-					      <li><a href="${basePath}/admin/menu/list?curpage=${talpage}">Next</a></li>     
-					   </c:when>
-					   <c:otherwise> 
-					      <li><a href="${basePath}/admin/menu/list?curpage=${curpage+1}">Next</a></li>
-					   </c:otherwise>
-					</c:choose>
+				<c:choose>
+				    <c:when test="${curpage+2>5}">
+						<c:forEach begin="1" end="${curpage-2>=5?5:curpage-3}" var = "page">
+							<li class="${curpage==page?'active':''}"><a href="${basePath}/admin/menu/list?curpage=${page}">${page}</a></li> 
+						</c:forEach>
+					</c:when>
+				</c:choose>
+				<c:choose>
+				    <c:when test="${curpage-2>5}">
+						<li class=""><a href="#">……</a></li> 
+					</c:when>
+				</c:choose>
+				<c:choose>
+					<c:when test="${curpage+2<5&&curpage-2<talpage-5&&talpage>5}">
+						<c:forEach begin="${curpage-2<1?1:curpage-2}" end="${curpage+2>=talpage?talpage:5}" var = "page">
+							<li class="active"><a href="${basePath}/admin/menu/list?curpage=${page}">${page}</a></li> 
+						</c:forEach>
+					</c:when>
+					<c:when test="${curpage+2>=5&&curpage-2>=talpage-3&&talpage>5}">
+						<c:forEach begin="${curpage-2<1?1:talpage-4}" end="${curpage+2>=talpage?talpage:curpage+2}" var = "page">
+							<li class="active"><a href="${basePath}/admin/menu/list?curpage=${page}">${page}</a></li> 
+						</c:forEach>
+					</c:when>
+					<c:when test="${curpage+2>=5&&curpage-2>=talpage-3&&talpage>5}">
+						<c:forEach begin="${curpage-2<1?1:talpage-5}" end="${curpage+2>=talpage?talpage:curpage+2}" var = "page">
+							<li class="active"><a href="${basePath}/admin/menu/list?curpage=${page}">${page}</a></li> 
+						</c:forEach>
+					</c:when>
+					 <c:otherwise> 
+							 <c:forEach begin="${curpage-2<1?1:curpage-2}" end="${curpage+2>=talpage?talpage:curpage+2}" var = "page">
+								<li class="active"><a href="${basePath}/admin/menu/list?curpage=${page}">${page}</a></li> 
+							</c:forEach>
+					</c:otherwise>
+				</c:choose>
+				<c:choose>
+				    <c:when test="${curpage+2<talpage-5}">
+						<li class=""><a href="#">……</a></li> 
+					</c:when>
+				</c:choose>
+				<c:choose>
+				    <c:when test="${curpage+2<talpage}">
+						<c:forEach begin="${curpage+2<talpage-4?talpage-4:curpage+3}" end="${talpage}" var = "page">
+							<li class="${curpage==page?'active':''}"><a href="${basePath}/admin/riddle/list?curpage=${page}">${page}</a></li> 
+						</c:forEach>
+					</c:when>
+				</c:choose>
+				<c:choose>
+				   <c:when test="${curpage== talpage}">  
+				      <li><a href="${basePath}/admin/menu/list?curpage=${talpage}">Next</a></li>     
+				   </c:when>
+				   <c:otherwise> 
+				      <li><a href="${basePath}/admin/menu/list?curpage=${curpage+1}">Next</a></li>
+				   </c:otherwise>
+				</c:choose>
+					<li class=""><a href="${basePath}/admin/menu/list?curpage=${talpage}">尾页</a></li> 
 				</ul>
+			</div>
 			</div>
 		</div>
 	</div>
-</div>
 <!-- END PAGE CONTAINER-->    
 <script>
 function display(classtag){

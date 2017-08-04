@@ -13,7 +13,16 @@
 			<ul class="breadcrumb">
 				<li>
 					<i class="icon-home"></i>
-					<a href="#">感谢您注册**网</a> 
+					<a href="${basePath}/admin/index.html">DashBoard</a> 
+					<i class="icon-angle-right"></i>
+				</li>
+				<li>
+					<a href="${basePath}/admin/position/list.html">职位列表</a>
+					<i class="icon-angle-right"></i>
+				</li>
+				<li>
+					<a href="${basePath}/admin/position/edit?positionId=${bean.positionId}">${bean.positionName}编辑</a>
+					<i class="icon-angle-right"></i>
 				</li>
 			</ul>
 			<!-- END PAGE TITLE & BREADCRUMB-->
@@ -29,7 +38,6 @@
 					<form action="${basePath}/admin/position/update" method="POST" class="form-horizontal">
 						
 						<input type="hidden" name="positionId" value="${bean.positionId}"/>
-						<h3 class="form-section">基本信息</h3>
 						<div class="row-fluid">
 							<div class="span6 ">
 								<div class="control-group">

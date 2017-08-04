@@ -25,7 +25,7 @@ public class SceneServiceImpl implements SceneService{
 	@Override
 	public List<Scene> findAll(Integer count, Integer curpage) {
 		// TODO Auto-generated method stub
-		Integer currentCount = 0;
+		Integer currentCount = null;
 		if(count!=null && curpage!= null){
 			currentCount = (curpage-1)*count;
 		}
@@ -95,6 +95,12 @@ public class SceneServiceImpl implements SceneService{
 			return null;
 		}
 		return sceneMapper.findSceneForTrain(application, robotAccount);
+	}
+
+	@Override
+	public List<Scene> findForRobotSwitch(Integer robotId) {
+		// TODO Auto-generated method stub
+		return sceneMapper.findForRobotSwitch(robotId);
 	}
 
 }

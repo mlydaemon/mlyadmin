@@ -12,7 +12,17 @@
 			<ul class="breadcrumb">
 				<li>
 					<i class="icon-home"></i>
-					<a href="#">感谢您注册**网</a> 
+					<a href="${basePath}/admin/index.html">DashBoard</a> 
+					<i class="icon-angle-right"></i>
+				</li>
+				<li>
+					<a href="${basePath}/admin/channel/list.html">栏目列表</a>
+					<i class="icon-angle-right"></i>
+				</li>
+				<li class="pull-right no-text-shadow">
+					<i class="icon-calendar"></i>
+					<a href="${basePath}/admin/channel/edit?channelId=${bean.channelId}">${bean.channelName}编辑</a> 
+					<i class="icon-angle-down"></i>
 				</li>
 			</ul>
 			<!-- END PAGE TITLE & BREADCRUMB-->

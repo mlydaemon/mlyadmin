@@ -38,7 +38,7 @@ public class SpeciesController {
             Species species = (com.mlycan.main.entity.Species) it2.next();
             List<Species> childSpecies = speciesService.findAll(null, null, species.getSpeciesId());
             species.setChildren(childSpecies);
-       }
+         }
 
 		Integer  total = speciesService.findAllCount();
 		

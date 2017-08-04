@@ -10,9 +10,18 @@
 				种类信息
 			</h3>
 			<ul class="breadcrumb">
-				<li>
+			    <li>
 					<i class="icon-home"></i>
-					<a href="#">感谢您注册**网</a> 
+					<a href="${basePath}/admin/index.html">DashBoard</a> 
+					<i class="icon-angle-right"></i>
+				</li>
+				<li>
+					<a href="${basePath}/admin/species/list.html">种类列表</a>
+					<i class="icon-angle-right"></i>
+				</li>
+				<li>
+					<a href="${basePath}/admin/species/edit?speciesId=${bean.speciesId}">${bean.speciesName}编辑</a>
+					<i class="icon-angle-right"></i>
 				</li>
 			</ul>
 			<!-- END PAGE TITLE & BREADCRUMB-->
@@ -28,13 +37,13 @@
 					<form action="${basePath}/admin/species/update" method="POST" class="form-horizontal">
 						
 						<input type="hidden" name="speciesId" value="${bean.speciesId}"/>
-						<h3 class="form-section">种类信息</h3>
 						<div class="row-fluid">
 							 <div class="span6 ">
 								<div class="control-group">
-									<label class="control-label" >种类名称</label>
+									<label class="control-label" >种类名称<span class="required">*</span></label>
 									<div class="controls">
-										<input type="text"  name="speciesName"  value="${bean.speciesName}"  class="m-wrap span12" placeholder="dd/mm/yyyy">
+										<input type="text"  name="speciesName"  value="${bean.speciesName}"  class="m-wrap span12" placeholder="机器人类别，例如：动物">
+									    <span class="help-block">类别名称，不重复</span>
 									</div>
 								</div>
 							</div> 
@@ -48,10 +57,8 @@
 										 <c:forEach var="species" items="${beans}"> 
 									       <option  <c:if test="${bean.parentId eq species.speciesId}" >selected="selected"</c:if> value="${species.speciesId}">${species.speciesName}</option>
 									　　	 </c:forEach>	
-											<%-- <c:forEach var="species" items="${beans}"> 
-										       <option value="${species.speciesId}">${species.speciesName}</option>
-										　　</c:forEach>	 --%>										
 										</select>
+									    <span class="help-block">默认为顶级分类，顶级分类不做为机器人分类类别</span>									
 									</div>
 								</div>
 							</div>
@@ -62,11 +69,13 @@
 								<div class="control-group">
 									<label class="control-label">是否启用</label>
 									<div class="controls">
-										<select name="active" class="span12 m-wrap" tabindex="1">
-										    <option value="0">请选择</option>
-											<option  <c:if test="${bean.active == 1}">selected = "selected"</c:if> value="1">启用</option>
-											<option  <c:if test="${bean.active == 0}">selected = "selected"</c:if> value="0">不启用</option>
-										</select>
+										<label class="radio">
+										 <div class="radio hover"><span><input type="radio" <c:if test="${bean.active == 1}">checked</c:if>  name="active" value="1"></span></div>启用
+										</label>
+										<label class="radio">
+										 <div class="radio hover"><span><input type="radio"<c:if test="${bean.active == 0}">checked</c:if> name="active" value="0"></span></div>不启用
+										</label>
+										<span class="help-block">启用后可供机器人创建时选择</span>
 									</div>
 								</div>
 							</div>
@@ -76,7 +85,8 @@
 								<div class="control-group">
 									<label class="control-label">备注</label>
 									<div class="controls">
-										<input type="text" name="comment" value="${bean.comment}" class="m-wrap span12" placeholder="Chee Kin">
+										<input type="text" name="comment" value="${bean.comment}" class="m-wrap span12" placeholder="说明:机器人类别说明">
+									    <span class="help-block">机器人分类说明</span>
 									</div>
 								</div>
 							</div>

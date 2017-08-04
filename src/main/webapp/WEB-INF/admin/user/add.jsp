@@ -13,7 +13,12 @@
 			<ul class="breadcrumb">
 				<li>
 					<i class="icon-home"></i>
-					<a href="#">感谢您注册**网</a> 
+					<a href="${basePath}/admin/index.html">Dashboard</a> 
+					<i class="icon-angle-right"></i>
+				</li>
+				<li>
+					<a href="${basePath}/admin/user/list.html">用户列表</a>
+					<i class="icon-angle-right"></i>
 				</li>
 			</ul>
 			<!-- END PAGE TITLE & BREADCRUMB-->
@@ -27,7 +32,6 @@
 				<div class="portlet-body form">
 					<!-- BEGIN FORM-->
 					<form action="${basePath}/admin/user/save" method="POST" class="form-horizontal">
-						<h3 class="form-section">基本信息</h3>
 						<div class="row-fluid">
 							<div class="span6 ">
 								<div class="control-group">

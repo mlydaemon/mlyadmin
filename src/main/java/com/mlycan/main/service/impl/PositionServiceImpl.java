@@ -74,7 +74,9 @@ public class PositionServiceImpl implements PositionService{
 		}
 		positionMapper.updatePosition(position);
 		positionMapper.deletePosiChannel(positionId);
-		positionMapper.replacePosiChannel(positionId,permissions);
+		if(permissions!=null){
+			positionMapper.replacePosiChannel(positionId,permissions);	
+		}
 		return position.getPositionId();
 	}
 	@Override

@@ -3,75 +3,39 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace必须是Dao接口的全类名 -->
 <mapper namespace="com.mlycan.main.mapper.ApplicationMapper">
+
 	<resultMap type="com.mlycan.main.entity.Application" id="applicationResultMap">
-		<id property="" column=""/>
-		<result property="appId" column="app_id"/>
-		<result property="account" column="account"/>
-		<result property="application" column="application"/>
-		<result property="appName" column="app_name"/>
-		<result property="classify" column="classify"/>
-		<result property="semantic" column="semantic"/>
-		<result property="active" column="active"/>
+		 <id property="robotSceneId" column="robot_scene_id"/> 
+		<result property="sceneId" column="scene_id"/>
+        <result property="sceneName" column="scene_name"/>
+        <result property="sceneComment" column="scene_comment"/> 
+        <result property="robotName" column="nickname"/>
+        <result property="robotId" column="robot_id"/>
+        <result property="robotAccount" column="account"/>
+        <result property="robotComment" column="robot_comment"/> 
+        <result property="application" column="application"/>
+        <result property="semantic" column="semangtic"/>
 	</resultMap>
 	<select id="findAll" resultMap="applicationResultMap">
-		<![CDATA[
-		select  app.app_id,
-				app.account,
-				app.application,
-				app.app_name,
-				app.classify,
-				app.semantic,
-				app.active
-		from mly_application  app
-		]]>
-		<if test="count!=null">
-			limit #{curpage},#{count}
-		</if>
+			select   rc.robot_scene_id  as robot_scene_id,
+			         scen.scene_id      as scene_id,
+			         scen.scene_name as scene_name,
+			         scen.comment   as scene_comment,
+			         robot.account    as account,
+			         robot.nickname  as nickname,
+			         robot.comment    as robot_comment,
+			         scen.application,
+			         scen.semantic,
+			         ra.robot_id
+		   from   mly_robot_scene rc
+		   left join mly_robot_app ra  on( ra.robot_scene_id=rc.robot_scene_id 
+		   <if test="robotId!=null">
+			  and ra.robot_id = #{robotId}
+		   </if>
+		   )
+		   left join mly_scene scen on(rc.scene_id = scen.scene_id)
+		   left join mly_robot  robot on(rc.robot_id = robot.robot_id)
+		   where rc.status = 1 and scen.scene_id is not null
 	</select>
-	<select id="findAllCount" resultType="java.lang.Integer">
-		<![CDATA[
-			select count(app.app_id) as value
-			  from  mly_application app
-		]]>
-	</select>
-	<select id="findApplication" resultMap="applicationResultMap">
-	<![CDATA[
-		select app.app_id,
-		       app.account,
-		       app.application,
-		       app.app_name,
-		       app.classify,
-		       app.semantic,
-		       app.active
-		from mly_application app    
-		where app.app_id=#{appId}
-	]]>
-	</select>
-	<insert id="saveApplication" >
-	<![CDATA[
-		insert into mly_application (app_id,account,application,app_name,classify,semantic,active)
-		values (#{appId},#{account},#{application},#{appName},#{classify},#{semantic},#{active})
-	]]>
-	</insert>
-	<update id="updateApplication" parameterType="com.mlycan.main.entity.Application">
-	<![CDATA[
-		update mly_application app
-			set 
-				app.app_id=#{appId},
-				app.account=#{account},
-				app.application=#{application},
-				app.app_name=#{appName},
-				app.classify=#{classify},
-				app.semantic=#{semantic},
-				app.active=#{active} 
-			where app.app_id=#{appId}
-	]]>
-	</update>
-	<delete id="deleteApplication">
-		<![CDATA[
-			delete
-			from  mly_application
-			where app_id=#{appId}
-		]]>
-	</delete>
+	
 </mapper>

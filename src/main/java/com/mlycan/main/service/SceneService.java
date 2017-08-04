@@ -23,5 +23,6 @@ public interface SceneService {
 		public Integer deleteScene(Integer sceneId);
 		//机器人场景核心词库训练
 		public Scene  findSceneForTrain(String application,String robotAccount);
-		
+		//获取所有场景用于机器人开启关闭
+		public List<Scene>  findForRobotSwitch(Integer robotId);
 }
