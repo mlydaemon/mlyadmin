@@ -24,6 +24,7 @@ public class Logic implements Serializable{
 	private String  application;//备注
 	private String  robotName;//备注
 	private String  robotAccount;//备注
+	private String  keywords;//关键词
 	
 	public Integer getLogicId() {
 		return logicId;
@@ -91,5 +92,10 @@ public class Logic implements Serializable{
 	public void setRobotAccount(String robotAccount) {
 		this.robotAccount = robotAccount;
 	}
-	 
+	public String getKeywords() {
+		return keywords;
+	}
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
+	}
 }

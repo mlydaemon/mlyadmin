@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -69,9 +70,9 @@ public class SceneController {
 	}
 	@RequestMapping(value = { "/update"},method = RequestMethod.POST)
 	public String update(HttpServletRequest request,HttpServletResponse response, ModelMap model,
-			Integer sceneId,String sceneName,String application,String semantic,Integer active,String comment) {
+			Integer sceneId,String sceneName,String application,String semantic,Integer active,String comment,String level,String performer,String processor,String keywords) {
 		
-		sceneService.updateScene(sceneId,sceneName,application,semantic,active,comment);
+		sceneService.updateScene(sceneId,sceneName,application,semantic,active,comment,level,performer,processor,keywords);
 
 		session.setAttribute(request, response, Constants.CHANNEL, "scene");
 		
@@ -87,9 +88,9 @@ public class SceneController {
 	}
 	@RequestMapping(value = { "/save"},method = RequestMethod.POST)
 	public String save(HttpServletRequest request,HttpServletResponse response, ModelMap model,
-			String sceneName,String application,String semantic,Integer active,String comment) {
+			String sceneName,String application,String semantic,Integer active,String comment,String level,String perfomer,String processor,String keywords) {
 		
-		sceneService.saveScene(sceneName,application,semantic,active,comment);
+		sceneService.saveScene(sceneName,application,semantic,active,comment,level,perfomer,processor,keywords);
 
 		session.setAttribute(request, response, Constants.CHANNEL, "scene");
 		

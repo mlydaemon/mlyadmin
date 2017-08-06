@@ -1,6 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<link href="${basePath}/media/css/datepicker.css" rel="stylesheet" type="text/css" />
+<link href="${basePath}/media/css/search.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="${basePath}/media/css/select2_metro.css">
+<link rel="stylesheet" type="text/css" href="${basePath}/media/css/jquery.tagsinput.css">
+<script type="text/javascript" src="${basePath}/media/js/select2.min.js"></script>
+<script src="${basePath}/media/js/form-components.js"></script> 
+<script >
+	jQuery(document).ready(function() {       
+	  $("#select2_sample5").select2({
+		      tags: ["看书", "看电影", "猜字谜", "旅游", "登山"]
+	    });
+	});
+</script> 
 <!-- BEGIN PAGE CONTAINER-->
 <div class="container-fluid">
 	<!-- BEGIN PAGE HEADER-->
@@ -36,7 +49,6 @@
 						<input type="hidden" name="sceneId" value="${bean.sceneId}"/>
 						<h3 class="form-section">场景信息</h3>
 						<div class="row-fluid">
-							
 							<!--/span-->
 							 <div class="span6 ">
 								<div class="control-group">
@@ -80,15 +92,55 @@
 							</div>
 						</div>
 						<div class="row-fluid">
+							<!--/span-->
+							 <div class="span6 ">
+								<div class="control-group">
+									<label class="control-label" >等级</label>
+									<div class="controls">
+										<input type="text"  name="level"  value="${bean.level}"  class="m-wrap span12" placeholder="例如：SLAVE">
+									</div>
+								</div>
+							</div> 
 							<div class="span6 ">
 								<div class="control-group">
-									<label class="control-label">备注</label>
+									<label class="control-label" >执行者</label>
 									<div class="controls">
-										<input type="text" name="comment" value="${bean.comment}" class="m-wrap span12" placeholder="例如：场景">
+										<input type="text"  name="performer"  value="${bean.performer}"  class="m-wrap span12" placeholder="例如：RIDDLEGUESS">
+									</div>
+								</div>
+							</div>
+							<!--/span-->
+						</div>
+						<div class="row-fluid">
+							 <div class="span12 ">
+								<div class="control-group">
+									<label class="control-label" >处理者</label>
+									<div class="controls">
+										<input type="text"  name="processor"  value="${bean.processor}"  class="m-wrap span12" placeholder="例如：聊天">
+									</div>
+								</div>
+							</div> 
+						</div>
+						<div class="row-fluid">
+						   <div class="span12 ">
+								<div class="control-group">
+									<label class="control-label" >关键词</label>
+									<div class="controls">
+										<input type="hidden"  name="keywords" id="select2_sample5" class="span12 select2" value="${bean.keywords}">
 									</div>
 								</div>
 							</div>
 						</div>
+						<div class="row-fluid">
+							<div class="span12 ">
+								<div class="control-group">
+									<label class="control-label">备注</label>
+									<div class="controls">
+									     <textarea name="comment"  class="large m-wrap" rows="3">${bean.comment}</textarea>
+									</div>
+								</div>
+							</div>
+						</div>	
 						<!--/row-->
 						<div class="form-actions">
 							<button type="submit" class="btn blue"><i class="icon-ok"></i> Save</button>

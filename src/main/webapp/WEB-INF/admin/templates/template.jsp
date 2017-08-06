@@ -47,7 +47,7 @@
 					<span class="title">Dashboard</span>
 					</a>
 				</li>
-				<li class="start ${((channel eq 'riddle'))?'active':''}">
+				<li class="start ${((channel eq 'riddle')or(channel eq 'repository'))?'active':''}">
 					<a href="charts.html">
 					<!-- <a href="${basePath}/admin/task/list.html"> -->
 					<i class="icon-sitemap"></i> 
@@ -56,6 +56,7 @@
 					</a>
 						<ul class="sub-menu">
 						<li class="${channel eq 'riddle'?'active':''}"><a href="${basePath}/admin/riddle/list.html">谜语管理</a></li>
+						<li class="${channel eq 'repository'?'active':''}"><a href="${basePath}/admin/repository/list.html">知识库管理</a></li>
 					</ul>
 				</li>
 				<li class=" ${((channel eq 'question')or(channel eq 'logic')or(channel eq 'scene')or(channel eq 'robot')or(channel eq 'answer'))?'active':''}">

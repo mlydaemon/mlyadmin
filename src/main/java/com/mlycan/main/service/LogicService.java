@@ -15,9 +15,9 @@ public interface LogicService {
 		
 		public Logic  findLogic(Integer logicId);
 		
-		public Integer saveLogic(Integer sceneId,String logicName,String command,String semantic,String code,String comment);
+		public Integer saveLogic(Integer sceneId,String logicName,String command,String semantic,String code,String comment,String keywords);
 		
-		public Integer updateLogic(Integer  logicId,Integer sceneId,String logicName,String command,String semantic,String code,String comment);
+		public Integer updateLogic(Integer  logicId,Integer sceneId,String logicName,String command,String semantic,String code,String comment,String keywords);
 		
 		public Integer deleteLogic(Integer logicId);
 		//机器人场景逻辑词库训练

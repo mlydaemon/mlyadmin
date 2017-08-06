@@ -44,6 +44,10 @@
 						 <th><i class="icon-bookmark"></i>核心词库</th>
 						 <th><i class="icon-bookmark"></i>是否启用</th>
 						 <!-- <th><i class="icon-bookmark"></i>备注</th> -->
+						 <th><i class="icon-bookmark"></i>等级</th>
+						<!--  <th><i class="icon-bookmark"></i>执行者</th> -->
+						 <th><i class="icon-bookmark"></i>处理者</th>
+						 <th><i class="icon-bookmark"></i>关键词</th>
 						<th></th>
 					</tr>
 				</thead>
@@ -57,8 +61,13 @@
 							 <td>${scene.semantic}</td> 
 							 <td>${scene.active==1?"启用":"禁用"}</td> 
 							 <%-- <td>${scene.comment}</td>  --%>
+							 <td>${scene.level}</td> 
+							 <%-- <td>${scene.performer}</td>  --%>
+							 <td>${scene.processor}</td> 
+							 <td>${scene.keywords}</td> 
 							<td><a class="btn mini green-stripe" href="${basePath}/admin/scene/edit?sceneId=${scene.sceneId}">编辑</a>|
-							<a class="btn mini green-stripe" href="${basePath}/admin/scene/delete?sceneId=${scene.sceneId}">删除</a></td>
+							<a class="btn mini green-stripe" href="${basePath}/admin/scene/delete?sceneId=${scene.sceneId}">删除</a>
+							<a class="btn mini green-stripe" href="${basePath}/admin/repository/add?sceneId=${scene.sceneId}">添加知识库</a></td>
 						</tr>
 						<div class="childChannels" style="display: hidden;">
 							<c:forEach var="logic" items="${scene.logics}">

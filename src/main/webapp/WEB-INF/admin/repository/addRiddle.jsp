@@ -24,7 +24,7 @@
 		 <div class="portlet box ">
 				<div class="portlet-body form">
 					<!-- BEGIN FORM-->
-					<form action="${basePath}/admin/riddle/save" method="POST" class="form-horizontal">
+					<form action="${basePath}/admin/repository/saveRiddle" method="POST" class="form-horizontal">
 						
 						<h3 class="form-section">谜语信息</h3>
 						<div class="row-fluid">
@@ -86,40 +86,11 @@
 									</div>
 								</div>
 							</div> 
-							<!--/span-->
-						</div>	<div class="row-fluid">
-							<div class="span6 ">
-								<div class="control-group">
-									<label class="control-label">分类</label>
-									<div class="controls">
-										<input type="text" name="classify" class="m-wrap span12" placeholder="Chee Kin">
-									</div>
-								</div>
 							</div>
 							<!--/span-->
-							<!--  <div class="span6 ">
-								<div class="control-group">
-									<label class="control-label" >创建时间</label>
-									<div class="controls">
-										<input type="text"  name="createdTime"  class="m-wrap span12" placeholder="dd/mm/yyyy">
-									</div>
-								</div>
-							</div> 
-							/span
-						</div>	<div class="row-fluid">
-							<div class="span6 ">
-								<div class="control-group">
-									<label class="control-label">更新时间</label>
-									<div class="controls">
-										<input type="text" name="updateTime" class="m-wrap span12" placeholder="dd/mm/yyyy">
-									</div>
-								</div>
-							</div> -->
-							<!--/span-->
-						</div>
 						<div class="form-actions">
 							<button type="submit" class="btn blue"><i class="icon-ok"></i> Save</button>
-							<a href="${basePath}/admin/riddle/list.html" class="btn">Cancel</a>
+							<a href="${basePath}/admin/repository/list.html" class="btn">Cancel</a>
 						</div>
 					</form>
 					<!-- END FORM-->                

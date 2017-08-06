@@ -6,6 +6,7 @@ package com.mlycan.main.service.impl;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,17 +44,21 @@ public class SceneServiceImpl implements SceneService{
 	}
 	
 	@Override
-	public Integer saveScene(String sceneName,String application,String semantic,Integer active,String comment) {
+	public Integer saveScene(String sceneName,String application,String semantic,Integer active,String comment,String level,String performer,String processor,String keywords) {
 		Scene scene = new Scene();
 		scene.setSceneName(sceneName);
 		scene.setApplication(application);
 		scene.setSemantic(semantic);
 		scene.setActive(active);
 		scene.setComment(comment);
+		scene.setLevel(level);
+		scene.setPerformer(performer);
+		scene.setProcessor(processor);
+		scene.setKeywords(keywords);
 		return sceneMapper.saveScene(scene);
 	}
 	@Override
-	public Integer updateScene(Integer sceneId,String sceneName,String application,String semantic,Integer active,String comment) {
+	public Integer updateScene(Integer sceneId,String sceneName,String application,String semantic,Integer active,String comment,String level,String performer,String processor,String keywords) {
 		
 		Scene scene = sceneMapper.findScene(sceneId);
 		if(scene == null){
@@ -73,6 +78,18 @@ public class SceneServiceImpl implements SceneService{
 		}
 		if(comment !=null){
 			scene.setComment(comment);
+		}
+		if(level !=null){
+			scene.setLevel(level);
+		}
+		if(performer !=null){
+			scene.setPerformer(performer);
+		}
+		if(processor !=null){
+			scene.setProcessor(processor);
+		}
+		if(keywords !=null){
+			scene.setKeywords(keywords);
 		}
 		return sceneMapper.updateScene(scene);
 	}

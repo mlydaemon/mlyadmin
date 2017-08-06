@@ -44,6 +44,7 @@
 						 <th><i class="icon-bookmark"></i>语义词库</th>
 						 <th><i class="icon-bookmark"></i>逻辑编码</th>
 						 <th><i class="icon-bookmark"></i>备注</th>
+						 <th><i class="icon-bookmark"></i>关键词</th>
 						<th></th>
 					</tr>
 				</thead>
@@ -57,6 +58,7 @@
 							<td>${logic.semantic}</td>
 							 <td>${logic.code}</td> 
 							 <td>${logic.comment}</td> 
+							 <td>${logic.keywords}</td> 
 							<td><a class="btn mini green-stripe" href="${basePath}/admin/logic/edit?logicId=${logic.logicId}">编辑</a>|
 							<a class="btn mini green-stripe" href="${basePath}/admin/logic/delete?logicId=${logic.logicId}">删除</a></td>
 						</tr>

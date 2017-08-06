@@ -16,6 +16,7 @@
         <result property="semantic" column="semantic"/>
         <result property="code" column="code"/> 
         <result property="comment" column="comment"/> 
+        <result property="keywords" column="keywords"/> 
     </resultMap>
 	
 	<select id="findList"   resultMap="logicResultMap">
@@ -26,7 +27,8 @@
 				   log.command    as command,
 				   log.semantic   as semantic,
 				   log.code       as code,
-				   log.comment    as comment
+				   log.comment    as comment,
+				   log.keywords   as keywords
 		     from mly_logic log
 		     left join mly_scene sce on (log.scene_id = sce.scene_id)
 		     where sce.scene_id = #{sceneId}
@@ -39,7 +41,8 @@
 				   log.command    as command,
 				   log.semantic   as semantic,
 				   log.code       as code,
-				   log.comment    as comment
+				   log.comment    as comment,
+				   log.keywords   as keywords
 		     from mly_logic log
 		     left join mly_scene sce on (log.scene_id = sce.scene_id)
 		     <if test="sceneName!=null">  
@@ -90,15 +93,16 @@
 				   log.command    as command,
 				   log.semantic   as semantic,
 				   log.code       as code,
-				   log.comment    as comment
+				   log.comment    as comment,
+				   log.keywords   as keywords
 		     from mly_logic log
 		     where log.logic_id = #{logicId}
 			]]>
 	</select>
 	<insert id="saveLogic"  >
 	<![CDATA[
-		   insert into  mly_logic(logic_id,scene_id,logic_name,command,semantic,code,comment)
-		    VALUES(#{logicId},#{sceneId},#{logicName},#{command},#{semantic},#{code},#{comment})
+		   insert into  mly_logic(logic_id,scene_id,logic_name,command,semantic,code,comment,keywords)
+		    VALUES(#{logicId},#{sceneId},#{logicName},#{command},#{semantic},#{code},#{comment},#{keywords})
 			]]>
 	</insert>
 	<update id="updateLogic"  parameterType="com.mlycan.main.entity.Logic"   >
@@ -111,7 +115,8 @@
 		          log.semantic=#{semantic},
 		          log.command=#{command},
 		          log.code=#{code},
-		          log.comment=#{comment}
+		          log.comment=#{comment},
+		          log.keywords=#{keywords}
 		      where  log.logic_id=#{logicId} 
 			]]>
 	</update>

@@ -3,6 +3,7 @@ package com.mlycan.main.service;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 
 import com.mlycan.main.entity.Scene;
 
@@ -16,9 +17,9 @@ public interface SceneService {
 		
 		public Scene  findScene(Integer sceneId);
 		
-		public Integer saveScene(String sceneName,String application,String semantic,Integer active,String comment);
+		public Integer saveScene(String sceneName,String application,String semantic,Integer active,String comment,String level,String performer,String processor,String keywords);
 		
-		public Integer updateScene(Integer  sceneId,String sceneName,String application,String semantic,Integer active,String comment);
+		public Integer updateScene(Integer  sceneId,String sceneName,String application,String semantic,Integer active,String comment,String level,String performer,String processor,String keywords);
 		
 		public Integer deleteScene(Integer sceneId);
 		//机器人场景核心词库训练

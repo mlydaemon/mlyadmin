@@ -2,7 +2,6 @@ package com.mlycan.main.service;
 
 import java.util.List;
 
-import com.mlycan.main.entity.Department;
 import com.mlycan.main.entity.Riddle;
 
 public interface RiddleService {

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace必须是DAO接口的全类名  -->
+<mapper namespace="com.mlycan.main.mapper.RepositoryMapper">
+	<resultMap type="com.mlycan.main.entity.Repository" id="repositoryResultMap"> 
+        <result property="knowledgeId" column="knowledge_id"/>
+        <result property="account" column="account"/>
+        <result property="application" column="application"/>
+        <result property="semantic" column="semantic"/> 
+        <result property="command" column="command"/>
+        <result property="content" column="content"/> 
+        <result property="masterId" column="master_id"/> 
+        <result property="createTime" column="create_time"/> 
+    </resultMap>
+	<select id="findAll"   resultMap="repositoryResultMap">
+		   select  
+				    klge.knowledge_id,
+					klge.account,
+					klge.application,
+					klge.semantic,
+					klge.command,
+					klge.content,
+					klge.master_id,
+					klge.create_time
+		     from mly_knowledge klge
+	         <if test=" count!=null">  
+               limit #{curpage},#{count}
+             </if>
+	</select>
+	<select id="findAllCount"   resultType="java.lang.Integer">
+		 <![CDATA[ 
+		   select count(klge.knowledge_id) as value
+		     from mly_knowledge klge
+		 	]]> 
+	</select>
+	<select id="findRepository"   resultMap="repositoryResultMap">
+		<![CDATA[
+		  select    klge.knowledge_id,
+					klge.account,
+					klge.application,
+					klge.semantic,
+					klge.command,
+					klge.content,
+					klge.master_id,
+					klge.create_time
+		     from mly_knowledge klge
+		    where knowledge_id=#{knowledgeId}
+			]]>
+	</select>
+	 <insert id="saveRepository"  >
+	<![CDATA[
+		   insert into  mly_knowledge(account,application,semantic,command,content,master_id,create_time)
+		    VALUES(#{account},#{application},#{semantic},#{command},#{content},#{masterId},now())
+	        SELECT LAST_INSERT_ID();
+			]]>
+	</insert> 
+	<insert id="saveRiddleToKnowledge" useGeneratedKeys="true"  parameterType="java.util.ArrayList">
+    insert into mly_knowledge(account,application,semantic,command,content,master_id,create_time) 
+    values 
+    <foreach collection="list" item="riddle" index="index" separator=",">
+        (121,12,12,#{riddle[1]},34,11,now())
+    </foreach>
+</insert> 
+	<update id="updateRepository" parameterType="com.mlycan.main.entity.Repository"   >
+		<![CDATA[
+		   update mly_knowledge klge
+		      set 
+		          klge.account=#{account},
+		          klge.application=#{application},
+		          klge.semantic=#{semantic},
+		          klge.command=#{command},
+		          klge.content=#{content},
+		          klge.master_id=#{masterId}
+		      where knowledge_id=#{knowledgeId}
+			]]>
+	</update>
+	<delete id="deleteRepository">
+	<![CDATA[
+	         delete 
+	         from mly_knowledge
+	         where knowledge_id=#{knowledgeId} 
+			]]>
+	</delete>
+</mapper>

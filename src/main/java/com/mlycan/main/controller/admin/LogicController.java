@@ -16,7 +16,9 @@ import com.mlycan.common.web.Constants;
 import com.mlycan.common.web.SessionProvider;
 import com.mlycan.main.controller.BaseController;
 import com.mlycan.main.entity.Logic;
+import com.mlycan.main.entity.Scene;
 import com.mlycan.main.service.LogicService;
+import com.mlycan.main.service.SceneService;
 
 @Controller
 @RequestMapping(value = { "logic"})
@@ -51,9 +53,13 @@ public class LogicController extends BaseController{
 			Integer logicId) {
 		
 		Logic logic = logicService.findLogic(logicId);
+		
+		List<Scene> scene= sceneService.findAll(null, null);
 
 		model.addAttribute(Constants.BEAN, logic);
 
+		model.addAttribute(Constants.BEANS, scene);
+		
 		session.setAttribute(request, response, Constants.CHANNEL, "logic");
 		
 		logger.debug("Exit LogicController:edit");
@@ -61,9 +67,9 @@ public class LogicController extends BaseController{
 	}
 	@RequestMapping(value = { "/update"},method = RequestMethod.POST)
 	public String update(HttpServletRequest request,HttpServletResponse response, ModelMap model,
-			Integer logicId,Integer sceneId,String logicName,String command,String semantic,String code,String comment) {
+			Integer logicId,Integer sceneId,String logicName,String command,String semantic,String code,String comment,String keywords) {
 	
-		logicService.updateLogic(logicId,sceneId,logicName,command,semantic,code,comment);
+		logicService.updateLogic(logicId,sceneId,logicName,command,semantic,code,comment,keywords);
 
 		session.setAttribute(request, response, Constants.CHANNEL, "logic");
 		
@@ -75,14 +81,18 @@ public class LogicController extends BaseController{
 
 		session.setAttribute(request, response, Constants.CHANNEL, "logic");
 		
+		List<Scene> scene= sceneService.findAll(null, null);
+		
+		model.addAttribute(Constants.BEANS, scene);
+		
 		logger.debug("Exit LogicController:add");
 		return "admin/logic/add";
 	}
 	@RequestMapping(value = { "/save"},method = RequestMethod.POST)
 	public String save(HttpServletRequest request,HttpServletResponse response, ModelMap model,
-			Integer sceneId,String logicName,String command,String semantic,String code,String comment) {
+			Integer sceneId,String logicName,String command,String semantic,String code,String comment,String keywords) {
 
-		logicService.saveLogic(sceneId,logicName,command,semantic,code,comment);
+		logicService.saveLogic(sceneId,logicName,command,semantic,code,comment,keywords);
 
 		session.setAttribute(request, response, Constants.CHANNEL, "logic");
 		
@@ -103,4 +113,6 @@ public class LogicController extends BaseController{
 	private LogicService logicService;
 	@Autowired
 	private SessionProvider session;
+	@Autowired
+	private SceneService sceneService;
 }

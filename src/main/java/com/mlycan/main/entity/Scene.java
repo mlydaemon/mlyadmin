@@ -24,6 +24,10 @@ public class Scene implements Serializable{
 	private String  semantic;//核心词库
 	private Integer  active;//是否启用
 	private String  comment;//备注
+	private String  level;//等级
+	private String  performer;//执行者
+	private String  processor;//处理者
+	private String  keywords;//关键字
 	private List<Logic> logics;
 	
 	public Integer getSceneId() {
@@ -85,6 +89,30 @@ public class Scene implements Serializable{
 	}
 	public void setRobotId(Integer robotId) {
 		this.robotId = robotId;
+	}
+	public String getLevel() {
+		return level;
+	}
+	public void setLevel(String level) {
+		this.level = level;
+	}
+	public String getPerformer() {
+		return performer;
+	}
+	public void setPerformer(String performer) {
+		this.performer = performer;
+	}
+	public String getProcessor() {
+		return processor;
+	}
+	public void setProcessor(String processor) {
+		this.processor = processor;
+	}
+	public String getKeywords() {
+		return keywords;
+	}
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
 	}
 	
 }

@@ -48,7 +48,7 @@ public class LogicServiceImpl implements LogicService{
 	}
 	
 	@Override
-	public Integer saveLogic(Integer sceneId,String logicName,String command,String semantic,String code,String comment) {
+	public Integer saveLogic(Integer sceneId,String logicName,String command,String semantic,String code,String comment,String keywords) {
 		Logic logic = new Logic();
 		logic.setSceneId(sceneId);
 		logic.setLogicName(logicName);
@@ -56,10 +56,11 @@ public class LogicServiceImpl implements LogicService{
 		logic.setSemantic(semantic);
 		logic.setCode(code);
 		logic.setComment(comment);
+		logic.setKeywords(keywords);
 		return logicMapper.saveLogic(logic);
 	}
 	@Override
-	public Integer updateLogic(Integer  logicId,Integer sceneId,String logicName,String command,String semantic,String code,String comment) {
+	public Integer updateLogic(Integer  logicId,Integer sceneId,String logicName,String command,String semantic,String code,String comment,String keywords) {
 		
 		Logic logic = logicMapper.findLogic(logicId);
 		if(logic == null){
@@ -87,6 +88,9 @@ public class LogicServiceImpl implements LogicService{
 		//可以设置为空格
 		if(comment !=null){
 			logic.setComment(comment);
+		}
+		if(keywords !=null){
+			logic.setKeywords(keywords);
 		}
 		return logicMapper.updateLogic(logic);
 	}

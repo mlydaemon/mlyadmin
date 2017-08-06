@@ -15,6 +15,10 @@
         <result property="semantic" column="semangtic"/>
         <result property="active" column="active"/> 
         <result property="comment" column="comment"/> 
+        <result property="level" column="level"/> 
+        <result property="performer" column="performer"/> 
+        <result property="processor" column="processor"/> 
+        <result property="keywords" column="keywords"/> 
     </resultMap>
     <select id="findSceneForTrain"   resultMap="sceneResultMap">
 		   select  scen.scene_id,
@@ -24,7 +28,11 @@
 				   scen.application,
 				   scen.semantic,
 				   scen.active,
-				   scen.comment
+				   scen.comment,
+				   scen.level,
+				   scen.performer,
+				   scen.processor,
+				   scen.keywords
 		     from mly_scene scen
 		     left join mly_robot_scene rc on(rc.scene_id = scen.scene_id)
 		     left join mly_robot  robot on(robot.robot_id = rc.robot_id)
@@ -67,7 +75,11 @@
 				   scen.application,
 				   scen.semantic,
 				   scen.active,
-				   scen.comment
+				   scen.comment,
+				   scen.level,
+				   scen.performer,
+				   scen.processor,
+				   scen.keywords
 		     from mly_scene scen
 	         <if test="count!=null">  
                limit #{start},#{count}
@@ -86,15 +98,19 @@
 				   scen.application,
 				   scen.semantic,
 				   scen.active,
-				   scen.comment
+				   scen.comment,
+				   scen.level,
+				   scen.performer,
+				   scen.processor,
+				   scen.keywords
 		     from mly_scene scen
 		     where scen.scene_id = #{sceneId}
 			]]>
 	</select>
 	<insert id="saveScene"  >
 	<![CDATA[
-		   insert into  mly_scene(scene_name,application,semantic,active,comment)
-		    VALUES(#{sceneName},#{application},#{semantic},#{active},#{comment})
+		   insert into  mly_scene(scene_name,application,semantic,active,comment,level,performer,processor,keywords)
+		    VALUES(#{sceneName},#{application},#{semantic},#{active},#{comment},#{level},#{performer},#{processor},#{keywords})
 			]]>
 	</insert>
 	<update id="updateScene"  parameterType="com.mlycan.main.entity.Scene"   >
@@ -106,7 +122,11 @@
 		          scen.application=#{application},
 		          scen.semantic=#{semantic},
 		          scen.active=#{active},
-		          scen.comment=#{comment}
+		          scen.comment=#{comment},
+		          scen.level=#{level},
+		          scen.performer=#{performer},
+		          scen.processor=#{processor},
+		          scen.keywords=#{keywords}
 		      where  scen.scene_id=#{sceneId} 
 			]]>
 	</update>
