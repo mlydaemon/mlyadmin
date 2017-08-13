@@ -12,11 +12,9 @@ public interface RepositoryService {
 		
 		public Repository  findRepository(Integer knowledgeId);
 		
-		public Integer saveRepository(String  account,String  application,String  semantic,String  command,String  content,Integer  masterId,String  createTime);
+		public Integer saveRepository(String  account,String  application,String  semantic,String  command,String  content,String  code);
 		
-		public Integer saveRiddleToKnowledge(String  account,String  conundrum,String  mystery,String  reminder,String  answer,String  explains);
-		
-		public Integer updateRepository(Integer  knowledgeId,String  account,String  application,String  semantic,String  command,String  content,Integer  masterId,String  createTime);
+		public Integer updateRepository(Integer  knowledgeId,String  account,String  application,String  semantic,String  command,String  content,String  code);
 		
 		public Integer deleteRepository(Integer knowledgeId);
 		

@@ -22,6 +22,7 @@ public class Question implements Serializable{
 	private String  command;//语义
 	private String  classify;//当前词库
 	private String  nextclassify;//跳转词库
+	private String  createTime;//创建时间
 	private Integer  pattern;//模式
 	public Integer getQuestionId() {
 		return questionId;
@@ -71,4 +72,11 @@ public class Question implements Serializable{
 	public void setPattern(Integer pattern) {
 		this.pattern = pattern;
 	}
+	public String getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
+	
 }

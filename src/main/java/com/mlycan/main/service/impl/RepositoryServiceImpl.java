@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mlycan.common.web.Constants;
 import com.mlycan.main.entity.Repository;
 import com.mlycan.main.entity.Riddle;
 import com.mlycan.main.mapper.RepositoryMapper;
@@ -44,31 +45,18 @@ public class RepositoryServiceImpl implements RepositoryService{
 	}
 	
 	@Override
-	public Integer saveRiddleToKnowledge(String account, String conundrum, String mystery, String reminder,
-			String answer, String explains) {
-		List<String> riddle=new ArrayList<String>();
-		riddle.add(account);
-		riddle.add(conundrum);
-		riddle.add(mystery);
-		riddle.add(reminder);
-		riddle.add(answer);
-		riddle.add(explains);
-		return repositoryMapper.saveRiddleToKnowledge(riddle);
-	}
-	@Override
-	public Integer saveRepository(String  account,String  application,String  semantic,String  command,String  content,Integer  masterId,String  createTime) {
+	public Integer saveRepository(String  account,String  application,String  semantic,String  command,String  content,String  code) {
 		Repository repository = new Repository();
 		repository.setAccount(account);
 		repository.setApplication(application);
 		repository.setSemantic(semantic);
 		repository.setCommand(command);
 		repository.setContent(content);
-		repository.setMasterId(masterId);
-		repository.setCreateTime(createTime);
+		repository.setCode(Constants.SPT+code+Constants.SPT+content.hashCode());
 		return repositoryMapper.saveRepository(repository);
 	}
 	@Override
-	public Integer updateRepository(Integer  knowledgeId,String  account,String  application,String  semantic,String  command,String  content,Integer  masterId,String  createTime) {
+	public Integer updateRepository(Integer  knowledgeId,String  account,String  application,String  semantic,String  command,String  content,String  code) {
 		
 		Repository repository = repositoryMapper.findRepository(knowledgeId);
 		if(repository == null){
@@ -89,12 +77,7 @@ public class RepositoryServiceImpl implements RepositoryService{
 		if(content !=null){
 			repository.setContent(content);
 		}
-		if( masterId !=null){
-			repository.setMasterId(masterId);
-		}
-		if(createTime !=null){
-			repository.setCreateTime(createTime);
-		}
+		repository.setCode(Constants.SPT+code+Constants.SPT+content.hashCode());
 		return repositoryMapper.updateRepository(repository);
 	}
 	@Override

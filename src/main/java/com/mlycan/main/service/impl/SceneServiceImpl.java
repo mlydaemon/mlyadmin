@@ -120,4 +120,16 @@ public class SceneServiceImpl implements SceneService{
 		return sceneMapper.findForRobotSwitch(robotId);
 	}
 
+	@Override
+	public Scene findSceneForConfig(Integer sceneId) {
+		// TODO Auto-generated method stub
+		return sceneMapper.findSceneForConfig(sceneId);
+	}
+
+	@Override
+	public Integer updateSceneMajor(Integer sceneId, String logicode) {
+		// TODO Auto-generated method stub
+		return sceneMapper.updateSceneMajor(sceneId,logicode);
+	}
+
 }

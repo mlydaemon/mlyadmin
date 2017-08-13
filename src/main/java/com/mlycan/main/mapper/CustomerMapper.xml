@@ -6,10 +6,10 @@
 
 <mapper namespace="com.mlycan.main.mapper.CustomerMapper">
 	<resultMap type="com.mlycan.main.entity.Customer" id="customerResultMap"> 
-        <id property="customerId" column="user_id"/> 
-        <result property="account" column="account"/>
+        <id property="customerId" column="member_id"/> 
         <result property="nickname" column="nickname"/> 
         <result property="gender" column="gender"/> 
+        <result property="printCount" column="print_count"/> 
         <result property="birthday" column="birthday"   /> 
         <result property="intro" column="intro"/> 
         <result property="comefrom" column="comefrom"/> 
@@ -24,13 +24,12 @@
         <result property="street" column="street"/>
         <result property="country" column="country"/>
         <result property="zipcode" column="zipcode"/>
-        
     </resultMap>
 	<select id="findAll"  resultMap="customerResultMap">
-		   select user.user_id,
-		          user.account,
+		   select mem.member_id,
 		          mem.nickname,
 		          mem.gender,
+		          pmem.print_count,
 		          mem.birthday,
 		          mem.intro,
 		          mem.comefrom,
@@ -41,16 +40,22 @@
 		          mem.portrait,
 		          mem.signature
 		        ,mem.province,mem.city,mem.street,mem.country,mem.zipcode
-		      from mly_user user 
-		      left join mly_member mem on (user.user_id = mem.member_id) 
+		      from  mly_member mem 
+		      left join mly_member_print pmem on(pmem.member_id = mem.member_id)
 		       <if test=" count!=null">  
                limit #{start},#{count}
              </if>
 	</select>
 	<select id="findAllCount"   resultType="java.lang.Integer">
 		 <![CDATA[ 
-		   select count(user.user_id) as value
-		     from mly_user user 
+		   select count(mem.member_id) as value
+		     from mly_member mem 
 		 	]]> 
 	</select>
+	<insert id="updatePrint"  >
+		<![CDATA[
+          replace into mly_member_print(member_id,print_count,print_time) 
+           select #{customerId},CASE  WHEN print_count IS NULL  THEN 1 ELSE  max(print_count)+1  end as print_count,now() from mly_member_print where member_id= #{customerId}
+	    ]]>
+	</insert>
 </mapper>

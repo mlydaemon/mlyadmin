@@ -37,6 +37,10 @@
     <definition name="admin/*/*" extends="atemplate">
         <put-attribute name="title" value="{1}.{2}.title" />
         <put-attribute name="body" value="/WEB-INF/admin/{1}/{2}.jsp" />
+    </definition>
+    <definition name="admin/*/*/*" extends="atemplate">
+        <put-attribute name="title" value="{1}.{2}.{3}.title" />
+        <put-attribute name="body" value="/WEB-INF/admin/{1}/{2}/{3}.jsp" />
     </definition> 
     <!-- front -->
     <definition name="ftemplate" template="/WEB-INF/front/templates/template.jsp">

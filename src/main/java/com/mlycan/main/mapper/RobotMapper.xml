@@ -62,6 +62,24 @@
 		     where rob.robot_id = #{robotId}
 			]]>
 	</select>
+	<select id="findRobotByAccount"   resultMap="robotResultMap">
+		<![CDATA[
+		   select  rob.robot_id,
+				   rob.account,
+				   rob.nickname,
+				   rob.species_id,
+				   date_format(rob.birthday,'%Y-%m-%d') as  birthday,
+				   rob.gender,
+				   rob.comefrom,
+				   rob.hobby,
+				   rob.comment,
+				   spe.species_name as species_name
+		     from mly_robot rob
+		     left join mly_species spe on  rob.species_id=spe.species_id
+		     where rob.account = #{account}
+			]]>
+	</select>
+	
 	<insert id="saveRobot"   useGeneratedKeys="true" keyProperty="robotId" >
 	<![CDATA[
 		   insert into  mly_robot(robot_id,account,nickname,species_id,birthday,gender,comefrom,hobby,comment)

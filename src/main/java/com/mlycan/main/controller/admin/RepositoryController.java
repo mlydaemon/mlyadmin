@@ -71,9 +71,9 @@ public class RepositoryController {
 	}
 	@RequestMapping(value = { "/update"},method = RequestMethod.POST)
 	public String update(HttpServletRequest request,HttpServletResponse response, ModelMap model,
-			Integer knowledgeId,String  account,String  application,String  semantic,String  command,String  content,Integer  masterId,String  createTime) {
+			Integer knowledgeId,String  account,String  application,String  semantic,String  command,String  content,String  code) {
 		
-		repositoryService.updateRepository(knowledgeId,account,application,semantic,command,content,masterId,createTime);
+		repositoryService.updateRepository(knowledgeId,account,application,semantic,command,content,code);
 
 		session.setAttribute(request, response, Constants.CHANNEL, "repository");
 		
@@ -111,9 +111,9 @@ public class RepositoryController {
 	}
 	@RequestMapping(value = { "/save"},method = RequestMethod.POST)
 	public String save(HttpServletRequest request,HttpServletResponse response, ModelMap model,
-			String  account,String  application,String  semantic,String  command,String  content,Integer  masterId,String  createTime) {
+			String  account,String  application,String  semantic,String  command,String  content,String  code) {
 		
-		repositoryService.saveRepository(account,application,semantic,command,content,masterId,createTime);
+		repositoryService.saveRepository(account,application,semantic,command,content,code);
 
 		session.setAttribute(request, response, Constants.CHANNEL, "repository");
 		
@@ -122,7 +122,7 @@ public class RepositoryController {
           /*	ajax的方式添加数据        */
 	
 	@SuppressWarnings("deprecation")
-	@RequestMapping(value = { "/saveRepository"},method = RequestMethod.POST)
+	@RequestMapping(value = { "/save/logic"},method = RequestMethod.POST)
 	@ResponseBody
 	public String saveRepository(HttpServletRequest request,HttpServletResponse response, ModelMap model,
 			@RequestBody String conditions) {
@@ -130,6 +130,10 @@ public class RepositoryController {
 		JavaType javaType= objectMapper.getTypeFactory().constructParametricType(List.class,Repository.class);
 		try {
 			List<Repository> list= objectMapper.readValue(conditions, javaType);
+			for(Repository repository:list){
+				repositoryService.saveRepository(repository.getAccount(),repository.getApplication(),repository.getSemantic(),
+						repository.getCommand(),repository.getContent(),Constants.SPT+repository.getMajorContent().hashCode()+Constants.SPT+repository.getContent().hashCode());
+			}
 			System.out.println(list);
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block
@@ -141,9 +145,6 @@ public class RepositoryController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		/*ObjectMapper objectMapper = new ObjectMapper();  
-		        JavaType javaType = objectMapper.getTypeFactory().constructParametricType(List.class, MyDomain.class);  
-		        List<MyDomain> list = objectMapper.readValue(myDomain, javaType); */
 		
 		System.out.println("ssssssssss");
 		//repositoryService.saveRepository();
@@ -158,7 +159,7 @@ public class RepositoryController {
 	public String saveRiddle(HttpServletRequest request,HttpServletResponse response, ModelMap model,
 			String  account,String  conundrum,String  mystery,String  reminder,String  answer,String  explains) {
 		
-		repositoryService.saveRiddleToKnowledge(account, conundrum, mystery, reminder, answer, explains);
+		//repositoryService.saveRiddleToKnowledge(account, conundrum, mystery, reminder, answer, explains);
 		
 		session.setAttribute(request, response, Constants.CHANNEL, "repository");
 		

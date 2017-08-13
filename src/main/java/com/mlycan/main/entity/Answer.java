@@ -19,7 +19,8 @@ public class Answer implements Serializable{
 	private String  application;//机器人名称
 	private String  question;//问题
 	private String  content;//内容
-	private String  command;//语义
+	private String  semantic;//当前词库
+	private String  createTime;//创建时间
 	private Integer  pattern;//模式
 	public Integer getAnswerId() {
 		return answerId;
@@ -51,11 +52,17 @@ public class Answer implements Serializable{
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getCommand() {
-		return command;
+	public String getCreateTime() {
+		return createTime;
 	}
-	public void setCommand(String command) {
-		this.command = command;
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
+	public String getSemantic() {
+		return semantic;
+	}
+	public void setSemantic(String semantic) {
+		this.semantic = semantic;
 	}
 	public Integer getPattern() {
 		return pattern;

@@ -12,7 +12,7 @@
         <result property="content" column="content"/> 
         <result property="command" column="command"/> 
         <result property="classify" column="classify"/> 
-        <result property="nextclassify" column="nextclassify"/> 
+        <result property="createTime" column="create_time"/> 
         <result property="pattern" column="pattern"/> 
     </resultMap>
 	<select id="findQuestionForTrain"   resultMap="questionResultMap">
@@ -22,7 +22,7 @@
 				   que.content,
 				   que.command,
 				   que.classify,
-				   que.nextclassify,
+				   date_format(que.create_time, '%Y-%m-%d') as create_time,
 				   que.pattern
 		     from mly_question que
 	         where que.account = #{robotAccount}
@@ -37,10 +37,26 @@
 				   que.content,
 				   que.command,
 				   que.classify,
-				   que.nextclassify,
+				   date_format(que.create_time, '%Y-%m-%d') as create_time,
 				   que.pattern
 		     from mly_question que
-		     order by que.content,que.create_time
+		     where 1=1
+		     <if test="startTime!=null and startTime!=''">
+		      AND  que.create_time >= #{startTime}
+		     </if>
+		     <if test="endTime!=null  and endTime!=''">
+		      AND   #{endTime} >= que.create_time
+		     </if>
+		     <if test="keywords!=null and keywords!=''">
+		      AND   (que.account =#{keywords} or que.application=#{keywords} or que.content=#{keywords} or que.command=#{keywords} )
+		     </if>
+		     <if test="command!=null and command!=''">
+		      AND   que.command = #{command}
+		     </if>
+		     <if test="semantic!=null and semantic!=''">
+		      AND   que.classify = #{semantic} 
+		     </if>
+		     order by que.create_time desc,que.content
 	         <if test=" count!=null">  
                limit #{currentCount},#{count}
              </if>
@@ -51,6 +67,22 @@
 		   select count(que.question_id) as value
 		     from mly_question que 
 		 	]]> 
+		   where 1=1
+		     <if test="startTime!=null and startTime!=''">
+		      AND  que.create_time >= #{startTime}
+		     </if>
+		     <if test="endTime!=null  and endTime!=''">
+		      AND   #{endTime} >= que.create_time
+		     </if>
+		     <if test="keywords!=null and keywords!=''">
+		      AND   (que.account =#{keywords} or que.application=#{keywords} or que.content=#{keywords} or que.command=#{keywords} )
+		     </if>
+		     <if test="command!=null and command!=''">
+		      AND   que.command = #{command}
+		     </if>
+		     <if test="semantic!=null and semantic!=''">
+		      AND   que.classify = #{semantic} 
+		     </if>
 	</select>
 	<select id="findQuestion"   resultMap="questionResultMap">
 		<![CDATA[
@@ -60,7 +92,7 @@
 				   que.content,
 				   que.command,
 				   que.classify,
-				   que.nextclassify,
+				   date_format(que.create_time, '%Y-%m-%d') as create_time,
 				   que.pattern
 		     from mly_question que
 		     where que.question_id = #{questionId}
@@ -83,6 +115,7 @@
 		          que.command=#{command},
 		          que.classify=#{classify},
 		          que.nextclassify=#{nextclassify},
+		          que.create_time = now();
 		          que.pattern=#{pattern}
 		      where  que.question_id=#{questionId} 
 			]]>

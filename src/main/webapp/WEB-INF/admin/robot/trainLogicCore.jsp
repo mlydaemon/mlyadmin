@@ -119,9 +119,9 @@
 						  <!--/span-->
 						  <div class="span5">
 							<div class="control-group">
-								<label class="control-label" >应答语义</label>
+								<label class="control-label" >应答语义库</label>
 								<div class="controls">
-									<input type="text"  id="answerCommand"   class="m-wrap span12"  value="${bean.logicName}">
+									<input type="text"  id="answerCommand"   class="m-wrap span12"  value="${bean.semantic}">
 								</div>
 						 	</div>
 						  </div>
@@ -143,7 +143,7 @@
 								<th class="span1"><i class="icon-briefcase"></i>语义词库</th>
 								<th class="span2"><i class="icon-bookmark"></i>提问</th>
 								 <th class="span2"><i class="icon-bookmark"></i>提问语义</th>
-								 <th class="span2"><i class="icon-bookmark"></i>应答语义</th>
+								 <!-- <th class="span2"><i class="icon-bookmark"></i>应答语义</th> -->
 								 <th class="span5"><i class="icon-bookmark"></i>应答内容</th>
 								 <!-- <th><i class="icon-bookmark"></i>跳转词库</th> -->
 								 <!-- <th><i class="icon-bookmark"></i>模式</th> -->
@@ -229,7 +229,7 @@ function loadKnowledges(){
 		     str+='<td class="span1"><a href="#">'+value.semantic+'</a></td>';
 		     str+='<td class="span2">'+value.questionContent+'</td> ';
 		     str+='<td class="span2">'+value.questionCommand+'</td>';
-		     str+='<td class="span2">'+value.answerCommand+'</td> ';
+		   /*   str+='<td class="span2">'+value.answerCommand+'</td> '; */
 		     str+='<td class="span5">'+value.answerContent+'</td> ';
 		     str+='<td><a class="btn mini green-stripe" href="javascript:void(0);" onclick="deleteKnowledge(\''+value.questionId+'\',\'null\')">删除提问</a>|';
 		     str+='<a class="btn mini green-stripe" href="javascript:void(0);" onclick="deleteKnowledge(\'null\',\''+value.answerId+'\')">删除应答</a></td>';

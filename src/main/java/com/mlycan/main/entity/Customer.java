@@ -14,13 +14,10 @@ public class Customer implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-	
 	private Integer customerId;//用户序号	Y
-	private String  account;//账号	Y
-	private String  password;//密码	Y
 	private String  nickname;//真实姓名
 	private Integer  gender;//性别
+	private Integer  printCount;//打印次数
 	private Long  birthday;//出生日期
 	private String  intro;//个人介绍
 	private String  comefrom;//来自
@@ -40,18 +37,6 @@ public class Customer implements Serializable{
 	}
 	public void setCustomerId(Integer customerId) {
 		this.customerId = customerId;
-	}
-	public String getAccount() {
-		return account;
-	}
-	public void setAccount(String account) {
-		this.account = account;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
 	}
 	public String getNickname() {
 		return nickname;
@@ -148,6 +133,12 @@ public class Customer implements Serializable{
 	}
 	public void setZipcode(String zipcode) {
 		this.zipcode = zipcode;
+	}
+	public Integer getPrintCount() {
+		return printCount;
+	}
+	public void setPrintCount(Integer printCount) {
+		this.printCount = printCount;
 	}
 	
 }

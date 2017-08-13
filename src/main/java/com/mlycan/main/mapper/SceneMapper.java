@@ -18,6 +18,9 @@ public interface SceneMapper {
 	public Integer findAllCount();
 	
 	public Scene  findScene(@Param("sceneId")Integer sceneId);
+	//获取场景用于配置关键词和应答
+	public Scene  findSceneForConfig(@Param("sceneId")Integer sceneId);
+	
 	//机器人场景核心词库训练
 	public Scene  findSceneForTrain(@Param("application")String application,@Param("robotAccount")String robotAccount);
 	
@@ -25,6 +28,8 @@ public interface SceneMapper {
 	
 	public Integer updateScene(Scene scene);
 	
+	public Integer updateSceneMajor(@Param("sceneId")Integer sceneId, @Param("logicode")String logicode);
+
 	public Integer deleteScene(@Param("sceneId")Integer sceneId);
 	
 }

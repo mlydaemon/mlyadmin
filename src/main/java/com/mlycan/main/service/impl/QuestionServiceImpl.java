@@ -25,17 +25,17 @@ public class QuestionServiceImpl implements QuestionService{
     private QuestionMapper questionMapper;
 	
 	@Override
-	public List<Question> findAll(Integer count, Integer curpage) {
+	public List<Question> findAll(String keywords,String command,String semantic,String startTime,String endTime,Integer count, Integer curpage) {
 		// TODO Auto-generated method stub
 		Integer currentCount = 0;
 		if(count!=null && curpage!= null){
 			currentCount = (curpage-1)*count;
 		}
-		return questionMapper.findAll(currentCount, count);
+		return questionMapper.findAll(keywords,command,semantic,startTime,endTime,currentCount, count);
 	}
 
-	public Integer findAllCount(){
-		return questionMapper.findAllCount();
+	public Integer findAllCount(String keywords,String command,String semantic,String startTime,String endTime){
+		return questionMapper.findAllCount(keywords,command,semantic,startTime,endTime);
 	}
 	
 	@Override

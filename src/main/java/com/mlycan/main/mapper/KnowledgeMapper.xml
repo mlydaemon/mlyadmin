@@ -23,7 +23,6 @@
 				   que.classify    as semantic ,
 				   que.content     as questionContent,
 		           que.command     as questionCommand,
-		           ans.command     as answerCommand,
 		           ans.content     as  answerContent
 		     from mly_question que
              left join mly_answer ans on(que.account = ans.account and que.application =ans.application and que.content = ans.question)
@@ -31,9 +30,25 @@
 	          <if test="questionCommand!=null or questionCommand==0">  
                AND   que.command = #{questionCommand}
              </if>
-	         AND   (ans.command like  concat(que.command, '%') or ans.command is null)
+	         AND   (ans.semantic = que.classify or ans.semantic is null)
 	         AND   que.application = #{application}
-	         AND   (que.classify = #{semantic} or  que.classify = concat(#{application},'CORE'))
-	         order by que.content,que.create_time,ans.create_time
+	         AND    que.classify = #{semantic}
+	         order by que.create_time  desc ,ans.create_time desc,que.content
+	         <if test=" count!=null">  
+               limit #{start},#{count}
+             </if>
+	</select>
+	<select id="findKnowledgesCount"   resultType="java.lang.Integer">
+		    select count(que.question_id) as value
+		     from mly_question que
+             left join mly_answer ans on(que.account = ans.account and que.application =ans.application and que.content = ans.question)
+	         where que.account = #{robotAccount}
+	          <if test="questionCommand!=null or questionCommand==0">  
+               AND   que.command = #{questionCommand}
+             </if>
+	         AND   (ans.semantic = que.classify or ans.semantic is null)
+	         AND   que.application = #{application}
+	         AND    que.classify = #{semantic}
+	         
 	</select>
 </mapper>

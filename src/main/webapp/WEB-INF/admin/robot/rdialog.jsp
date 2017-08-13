@@ -7,7 +7,7 @@
 		<div class="span12">
 			<!-- BEGIN PAGE TITLE & BREADCRUMB-->
 			<h3 class="page-title">
-				机器人场景核心语义训练信息
+				对话信息
 			</h3>
 			<ul class="breadcrumb">
 				<li>
@@ -28,7 +28,7 @@
 							<div class="control-group">
 								<label class="control-label" >机器人名称</label>
 								<div class="controls">
-									<input type="text" id="robotName" value="${bean.robotName}"  class="m-wrap span12" >
+									<input type="text" id="robotName" value="${bean.nickname}"  class="m-wrap span12" >
 								</div>
 							</div>
 						</div>
@@ -36,24 +36,16 @@
 							<div class="control-group">
 								<label class="control-label" >机器人账号</label>
 								<div class="controls">
-									<input type="text" id="robotAccount" value="${bean.robotAccount}"  class="m-wrap span12" >
+									<input type="text" id="robotAccount" value="${bean.account}"  class="m-wrap span12" >
 								</div>
 							</div>
 						</div>
 				        <!--/span-->
-						<div class="span2 ">
-							<div class="control-group">
-								<label class="control-label" >场景名称</label>
-								<div class="controls">
-									<input type="text"  value="${bean.sceneName}"  class="m-wrap span12" placeholder="例如：聊天">
-								</div>
-							</div>
-						</div>
 						<div class="span3 ">
 							<div class="control-group">
 								<label class="control-label" >应用编码</label>
 								<div class="controls">
-									<input type="text" id="application"  value="${bean.application}"  class="m-wrap span12" placeholder="例如：RIDDLEGUESS">
+									<input type="text" id="application"  value="${application}"  class="m-wrap span12" placeholder="例如：RIDDLEGUESS">
 								</div>
 							</div>
 						</div>
@@ -62,7 +54,7 @@
 							<div class="control-group">
 								<label class="control-label">核心词库</label>
 								<div class="controls">
-									<input type="text" id="semantic" value="${bean.semantic}" class="m-wrap span12" placeholder="例如：RIDDLEGUESSCORE">
+									<input type="text" id="semantic" value="${semantic}" class="m-wrap span12" placeholder="例如：RIDDLEGUESSCORE">
 								</div>
 							</div>
 						</div>
@@ -83,10 +75,7 @@
 									<label class="control-label" >提问语义</label>
 									<div class="controls">
 									   <select id="questionCommand"  class="span12 m-wrap" tabindex="1">
-										   <option value="">请选择</option>
-										   <c:forEach var="logic" items="${beans}">
-										      <option value="${logic.logicName}">${logic.logicName}</option>
-									       </c:forEach>
+										   <option value="检索">检索</option>
 										</select>
 									</div>
 									
@@ -119,10 +108,7 @@
 									<label class="control-label" >应答语义</label>
 									<div class="controls">
 									   <select id="answerCommand"  class="span12 m-wrap" tabindex="1">
-										   <option value="0">请选择</option>
-										   <c:forEach var="logic" items="${beans}">
-										      <option value="${logic.logicName}">${logic.logicName}</option>
-									       </c:forEach>
+										   <option value="MONITORRETRIEVE">检索</option>
 										</select>
 									</div>
 							 	</div>
@@ -152,7 +138,7 @@
 								<th></th>
 							</tr>
 						</thead>
-						<tbody id="knowledges">
+						<tbody id="knowledges" >
 							<%-- <c:forEach var="question" items="${beans}"> 
 							    <tr>
 									<td><a href="#">${question.questionId}</a></td>
@@ -172,12 +158,35 @@
 			</div>
 		</div>
 	</div>
+	<input type="hidden" id="count" value=20 />
+	<input type="hidden" id="curpage" value=1 />
 </div>
 <!-- END PAGE CONTAINER-->   
 <script type="text/javascript">
 window.onload=function(){ 
 	loadKnowledges();
+	
 }
+$(document).ready(function(){ 
+	var range = 50;             //距下边界长度/单位px  
+    var elemt = 500;           //插入元素高度/单位px  
+    var maxnum = 20;            //设置加载最多次数  
+    var num = 1;  
+    var totalheight = 0;   
+    var main = $("#knowledges");
+	$(window).scroll(function(){  
+		var srollPos = $(window).scrollTop();    //滚动条距顶部距离(页面超出窗口的高度)  
+        
+        console.log("滚动条到顶部的垂直高度: "+$(document).scrollTop());  
+        console.log("页面的文档高度 ："+$(document).height());  
+        console.log('浏览器的高度：'+$(window).height());
+        totalheight = parseFloat($(window).height()) + parseFloat(srollPos);
+        if(($(document).height()-range) <= totalheight  && num != maxnum) { 
+        	loadonce();
+            num++;  
+        } 
+	});
+});
 function deleteKnowledge(questionId,answerId){
 	var formData = new FormData();
 		if(questionId!='null'){
@@ -206,12 +215,21 @@ function deleteKnowledge(questionId,answerId){
 	         }  
 	    });  
 }
-function loadKnowledges(){
+function  loadKnowledges(){
+	$("#curpage").val(1);
+	$("#knowledges").empty();
+	loadonce();
+}
+function loadonce(){
+	var count = $("#count").val();
+	var curpage = $("#curpage").val();
 	var robotAccount = $("#robotAccount").val();
 	var application  = $("#application").val();
 	var semantic  = $("#semantic").val();
 	var questionCommand  = $("#questionCommand").val();
     var formData = new FormData();
+    formData.append("count", count);
+    formData.append("curpage", curpage);
     formData.append("robotAccount", robotAccount);
     formData.append("application", application);
     formData.append("semantic", semantic);
@@ -225,23 +243,22 @@ function loadKnowledges(){
         contentType: false,  
         processData: false,  
         success: function (returndata) {  
-       	 var knowledges = JSON.parse(returndata).knowledges;
-       	 console.log(knowledges);
-       	 //var results = $("#results");
-       	 $("#knowledges").empty();
-       	 $.each(knowledges,function(index,value){
-       		 var str='<tr >';
-		     str+='<td class="span1"><a href="#">'+value.semantic+'</a></td>';
-		     str+='<td class="span2">'+value.questionContent+'</td> ';
-		     str+='<td class="span2">'+value.questionCommand+'</td>';
-		     str+='<td class="span2">'+value.answerCommand+'</td> ';
-		     str+='<td class="span5">'+value.answerContent+'</td> ';
-		     str+='<td><a class="btn mini green-stripe" href="javascript:void(0);" onclick="deleteKnowledge(\''+value.questionId+'\',\'null\')">删除提问</a>|';
-		     str+='<a class="btn mini green-stripe" href="javascript:void(0);" onclick="deleteKnowledge(\'null\',\''+value.answerId+'\')">删除应答</a></td>';
-		     str+='</tr>';
-		     $("#knowledges").append(str);
-       	});
-       
+		       	 var knowledges = JSON.parse(returndata).knowledges;
+		       	 console.log(knowledges);
+		       	 //var results = $("#results");
+		       	 $.each(knowledges,function(index,value){
+		       		 var str='<tr >';
+				     str+='<td class="span1"><a href="#">'+value.semantic+'</a></td>';
+				     str+='<td class="span2">'+value.questionContent+'</td> ';
+				     str+='<td class="span2">'+value.questionCommand+'</td>';
+				     str+='<td class="span2">'+value.questionCommand+'</td> ';
+				     str+='<td class="span5">'+value.answerContent+'</td> ';
+				     str+='<td><a class="btn mini green-stripe" href="javascript:void(0);" onclick="deleteKnowledge(\''+value.questionId+'\',\'null\')">删除提问</a>|';
+				     str+='<a class="btn mini green-stripe" href="javascript:void(0);" onclick="deleteKnowledge(\'null\',\''+value.answerId+'\')">删除应答</a></td>';
+				     str+='</tr>';
+				     $("#knowledges").append(str);
+		       	});
+             	$("#curpage").val(parseInt(curpage)+1);
         },  
         error: function (returndata) {  
             alert(returndata);  

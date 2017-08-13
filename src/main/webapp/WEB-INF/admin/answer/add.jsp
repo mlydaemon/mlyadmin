@@ -72,7 +72,7 @@
 								<div class="control-group">
 									<label class="control-label" >语义</label>
 									<div class="controls">
-										<input type="text"  name="command"  class="m-wrap span12" placeholder="dd/mm/yyyy">
+										<input type="text"  name="semantic"  class="m-wrap span12" placeholder="dd/mm/yyyy">
 									</div>
 								</div>
 							</div> 

@@ -60,6 +60,22 @@
                where sce.scene_name=#{sceneName}
              </if>
 	</select>
+	<select id="findLogicForConfig"   resultMap="logicResultMap">
+		<![CDATA[
+		  SELECT 
+			    logic.logic_name  as logic_name,
+			    logic.semantic    as semantic,
+			    logic.command     as command,
+			    logic.code        as code,
+			    scene.scene_name  as scene_name,
+			    scene.application as application
+			FROM
+			    mly_logic logic
+			        left join
+			    mly_scene scene ON (logic.scene_id = scene.scene_id)
+			where logic.logic_id = #{logicId}
+			]]>
+	</select>
 	<select id="findLogicForTrain"   resultMap="logicResultMap">
 		<![CDATA[
 		  SELECT 

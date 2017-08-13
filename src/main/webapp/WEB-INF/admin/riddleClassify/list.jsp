@@ -87,22 +87,22 @@
 				<c:choose>
 						<c:when test="${curpage+2<5&&curpage-2<talpage-5&&talpage>5}">
 							<c:forEach begin="${curpage-2<1?1:curpage-2}" end="${curpage+2>=talpage?talpage:5}" var = "page">
-								<li class="active"><a href="${basePath}/admin/riddleClassify/list?curpage=${page}">${page}</a></li> 
+								<li class="${curpage==page?'active':''}"><a href="${basePath}/admin/riddleClassify/list?curpage=${page}">${page}</a></li> 
 							</c:forEach>
 						</c:when>
 						<c:when test="${curpage+2>=5&&curpage-2>=talpage-3&&talpage>5}">
 							<c:forEach begin="${curpage-2<1?1:talpage-4}" end="${curpage+2>=talpage?talpage:curpage+2}" var = "page">
-								<li class="active"><a href="${basePath}/admin/riddleClassify/list?curpage=${page}">${page}</a></li> 
+								<li class="${curpage==page?'active':''}"><a href="${basePath}/admin/riddleClassify/list?curpage=${page}">${page}</a></li> 
 							</c:forEach>
 						</c:when>
 						<c:when test="${curpage+2>=5&&curpage-2>=talpage-3&&talpage>5}">
 							<c:forEach begin="${curpage-2<1?1:talpage-5}" end="${curpage+2>=talpage?talpage:curpage+2}" var = "page">
-								<li class="active"><a href="${basePath}/admin/riddleClassify/list?curpage=${page}">${page}</a></li> 
+								<li class="${curpage==page?'active':''}"><a href="${basePath}/admin/riddleClassify/list?curpage=${page}">${page}</a></li> 
 							</c:forEach>
 						</c:when>
 					 <c:otherwise> 
 							 <c:forEach begin="${curpage-2<1?1:curpage-2}" end="${curpage+2>=talpage?talpage:curpage+2}" var = "page">
-								<li class="active"><a href="${basePath}/admin/riddleClassify/list?curpage=${page}">${page}</a></li> 
+								<li class="${curpage==page?'active':''}"><a href="${basePath}/admin/riddleClassify/list?curpage=${page}">${page}</a></li> 
 							</c:forEach>
 					</c:otherwise>
 				</c:choose>

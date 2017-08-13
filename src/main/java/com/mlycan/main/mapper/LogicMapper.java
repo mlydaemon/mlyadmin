@@ -16,7 +16,9 @@ public interface LogicMapper {
 	public Integer findAllCount(@Param("sceneName")String sceneName);
 	
 	public Logic  findLogic(@Param("logicId")Integer logicId);
-	
+	//获取逻辑节点用于配置关键词和应答
+	public Logic  findLogicForConfig(@Param("logicId")Integer logicId);
+		
 	public Integer saveLogic(Logic logic);
 	
 	public Integer updateLogic(Logic logic);

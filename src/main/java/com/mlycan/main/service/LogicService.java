@@ -2,6 +2,8 @@ package com.mlycan.main.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.mlycan.main.entity.Logic;
 import com.mlycan.main.entity.Scene;
 
@@ -22,5 +24,7 @@ public interface LogicService {
 		public Integer deleteLogic(Integer logicId);
 		//机器人场景逻辑词库训练
 		public Logic  findLogicForTrain(String robotAccount,String application,String semantic);
+		//获取逻辑节点用于配置关键词和应答
+		public Logic  findLogicForConfig(Integer logicId);
 			
 }

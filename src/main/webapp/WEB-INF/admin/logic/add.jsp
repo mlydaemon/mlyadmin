@@ -4,15 +4,6 @@
 <link href="${basePath}/media/css/search.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="${basePath}/media/css/select2_metro.css">
 <link rel="stylesheet" type="text/css" href="${basePath}/media/css/jquery.tagsinput.css">
-<script type="text/javascript" src="${basePath}/media/js/select2.min.js"></script>
-<script src="${basePath}/media/js/form-components.js"></script> 
-<script >
-	jQuery(document).ready(function() {       
-	  $("#select2_sample5").select2({
-		      tags: ["看书", "看电影", "猜字谜", "旅游", "登山"]
-	    });
-	});
-</script> 
 <!-- BEGIN PAGE CONTAINER-->
 <div class="container-fluid">
 	<!-- BEGIN PAGE HEADER-->
@@ -108,16 +99,6 @@
 							 
 						</div>
 						<!--/row-->
-						<div class="row-fluid">
-						   <div class="span12 ">
-								<div class="control-group">
-									<label class="control-label" >关键词</label>
-									<div class="controls">
-										<input type="hidden"  name="keywords" id="select2_sample5" class="span12 select2" value="">
-									</div>
-								</div>
-							</div>
-						</div>
 						<div class="row-fluid">
 							<div class="span12 ">
 								<div class="control-group">

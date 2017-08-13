@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace必须是DAO接口的全类名  -->
+<mapper namespace="com.mlycan.main.mapper.SemanticMapper">
+	<resultMap type="com.mlycan.main.entity.Semantic" id="semanticResultMap"> 
+        <id property="semanticId" column="semantic_id"/> 
+        <result property="application" column="application"/> 
+        <result property="semantic" column="semantic"/> 
+        <result property="keyword" column="keyword"   /> 
+        <result property="precision" column="sprecision"/> 
+        <result property="remark" column="remark"/> 
+    </resultMap>
+	<select id="findList"  resultMap="semanticResultMap">
+		   select sem.semantic_id,
+		          sem.application,
+		          sem.semantic,
+		          sem.keyword,
+		          sem.sprecision,
+		          sem.remark
+		      from  mly_robot_semantic sem 
+		       where sem.application = #{application}
+	            AND sem.semantic = #{semantic}
+	</select>
+	<insert id="replaceSemantic">
+		<![CDATA[
+          replace into mly_robot_semantic(application,semantic,keyword,sprecision,remark,create_time) 
+           VALUES( #{application},#{semantic},#{keyword},#{precision},#{remark},now())
+	    ]]>
+	</insert>
+	<insert id="deleteSemantic">
+		<![CDATA[
+	         delete 
+	         from mly_robot_semantic 
+	         where semantic_id=#{semanticId} 
+			]]>
+	</insert>
+</mapper>

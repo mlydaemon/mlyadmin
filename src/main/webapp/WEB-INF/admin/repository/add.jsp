@@ -34,12 +34,12 @@
 								<div class="control-group">
 									<label class="control-label">${logic.logicName}</label>
 									<div class="controls">
-										<input type="text" id="${logic.logicId }"  name="repository" application="${bean.application}" semantic="${logic.semantic }" command="${logic.command }" class="m-wrap span12" placeholder="Chee Kin">
+										<input type="text"   <c:if test="${bean.major eq logic.code}" >id="majorContent" </c:if> name="repository" application="${bean.application}" semantic="${logic.semantic }" command="${logic.command }" class="m-wrap span12" placeholder="Chee Kin">
 									</div>
 								</div>
 							    </div>
 							 
-							<c:if test="${status.index%2==1}"></div></c:if>
+							<c:if test="${status.index%2==1||status.last}"></div></c:if>
 		 				</c:forEach>
 		         <!-- 手动输入内容文本框 -->
 					<!-- <div class="row-fluid">
@@ -71,6 +71,7 @@
 	   Search.init();
 	});
 	function send(){
+		var majorContent = $("majorContent").val();
 		var objre =document.getElementsByName("repository");
 		 	var conditons = [];  
 		for(var i=0;i<objre.length;i++){
@@ -79,23 +80,19 @@
 			var command=objre[i].getAttribute("command");
 			var content=objre[i].value;
 			var repo = new Object();  
-			    repo.account="smoon";
 			    repo.application=application,
 			    repo.semantic=semantic,
 			    repo.command=command,
 			    repo.content=content,
-			    repo.master="121",
-			    repo.createTime=null,
-			    
+			    repo.majorContent=majorContent,
 		 		conditons.push(repo);  
-			    
 			}
 			 $.ajax({
-				 url: '${basePath}/admin/repository/saveRepository' ,  
+				 url: '${basePath}/admin/repository/save/logic' ,  
 		         type: 'POST',  
 		         dataType:"json",
 		         contentType: "application/json", 
-		         data:{conditions:JSON.stringify(conditons)},   
+		         data:JSON.stringify(conditons),   
 		         success:function(data){
 						 var results = JSON.parse(data);
 			        	 console.log(results);

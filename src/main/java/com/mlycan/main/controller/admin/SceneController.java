@@ -2,8 +2,10 @@ package com.mlycan.main.controller.admin;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,15 +19,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mlycan.common.web.Constants;
 import com.mlycan.common.web.SessionProvider;
+import com.mlycan.main.controller.BaseController;
 import com.mlycan.main.entity.Channel;
 import com.mlycan.main.entity.Logic;
+import com.mlycan.main.entity.Reply;
 import com.mlycan.main.entity.Scene;
+import com.mlycan.main.entity.Semantic;
 import com.mlycan.main.service.LogicService;
+import com.mlycan.main.service.ReplyService;
 import com.mlycan.main.service.SceneService;
+import com.mlycan.main.service.SemanticService;
 
 @Controller
 @RequestMapping(value = { "scene"})
-public class SceneController {
+public class SceneController   extends BaseController {
 	
 	@RequestMapping(value = { "/list"})
 	public String list(HttpServletRequest request,HttpServletResponse response, ModelMap model,
@@ -68,6 +75,19 @@ public class SceneController {
 		
 		return "admin/scene/edit";
 	}
+	@RequestMapping(value = { "/preview"})
+	public String preview(HttpServletRequest request,HttpServletResponse response, ModelMap model,
+			Integer sceneId) {
+		
+		Scene scene = sceneService.findScene(sceneId);
+
+		model.addAttribute(Constants.BEAN, scene);
+
+		session.setAttribute(request, response, Constants.CHANNEL, "scene");
+		
+		return "admin/scene/preview";
+	}
+	
 	@RequestMapping(value = { "/update"},method = RequestMethod.POST)
 	public String update(HttpServletRequest request,HttpServletResponse response, ModelMap model,
 			Integer sceneId,String sceneName,String application,String semantic,Integer active,String comment,String level,String performer,String processor,String keywords) {
@@ -102,6 +122,55 @@ public class SceneController {
 		
 		sceneService.deleteScene(sceneId);
 
+		session.setAttribute(request, response, Constants.CHANNEL, "scene");
+		
+		return "redirect:/admin/scene/list";
+	}
+	@RequestMapping(value = { "/config/keywords"})
+	public String configKeywords(HttpServletRequest request,HttpServletResponse response, ModelMap model,
+			Integer sceneId) {
+		
+		Scene scene = sceneService.findScene(sceneId);
+
+		model.addAttribute(Constants.BEAN, scene);
+
+		session.setAttribute(request, response, Constants.CHANNEL, "scene");
+		
+		return "admin/scene/config/keywords";
+	}
+	@RequestMapping(value = { "/config/replys"})
+	public String configReply(HttpServletRequest request,HttpServletResponse response, ModelMap model,
+			Integer sceneId) {
+		
+		Scene scene = sceneService.findScene(sceneId);
+
+		model.addAttribute(Constants.BEAN, scene);
+
+		session.setAttribute(request, response, Constants.CHANNEL, "scene");
+		
+		return "admin/scene/config/reply";
+	}
+	@RequestMapping(value = { "/config/major"})
+	public String configMajor(HttpServletRequest request,HttpServletResponse response, ModelMap model,
+			Integer sceneId) {
+		
+		Scene scene = sceneService.findScene(sceneId);
+		
+		List<Logic> logics = logicService.findList(scene.getSceneId());
+        
+		scene.setLogics(logics);
+        
+		model.addAttribute(Constants.BEAN, scene);
+
+		session.setAttribute(request, response, Constants.CHANNEL, "scene");
+		
+		return "admin/scene/config/major";
+	}
+	@RequestMapping(value = { "/upmajor"})
+	public String updateMajor(HttpServletRequest request,HttpServletResponse response, ModelMap model,
+			Integer sceneId,String logicode) {
+		
+		sceneService.updateSceneMajor(sceneId, logicode);
 		session.setAttribute(request, response, Constants.CHANNEL, "scene");
 		
 		return "redirect:/admin/scene/list";

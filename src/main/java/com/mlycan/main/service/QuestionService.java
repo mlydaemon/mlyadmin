@@ -9,9 +9,9 @@ import com.mlycan.main.entity.Question;
 
 public interface QuestionService {
 	   
-		public List<Question>  findAll(Integer count,Integer curpage);
+		public List<Question>  findAll(String keywords,String command,String semantic,String startTime,String endTime,Integer count,Integer curpage);
 
-		public Integer findAllCount();
+		public Integer findAllCount(String keywords,String command,String semantic,String startTime,String endTime);
 		
 		public Question  findQuestion(Integer questionId);
 		

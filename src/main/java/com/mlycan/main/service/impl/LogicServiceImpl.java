@@ -103,5 +103,10 @@ public class LogicServiceImpl implements LogicService{
 		
 		return logicMapper.findLogicForTrain(robotAccount, application, semantic);
 	}
+	@Override
+	public Logic findLogicForConfig(Integer logicId) {
+		// TODO Auto-generated method stub
+		return logicMapper.findLogicForConfig(logicId);
+	}
 
 }

@@ -23,23 +23,27 @@ public class AnswerController {
 	
 	@RequestMapping(value = { "/list"})
 	public String list(HttpServletRequest request,HttpServletResponse response, ModelMap model,
-			Integer count,Integer curpage) {
+			Integer count,Integer curpage,String startTime,String endTime,String keywords,String application,String semantic) {
 		if(count ==null){
 			count = 10;
 		}
 		if(curpage ==null){
 			curpage = 1;
 		}
-		List<Answer> answers = answerService.findAll(count, curpage);
+		List<Answer> answers = answerService.findAll(startTime,endTime,keywords,application,semantic,count, curpage);
 
-		Integer  total = answerService.findAllCount();
+		Integer  total = answerService.findAllCount(startTime,endTime,keywords,application,semantic);
 		
 		model.addAttribute(Constants.BEANS, answers);
         
 		model.addAttribute(Constants.CURPAGE, curpage);
 		
 		model.addAttribute(Constants.TALPAGE, (int)Math.ceil((double)total/count));
-
+		model.addAttribute("keywords", keywords!=null?keywords:"");
+		model.addAttribute("application", application!=null?application:"");
+		model.addAttribute("semantic", semantic!=null?semantic:"");
+		model.addAttribute("startTime", startTime!=null?startTime:"");
+		model.addAttribute("endTime", endTime!=null?endTime:"");
 		session.setAttribute(request, response, Constants.CHANNEL, "answer");
 		
 		return "admin/answer/list";
@@ -58,9 +62,9 @@ public class AnswerController {
 	}
 	@RequestMapping(value = { "/update"},method = RequestMethod.POST)
 	public String update(HttpServletRequest request,HttpServletResponse response, ModelMap model,
-			Integer answerId,String account,String application,String question,String content,String command,Integer pattern) {
+			Integer answerId,String account,String application,String question,String content,String semantic,Integer pattern) {
 		
-		answerService.updateAnswer(answerId,account,application,question,content,command,pattern);
+		answerService.updateAnswer(answerId,account,application,question,content,semantic,pattern);
 
 		session.setAttribute(request, response, Constants.CHANNEL, "answer");
 		
@@ -76,9 +80,9 @@ public class AnswerController {
 	}
 	@RequestMapping(value = { "/save"},method = RequestMethod.POST)
 	public String save(HttpServletRequest request,HttpServletResponse response, ModelMap model,
-			String account,String application,String content,String command,String classify,String nextclassify,Integer pattern) {
+			String account,String application,String content,String semantic,String classify,String nextclassify,Integer pattern) {
 		
-		answerService.saveAnswer(account,application,content,content,command,pattern);
+		answerService.saveAnswer(account,application,content,content,semantic,pattern);
 
 		session.setAttribute(request, response, Constants.CHANNEL, "answer");
 		

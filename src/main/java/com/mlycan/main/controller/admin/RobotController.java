@@ -98,15 +98,16 @@ public class RobotController  extends BaseController {
 		session.setAttribute(request, response, Constants.CHANNEL, "robot");
 		return "admin/robot/trainLogicCore";
 	}
-	@RequestMapping(value = { "/trainSceneCore"})
+	@RequestMapping(value = { "/rdialog"})
 	public String trainSceneCore(HttpServletRequest request,HttpServletResponse response, ModelMap model,
 			String robotAccount,String application,String semantic) {
-		Scene scene = sceneService.findSceneForTrain(application,robotAccount);
-		 List<Logic> logics = logicService.findList(scene.getSceneId());
-		 model.addAttribute(Constants.BEAN, scene);
-		 model.addAttribute(Constants.BEANS, logics);
-		 session.setAttribute(request, response, Constants.CHANNEL, "robot");
-		return "admin/robot/trainSceneCore";
+		model.addAttribute("acount", "smoon");
+		Robot robot = robotService.findRobotByAccount("smoon");
+		 model.addAttribute(Constants.BEAN, robot);
+		 model.addAttribute("application", "MONITOR");
+		 model.addAttribute("semantic", "MONITORRETRIEVE");
+		 session.setAttribute(request, response, Constants.CHANNEL, "rdialog");
+		return "admin/robot/rdialog";
 	}
 	@RequestMapping(value = { "/edit"})
 	public String edit(HttpServletRequest request,HttpServletResponse response, ModelMap model,

@@ -14,7 +14,8 @@
         <result property="application" column="application"/>
         <result property="semantic" column="semangtic"/>
         <result property="active" column="active"/> 
-        <result property="comment" column="comment"/> 
+        <result property="comment" column="comment"/>
+        <result property="major" column="major"/>  
         <result property="level" column="level"/> 
         <result property="performer" column="performer"/> 
         <result property="processor" column="processor"/> 
@@ -29,6 +30,7 @@
 				   scen.semantic,
 				   scen.active,
 				   scen.comment,
+				   scen.major,
 				   scen.level,
 				   scen.performer,
 				   scen.processor,
@@ -50,6 +52,7 @@
                    rc.robot_id,
 				   scen.semantic,
 				   scen.active,
+				   scen.major,
 				   scen.comment
 		     from mly_scene scen
 		     left join mly_robot_scene rc on(rc.scene_id = scen.scene_id and rc.robot_id = #{robotId} and rc.status = 1)
@@ -62,6 +65,7 @@
 				   scen.application,
 				   scen.semantic,
 				   scen.active,
+				   scen.major,
 				   scen.comment
 		     from mly_scene scen
 		     left join mly_robot_scene rc on(rc.scene_id = scen.scene_id  and rc.status !=2)
@@ -77,6 +81,7 @@
 				   scen.active,
 				   scen.comment,
 				   scen.level,
+				   scen.major,
 				   scen.performer,
 				   scen.processor,
 				   scen.keywords
@@ -100,10 +105,27 @@
 				   scen.active,
 				   scen.comment,
 				   scen.level,
+				   scen.major,
 				   scen.performer,
 				   scen.processor,
 				   scen.keywords
 		     from mly_scene scen
+		     where scen.scene_id = #{sceneId}
+			]]>
+	</select>
+	<select id="findSceneForConfig"   resultMap="sceneResultMap">
+		<![CDATA[
+		     select  scen.scene_id,
+				   scen.scene_name,
+				   robot.nickname  as nickname,
+				   robot.account    as account,
+				   scen.application,
+				   scen.semantic,
+				   scen.active,
+				   scen.comment
+		     from mly_scene scen
+		     left join mly_robot_scene rc on(rc.scene_id = scen.scene_id  and rc.status !=2)
+		     left join mly_robot  robot on(robot.robot_id = rc.robot_id)
 		     where scen.scene_id = #{sceneId}
 			]]>
 	</select>
@@ -117,7 +139,6 @@
 		<![CDATA[
 		   update mly_scene scen
 		      set 
-		          scen.scene_id=#{sceneId},
 		          scen.scene_name=#{sceneName},
 		          scen.application=#{application},
 		          scen.semantic=#{semantic},
@@ -130,6 +151,14 @@
 		      where  scen.scene_id=#{sceneId} 
 			]]>
 	</update>
+	<update id="updateSceneMajor"  >
+		<![CDATA[
+		   update mly_scene scen
+		      set scen.major=#{logicode}
+		      where  scen.scene_id=#{sceneId} 
+			]]>
+	</update>
+	
 	<delete id="deleteScene">
 	<![CDATA[
 	         delete 

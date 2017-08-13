@@ -17,9 +17,14 @@ public interface SceneService {
 		
 		public Scene  findScene(Integer sceneId);
 		
+		public Scene  findSceneForConfig(Integer sceneId);
+		
 		public Integer saveScene(String sceneName,String application,String semantic,Integer active,String comment,String level,String performer,String processor,String keywords);
 		
 		public Integer updateScene(Integer  sceneId,String sceneName,String application,String semantic,Integer active,String comment,String level,String performer,String processor,String keywords);
+		
+		public Integer updateSceneMajor(Integer  sceneId,String logicode);
+
 		
 		public Integer deleteScene(Integer sceneId);
 		//机器人场景核心词库训练

@@ -9,9 +9,9 @@ import com.mlycan.main.entity.Question;
 
 public interface QuestionMapper {
 
-	public List<Question>  findAll(@Param("currentCount")Integer currentCount,@Param("count")Integer count);
+	public List<Question>  findAll(@Param("keywords")String keywords,@Param("command")String command,@Param("semantic")String semantic,@Param("startTime")String startTime,@Param("endTime")String endTime,@Param("currentCount")Integer currentCount,@Param("count")Integer count);
 
-	public Integer findAllCount();
+	public Integer findAllCount(@Param("keywords")String keywords,@Param("command")String command,@Param("semantic")String semantic,@Param("startTime")String startTime,@Param("endTime")String endTime);
 	
 	public Question  findQuestion(@Param("questionId")Integer questionId);
 	

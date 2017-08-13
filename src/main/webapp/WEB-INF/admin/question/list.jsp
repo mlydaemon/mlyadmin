@@ -35,56 +35,54 @@
 	<!-- END PAGE HEADER-->
 	<div class="row-fluid">
 	<div class="span12 booking-search">
-		<form action="${basePath}/admin/question/list" method="GET">
+		<form id="searchForm" action="${basePath}/admin/question/list" method="POST" >
+			<input id="count" name="count"  type="hidden" value="20"/>
+			<input id="curpage" name="curpage"  type="hidden" value="1"/>
 			<div class="clearfix margin-bottom-10">
-				<label>Distanation</label>
+				<label>关键词</label>
 				<div class="input-icon left">
 					<i class="icon-map-marker"></i>
-					<input class="m-wrap span12" type="text" placeholder="Canada, Malaysia, Russia ...">
+					<input id="keywords" name="keywords" value="${keywords}" class="m-wrap span12" type="text" placeholder="例如：检索,猜字谜">
 				</div>
 			</div>
 			<div class="clearfix margin-bottom-20">
 				<div class="control-group pull-left margin-right-20">
-					<label class="control-label">Check-in:</label>
+					<label class="control-label">录入时间开始:</label>
 					<div class="controls">
-						<div class="input-append date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
-							<input style="height:34px" class="span9 m-wrap m-ctrl-medium date-picker" size="16" type="text" value="12-02-2012" /><span class="add-on"><i class="icon-calendar"></i></span>
+						<div class="input-append date date-picker" data-date="2017-06-06" data-date-format="yyyy-mm-dd" data-date-viewmode="years">
+							<input id="startTime" name="startTime"  style="height:34px" class="span9 m-wrap m-ctrl-medium date-picker" size="16" type="text" value="${startTime}" placeholder="例如：2017-06-06" /><span class="add-on"><i class="icon-calendar"></i></span>
 						</div>
 					</div>
 				</div>
 				<div class="control-group pull-left">
-					<label class="control-label">Check-out:</label>
+					<label class="control-label">录入时间结束:</label>
 					<div class="controls">
-						<div class="input-append date date-picker" data-date="102/2012" data-date-format="mm/yyyy" data-date-viewmode="years" data-date-minviewmode="months">
-							<input style="height:34px" class="span9 m-wrap m-ctrl-medium date-picker" size="16" type="text" value="02/2012" /><span class="add-on"><i class="icon-calendar"></i></span>
+						<div class="input-append date date-picker" data-date="2017-06-06" data-date-format="yyyy-mm-dd" data-date-viewmode="years" data-date-minviewmode="months">
+							<input id="endTime" name="endTime"  style="height:34px" class="span9 m-wrap m-ctrl-medium date-picker" size="16" type="text" value="${endTime}" placeholder="例如：2017-06-06" /><span class="add-on"><i class="icon-calendar"></i></span>
 						</div>
 					</div>
 				</div>
 				<div class="control-group pull-left">
-					<label class="control-label">How Many:</label>
+					<label class="control-label">语义:</label>
 					<div class="controls">
 						<div class="input-icon left">
 							<i class="icon-user"></i>
-							<input style="height:34px"  class="span11 m-wrap" type="text" placeholder="1 Room, 2 Adults, 0 Children">
+							<input  id="command"  name="command" value="${command}" style="height:34px"  class="span11 m-wrap" type="text"  placeholder="例如：检索">
 						</div>
 					</div>
 				</div>
-				<div class="control-group booking-option pull-left">
-						<label class="control-label">Choose Option</label>
-						<div class="controls controls-uniform">
-							<label class="radio">
-							<input type="radio" name="optionsRadios2" value="option1" />
-							Option1
-							</label>
-							<label class="radio">
-							<input type="radio" name="optionsRadios2" value="option2" checked />
-							Option2
-							</label>  
+				<div class="control-group pull-left">
+					<label class="control-label">词库:</label>
+					<div class="controls">
+						<div class="input-icon left">
+							<i class="icon-user"></i>
+							<input  id="semantic" name="semantic" value="${semantic}" style="height:34px"  class="span11 m-wrap" type="text" placeholder="例如：MONITORRETRIEVE">
 						</div>
 					</div>
+				</div>
 			</div>
-			<button type="submit" class="btn blue btn-block">SEARCH <i class="m-icon-swapright m-icon-white"></i></button>
-		</form>
+			<button type="button"  onclick="searchQuestion('1')" class="btn blue btn-block">SEARCH <i class="m-icon-swapright m-icon-white"></i></button>
+	     </form>
 	</div>
 	<!--end booking-search-->
 	</div>
@@ -99,7 +97,7 @@
 						 <th><i class="icon-bookmark"></i>内容</th>
 						 <th><i class="icon-bookmark"></i>语义</th>
 						 <th><i class="icon-bookmark"></i>当前词库</th>
-						 <!-- <th><i class="icon-bookmark"></i>跳转词库</th> -->
+						 <th><i class="icon-bookmark"></i>录入时间</th>
 						 <!-- <th><i class="icon-bookmark"></i>模式</th> -->
 						<th></th>
 					</tr>
@@ -113,7 +111,7 @@
 							 <td>${question.content}</td> 
 							 <td>${question.command}</td> 
 							 <td>${question.classify}</td> 
-							<%--  <td>${question.nextclassify}</td>  --%>
+							<td>${question.createTime}</td> 
 							 <%-- <td>${question.pattern}</td>  --%>
 							<td><a class="btn mini green-stripe" href="${basePath}/admin/question/edit?questionId=${question.questionId}">编辑</a>|
 							<a class="btn mini green-stripe" href="${basePath}/admin/question/delete?questionId=${question.questionId}">删除</a></td>
@@ -126,19 +124,19 @@
             <div class="space5"></div>
             <div class="pagination pagination-right">
 				<ul>
-					<li class=""><a href="${basePath}/admin/question/list?curpage=1">首页</a></li> 
+					<li class=""><a href="javascript:searchQuestion('1')">首页</a></li> 
 				<c:choose>
 				   <c:when test="${curpage== '1'}">  
-				    <li><a href="${basePath}/admin/question/list?curpage=1">Prev</a></li>     
+				    <li><a href="javascript:searchQuestion('1')">Prev</a></li>     
 				   </c:when>
 				   <c:otherwise> 
-				   <li><a href="${basePath}/admin/question/list?curpage=${curpage-1}">Prev</a></li>
+				   <li><a href="javascript:searchQuestion('${curpage-1}')">Prev</a></li>
 				   </c:otherwise>
 				</c:choose>
 				<c:choose>
 				    <c:when test="${curpage+2>5}">
 						<c:forEach begin="1" end="${curpage-2>=5?5:curpage-3}" var = "page">
-							<li class="${curpage==page?'active':''}"><a href="${basePath}/admin/question/list?curpage=${page}">${page}</a></li> 
+							<li class="${curpage==page?'active':''}"><a href="javascript:searchQuestion('${page}')">${page}</a></li> 
 						</c:forEach>
 					</c:when>
 				</c:choose>
@@ -150,22 +148,22 @@
 				<c:choose>
 						<c:when test="${curpage+2<5&&curpage-2<talpage-5&&talpage>5}">
 							<c:forEach begin="${curpage-2<1?1:curpage-2}" end="${curpage+2>=talpage?talpage:5}" var = "page">
-								<li class="active"><a href="${basePath}/admin/question/list?curpage=${page}">${page}</a></li> 
+								<li class="${curpage==page?'active':''}"><a href="javascript:searchQuestion('${page}')">${page}</a></li> 
 							</c:forEach>
 						</c:when>
 						<c:when test="${curpage+2>=5&&curpage-2>=talpage-3&&talpage>5}">
 							<c:forEach begin="${curpage-2<1?1:talpage-4}" end="${curpage+2>=talpage?talpage:curpage+2}" var = "page">
-								<li class="active"><a href="${basePath}/admin/question/list?curpage=${page}">${page}</a></li> 
+								<li class="${curpage==page?'active':''}"><a href="javascript:searchQuestion('${page}')">${page}</a></li> 
 							</c:forEach>
 						</c:when>
 						<c:when test="${curpage+2>=5&&curpage-2>=talpage-3&&talpage>5}">
 							<c:forEach begin="${curpage-2<1?1:talpage-5}" end="${curpage+2>=talpage?talpage:curpage+2}" var = "page">
-								<li class="active"><a href="${basePath}/admin/question/list?curpage=${page}">${page}</a></li> 
+								<li class="${curpage==page?'active':''}"><a href="javascript:searchQuestion('${page}')">${page}</a></li> 
 							</c:forEach>
 						</c:when>
 					 <c:otherwise> 
 							 <c:forEach begin="${curpage-2<1?1:curpage-2}" end="${curpage+2>=talpage?talpage:curpage+2}" var = "page">
-								<li class="active"><a href="${basePath}/admin/question/list?curpage=${page}">${page}</a></li> 
+								<li class="${curpage==page?'active':''}"><a href="javascript:searchQuestion('${page}')">${page}</a></li> 
 							</c:forEach>
 					</c:otherwise>
 				</c:choose>
@@ -177,19 +175,19 @@
 				<c:choose>
 				    <c:when test="${curpage+2<talpage}">
 						<c:forEach begin="${curpage+2<talpage-4?talpage-4:curpage+3}" end="${talpage}" var = "page">
-							<li class="${curpage==page?'active':''}"><a href="${basePath}/admin/riddle/list?curpage=${page}">${page}</a></li> 
+							<li class="${curpage==page?'active':''}"><a href="javascript:searchQuestion('${page}')">${page}</a></li> 
 						</c:forEach>
 					</c:when>
 				</c:choose>
 				<c:choose>
 				   <c:when test="${curpage== talpage}">  
-				      <li><a href="${basePath}/admin/question/list?curpage=${talpage}">Next</a></li>     
+				      <li><a href="javascript:searchQuestion('${talpage}')">Next</a></li>     
 				   </c:when>
 				   <c:otherwise> 
-				      <li><a href="${basePath}/admin/question/list?curpage=${curpage+1}">Next</a></li>
+				      <li><a href="javascript:searchQuestion('${curpage+1}')">Next</a></li>
 				   </c:otherwise>
 				</c:choose>
-					<li class=""><a href="${basePath}/admin/question/list?curpage=${talpage}">尾页</a></li> 
+					<li class=""><a href="javascript:searchQuestion('${talpage}')">尾页</a></li> 
 				</ul>
 			</div>
 		</div>
@@ -201,5 +199,9 @@
 <script>
 	jQuery(document).ready(function() {    
 	   Search.init();
-	});
+	}); 
+	function searchQuestion(curpage){
+		$("#curpage").val(curpage);
+		$("#searchForm").submit();
+	}
 </script>		

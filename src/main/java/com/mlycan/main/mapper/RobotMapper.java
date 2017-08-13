@@ -63,4 +63,14 @@ public interface RobotMapper {
 	* @throws
 	 */
 	public Integer replaceRobotApp(@Param("robotId")Integer robotId,@Param("robotSceneId")Integer robotSceneId,@Param("status")Integer status);
+    /**
+     * 
+    * @Title: findRobotByAccount 
+    * @Description: TODO(根据账号获取机器人信息) 
+    * @param @param account
+    * @param @return    设定文件 
+    * @return Robot    返回类型 
+    * @throws
+     */
+	public Robot  findRobotByAccount(@Param("account")String account);
 }

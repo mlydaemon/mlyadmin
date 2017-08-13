@@ -56,11 +56,16 @@
 			]]>
 	</update>
 	<insert id="saveMember"  >
-	<![CDATA[
-		   insert into  mly_member(member_id,nickname,gender,birthday,intro,comefrom,qq,email,phone,mobile,portrait,signature)
-		    VALUES(#{memberId},#{nickname},#{gender},#{birthday},#{intro},
-		    #{comefrom},#{qq},#{email},#{phone},#{mobile},#{portrait},#{signature})
-			]]>
+			<if test=" memberId==null"> 
+			    insert into  mly_member(nickname,gender,birthday,intro,comefrom,qq,email,phone,mobile,portrait,signature)
+				    VALUES(#{nickname},#{gender},#{birthday},#{intro},
+				    #{comefrom},#{qq},#{email},#{phone},#{mobile},#{portrait},#{signature})
+			</if> 
+		    <if test=" memberId!=null"> 
+			    insert into  mly_member(member_id,nickname,gender,birthday,intro,comefrom,qq,email,phone,mobile,portrait,signature)
+				    VALUES(#{memberId},#{nickname},#{gender},#{birthday},#{intro},
+				    #{comefrom},#{qq},#{email},#{phone},#{mobile},#{portrait},#{signature})
+	        </if>   
 	</insert>
 	<delete id="deleteMemberByid">
 	<![CDATA[

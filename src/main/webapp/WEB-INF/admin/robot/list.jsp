@@ -83,7 +83,7 @@
 							<c:forEach var="scene" items="${robot.scenes}">
 								<tr class="scene${robot.robotId}  hiddendiv">
 								     <td></td>
-									 <td><a href="${basePath}/admin/robot/trainSceneCore?application=${scene.application}&robotAccount=${robot.account}&semantic=${scene.semantic}">${scene.sceneName}</a></td>
+									 <td>${scene.sceneName}</td>
 									 <td>${scene.application}</td>
 									 <td><c:forEach var="logic" items="${scene.logics}"><a href="${basePath}/admin/robot/trainLogicCore?application=${scene.application}&robotAccount=${robot.account}&semantic=${logic.semantic}">${logic.logicName}</a>|</c:forEach></td>
 									 <td>${scene.comment}</td>
@@ -123,22 +123,22 @@
 				<c:choose>
 						<c:when test="${curpage+2<5&&curpage-2<talpage-5&&talpage>5}">
 							<c:forEach begin="${curpage-2<1?1:curpage-2}" end="${curpage+2>=talpage?talpage:5}" var = "page">
-								<li class="active"><a href="${basePath}/admin/robot/list?curpage=${page}">${page}</a></li> 
+								<li class="${curpage==page?'active':''}"><a href="${basePath}/admin/robot/list?curpage=${page}">${page}</a></li> 
 							</c:forEach>
 						</c:when>
 						<c:when test="${curpage+2>=5&&curpage-2>=talpage-3&&talpage>5}">
 							<c:forEach begin="${curpage-2<1?1:talpage-4}" end="${curpage+2>=talpage?talpage:curpage+2}" var = "page">
-								<li class="active"><a href="${basePath}/admin/robot/list?curpage=${page}">${page}</a></li> 
+								<li class="${curpage==page?'active':''}"><a href="${basePath}/admin/robot/list?curpage=${page}">${page}</a></li> 
 							</c:forEach>
 						</c:when>
 						<c:when test="${curpage+2>=5&&curpage-2>=talpage-3&&talpage>5}">
 							<c:forEach begin="${curpage-2<1?1:talpage-5}" end="${curpage+2>=talpage?talpage:curpage+2}" var = "page">
-								<li class="active"><a href="${basePath}/admin/robot/list?curpage=${page}">${page}</a></li> 
+								<li class="${curpage==page?'active':''}"><a href="${basePath}/admin/robot/list?curpage=${page}">${page}</a></li> 
 							</c:forEach>
 						</c:when>
 					 <c:otherwise> 
 							 <c:forEach begin="${curpage-2<1?1:curpage-2}" end="${curpage+2>=talpage?talpage:curpage+2}" var = "page">
-								<li class="active"><a href="${basePath}/admin/robot/list?curpage=${page}">${page}</a></li> 
+								<li class="${curpage==page?'active':''}"><a href="${basePath}/admin/robot/list?curpage=${page}">${page}</a></li> 
 							</c:forEach>
 					</c:otherwise>
 				</c:choose>

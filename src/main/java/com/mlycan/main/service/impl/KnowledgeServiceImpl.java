@@ -21,9 +21,12 @@ public class KnowledgeServiceImpl implements KnowledgeService{
 	 @Autowired
 	 private AnswerMapper answerMapper;
 	@Override
-	public List<Knowledge> findKnowledges(String robotAccount, String application, String semantic, String questionCommand) {
-		// TODO Auto-generated method stub
-		return knowledgeMapper.findKnowledges(robotAccount, application, semantic,questionCommand);
+	public List<Knowledge> findKnowledges(Integer count,Integer curpage,String robotAccount, String application, String semantic, String questionCommand) {
+		Integer currentCount = 0;
+		if(count!=null && curpage!= null){
+			currentCount = (curpage-1)*count;
+		}
+		return knowledgeMapper.findKnowledges(count,currentCount,robotAccount, application, semantic,questionCommand);
 	}
 	@Override
 	public Integer deleteKnowledges(Integer questionId,Integer answerId) {
@@ -40,5 +43,11 @@ public class KnowledgeServiceImpl implements KnowledgeService{
 			answerMapper.deleteAnswerByparam(robotAccount, application, questionContent, answerContent, answerCommand);
 		}*/
 		return null;
+	}
+	@Override
+	public Integer findKnowledgesCount(String robotAccount, String application, String semantic,
+			String questionCommand) {
+		// TODO Auto-generated method stub
+		return knowledgeMapper.findKnowledgesCount(robotAccount, application, semantic, questionCommand);
 	}
 }

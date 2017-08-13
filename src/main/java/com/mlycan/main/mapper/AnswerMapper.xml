@@ -9,22 +9,39 @@
         <id property="answerId" column="answer_id"/> 
         <result property="account" column="account"/>
         <result property="application" column="application"/>
-        <result property="ansstion" column="ansntion"/> 
+        <result property="question" column="question"/> 
         <result property="content" column="content"/> 
-        <result property="command" column="command"/> 
+        <result property="createTime" column="create_time"/>
+        <result property="semantic" column="semantic"/> 
         <result property="pattern" column="pattern"/> 
     </resultMap>
-	
 	<select id="findAll"   resultMap="answerResultMap">
 		   select  ans.answer_id,
 				   ans.account,
 				   ans.application,
 				   ans.question,
 				   ans.content,
-				   ans.command,
+				   ans.semantic,
+				   date_format(ans.create_time, '%Y-%m-%d') as create_time,
 				   ans.pattern
 		     from mly_answer ans
-		     order by ans.question,ans.create_time
+		      where 1=1
+		     <if test="startTime!=null and startTime!=''">
+		      AND  ans.create_time >= #{startTime}
+		     </if>
+		     <if test="endTime!=null and endTime!=''">
+		      AND   #{endTime} >= ans.create_time
+		     </if>
+		     <if test="keywords!=null and keywords!=''">
+		      AND   (ans.account =#{keywords} or ans.application=#{keywords} or ans.content=#{keywords} or ans.question=#{keywords} )
+		     </if>
+		     <if test="application!=null and application!=''">
+		      AND   ans.application = #{application}
+		     </if>
+		     <if test="semantic!=null and semantic!=''">
+		      AND   ans.semantic = #{semantic} 
+		     </if>
+		     order by ans.create_time desc,ans.question
 	         <if test=" count!=null">  
                limit #{curpage},#{count}
              </if>
@@ -33,7 +50,24 @@
 		 <![CDATA[ 
 		   select count(ans.answer_id) as value
 		     from mly_answer ans 
+		      where 1=1
 		 	]]> 
+		 	
+		 	<if test="startTime!=null and startTime!=''">
+		      AND  ans.create_time >= #{startTime}
+		     </if>
+		     <if test="endTime!=null and endTime!=''">
+		      AND   #{endTime} >= ans.create_time
+		     </if>
+		     <if test="keywords!=null and keywords!=''">
+		      AND   (ans.account =#{keywords} or ans.application=#{keywords} or ans.content=#{keywords} or ans.question=#{keywords} )
+		     </if>
+		     <if test="application!=null and application!=''">
+		      AND   ans.application = #{application}
+		     </if>
+		     <if test="semantic!=null and semantic!=''">
+		      AND   ans.semantic = #{semantic} 
+		     </if>
 	</select>
 	<select id="findAnswer"   resultMap="answerResultMap">
 		<![CDATA[
@@ -42,7 +76,8 @@
 				   ans.application,
 				   ans.question,
 				   ans.content,
-				   ans.command,
+				   ans.semantic,
+				    date_format(ans.create_time, '%Y-%m-%d') as create_time,
 				   ans.pattern
 		     from mly_answer ans
 		     where ans.answer_id = #{answerId}
@@ -50,8 +85,8 @@
 	</select>
 	<insert id="saveAnswer"  >
 	<![CDATA[
-		   insert into  mly_answer(answer_id,account,application,question,content,command,pattern)
-		    VALUES(#{answerId},#{account},#{application},#{question},#{content},#{command},#{pattern})
+		   insert into  mly_answer(answer_id,account,application,question,content,semantic,pattern,create_time)
+		    VALUES(#{answerId},#{account},#{application},#{question},#{content},#{semantic},#{pattern},now())
 			]]>
 	</insert>
 	<update id="updateAnswer"  parameterType="com.mlycan.main.entity.Answer"   >
@@ -63,7 +98,8 @@
 		          ans.application=#{application},
 		          ans.question=#{question},
 		          ans.content=#{content},
-		          ans.command=#{command},
+		          ans.semantic=#{semantic},
+		          ans.create_time=now(),
 		          ans.pattern=#{pattern}
 		      where  ans.answer_id=#{answerId} 
 			]]>
@@ -82,7 +118,7 @@
 	         AND   ans.application = #{application}
 	         AND   ans.question like  concat('%', #{questionContent}, '%')
              AND   ans.content like  concat('%', #{answerContent}, '%')
-             AND   ans.command like  concat('%', #{answerCommand}, '%') 
+             AND   ans.semantic like  concat('%', #{semantic}, '%') 
 			]]>
 	</delete>
 </mapper>

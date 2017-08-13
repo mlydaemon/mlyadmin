@@ -20,7 +20,8 @@ public class Repository implements Serializable{
 	private String  semantic;//语义
 	private String  command;//命令
 	private String  content;//内容
-	private Integer  masterId;//
+	private String  code;//
+	private String  majorContent;// 
 	private String  createTime;//创建时间
 	public Integer getKnowledgeId() {
 		return knowledgeId;
@@ -58,11 +59,12 @@ public class Repository implements Serializable{
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public Integer getMasterId() {
-		return masterId;
+	
+	public String getCode() {
+		return code;
 	}
-	public void setMasterId(Integer masterId) {
-		this.masterId = masterId;
+	public void setCode(String code) {
+		this.code = code;
 	}
 	public String getCreateTime() {
 		return createTime;
@@ -70,4 +72,11 @@ public class Repository implements Serializable{
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
+	public String getMajorContent() {
+		return majorContent;
+	}
+	public void setMajorContent(String majorContent) {
+		this.majorContent = majorContent;
+	}
+	
 }

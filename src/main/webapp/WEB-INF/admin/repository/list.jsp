@@ -41,7 +41,7 @@
 						 <th><i class="icon-bookmark"></i>语义</th> 
 						 <th><i class="icon-bookmark"></i>指令</th>
 						 <!-- <th><i class="icon-bookmark"></i>内容</th> -->
-						 <th><i class="icon-bookmark"></i>主参ID</th>
+						 <th><i class="icon-bookmark"></i>主参Code</th>
 						 <!-- <th><i class="icon-bookmark"></i>创建时间</th>-->
 						<th></th>
 					</tr>
@@ -55,7 +55,7 @@
 							 <td>${repository.semantic}</td>
 							 <td>${repository.command}</td> 
 							 <%-- <td>${repository.content}</td>  --%>
-							 <td>${repository.masterId}</td> 
+							 <td>${repository.code}</td> 
 							 <%-- <td>${repository.createdTime}</td>  --%>
 							<td><a class="btn mini green-stripe" href="${basePath}/admin/repository/edit?knowledgeId=${repository.knowledgeId}">编辑</a>|
 							<a class="btn mini green-stripe" href="${basePath}/admin/repository/delete?knowledgeId=${repository.knowledgeId}">删除</a></td>

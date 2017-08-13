@@ -28,5 +28,11 @@ public class CustomerServiceImpl implements CustomerService{
 		return customermapper.findAllCount();
 		
 	}
+
+	@Override
+	public Integer updatePrint(Integer customerId) {
+		// TODO Auto-generated method stub
+		return customermapper.updatePrint(customerId);
+	}
 	
 }

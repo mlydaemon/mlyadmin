@@ -23,17 +23,17 @@ public class AnswerServiceImpl implements AnswerService{
     private AnswerMapper answerMapper;
 	
 	@Override
-	public List<Answer> findAll(Integer count, Integer curpage) {
+	public List<Answer> findAll(String startTime,String endTime,String keywords,String application,String semantic,Integer count, Integer curpage) {
 		// TODO Auto-generated method stub
 		Integer currentCount = 0;
 		if(count!=null && curpage!= null){
 			currentCount = (curpage-1)*count;
 		}
-		return answerMapper.findAll(count, currentCount);
+		return answerMapper.findAll(startTime,endTime,keywords,application,semantic,count, currentCount);
 	}
 
-	public Integer findAllCount(){
-		return answerMapper.findAllCount();
+	public Integer findAllCount(String startTime,String endTime,String keywords,String application,String semantic){
+		return answerMapper.findAllCount(startTime,endTime,keywords,application,semantic);
 	}
 	
 	@Override
@@ -43,18 +43,18 @@ public class AnswerServiceImpl implements AnswerService{
 	}
 	
 	@Override
-	public Integer saveAnswer(String account,String application,String question,String content,String command,Integer pattern) {
+	public Integer saveAnswer(String account,String application,String question,String content,String semantic,Integer pattern) {
 		Answer answer = new Answer();
 		answer.setAccount(account);
 		answer.setApplication(application);
 		answer.setQuestion(question);
 		answer.setContent(content);
-		answer.setCommand(command);
+		answer.setSemantic(semantic);
 		answer.setPattern(pattern);
 		return answerMapper.saveAnswer(answer);
 	}
 	@Override
-	public Integer updateAnswer(Integer  answerId,String account,String application,String question,String content,String command,Integer  pattern) {
+	public Integer updateAnswer(Integer  answerId,String account,String application,String question,String content,String semantic,Integer  pattern) {
 		
 		Answer answer = answerMapper.findAnswer(answerId);
 		if(answer == null){
@@ -72,8 +72,8 @@ public class AnswerServiceImpl implements AnswerService{
 		if(content !=null){
 			answer.setContent(content);
 		}
-		if(command !=null){
-			answer.setCommand(command);
+		if(semantic !=null){
+			answer.setSemantic(semantic);
 		}
 		if(pattern !=null){
 			answer.setPattern(pattern);

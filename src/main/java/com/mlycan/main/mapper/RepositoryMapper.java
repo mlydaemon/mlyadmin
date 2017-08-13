@@ -16,8 +16,6 @@ public interface RepositoryMapper {
 	
 	public Integer saveRepository(Repository repository);
 	
-	public Integer saveRiddleToKnowledge(List<String> riddle);
-	
 	public Integer updateRepository(Repository repository);
 	
 	public Integer deleteRepository(@Param("knowledgeId")Integer knowledgeId);

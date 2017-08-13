@@ -42,12 +42,9 @@
 						<th></th>
 						 <th><i class="icon-bookmark"></i>应用编码</th>
 						 <th><i class="icon-bookmark"></i>核心词库</th>
-						 <th><i class="icon-bookmark"></i>是否启用</th>
-						 <!-- <th><i class="icon-bookmark"></i>备注</th> -->
 						 <th><i class="icon-bookmark"></i>等级</th>
-						<!--  <th><i class="icon-bookmark"></i>执行者</th> -->
-						 <th><i class="icon-bookmark"></i>处理者</th>
 						 <th><i class="icon-bookmark"></i>关键词</th>
+						  <th><i class="icon-bookmark"></i>是否启用</th>
 						<th></th>
 					</tr>
 				</thead>
@@ -59,15 +56,29 @@
 							 <td></td>
 							 <td>${scene.application}</td> 
 							 <td>${scene.semantic}</td> 
-							 <td>${scene.active==1?"启用":"禁用"}</td> 
-							 <%-- <td>${scene.comment}</td>  --%>
 							 <td>${scene.level}</td> 
-							 <%-- <td>${scene.performer}</td>  --%>
-							 <td>${scene.processor}</td> 
-							 <td>${scene.keywords}</td> 
-							<td><a class="btn mini green-stripe" href="${basePath}/admin/scene/edit?sceneId=${scene.sceneId}">编辑</a>|
-							<a class="btn mini green-stripe" href="${basePath}/admin/scene/delete?sceneId=${scene.sceneId}">删除</a>
-							<a class="btn mini green-stripe" href="${basePath}/admin/repository/add?sceneId=${scene.sceneId}">添加知识库</a></td>
+							 <td>${scene.keywords}</td>
+							  <td>${scene.active==1?"启用":"禁用"}</td> 
+							 <td>
+							     <div class="btn-group">
+									  <button class="btn red dropdown-toggle" data-toggle="dropdown">操作 <i class="icon-angle-down"></i></button>
+									  <ul class="dropdown-menu" >
+									      <li><a href="${basePath}/admin/scene/preview?sceneId=${scene.sceneId}">预览</a></li>
+										  <li><a href="${basePath}/admin/scene/edit?sceneId=${scene.sceneId}">编辑</a></li>
+										  <li><a href="${basePath}/admin/scene/delete?sceneId=${scene.sceneId}">删除</a></li>
+										  <li class="divider"></li>
+										  <c:if  test="${scene.major!=null}">
+										  	 <li><a href="${basePath}/admin/repository/add?sceneId=${scene.sceneId}">添加知识库</a></li>
+										  </c:if>
+										  <c:if  test="${scene.major==null}">
+										  <li style="background-color: #d8d8d8;"><a>添加知识库</a></li>
+										  </c:if>
+										  <li><a href="${basePath}/admin/scene/config/major?sceneId=${scene.sceneId}">MAJOR配置</a></li>
+										  <li><a href="${basePath}/admin/scene/config/keywords?sceneId=${scene.sceneId}">语义配置</a></li>
+										  <li><a href="${basePath}/admin/scene/config/replys?sceneId=${scene.sceneId}">应答配置</a></li>
+									  </ul>
+								  </div>
+							</td> 
 						</tr>
 						<div class="childChannels" style="display: hidden;">
 							<c:forEach var="logic" items="${scene.logics}">
@@ -76,9 +87,10 @@
 								 <td>${logic.logicName}</td>
 								 <td>${logic.code}</td> 
 								 <td>${logic.semantic}</td> 
+							     <td>${scene.major eq logic.code?"MAJOR":""}</td>
+								 <td></td>
 								 <td>启用</td>
-								 <td><a  class="btn mini green-stripe" href="#">启用</a>|
-							         <a class="btn mini green-stripe" href="#">禁用</a></td>
+								 <td></td>
 							 </tr>
 							</c:forEach>
 						</div>
@@ -103,22 +115,22 @@
 				<c:choose>
 						<c:when test="${curpage+2<5&&curpage-2<talpage-5&&talpage>5}">
 							<c:forEach begin="${curpage-2<1?1:curpage-2}" end="${curpage+2>=talpage?talpage:5}" var = "page">
-								<li class="active"><a href="${basePath}/admin/scene/list?curpage=${page}">${page}</a></li> 
+								<li class="${curpage==page?'active':''}"><a href="${basePath}/admin/scene/list?curpage=${page}">${page}</a></li> 
 							</c:forEach>
 						</c:when>
 						<c:when test="${curpage+2>=5&&curpage-2>=talpage-3&&talpage>5}">
 							<c:forEach begin="${curpage-2<1?1:talpage-4}" end="${curpage+2>=talpage?talpage:curpage+2}" var = "page">
-								<li class="active"><a href="${basePath}/admin/scene/list?curpage=${page}">${page}</a></li> 
+								<li class="${curpage==page?'active':''}"><a href="${basePath}/admin/scene/list?curpage=${page}">${page}</a></li> 
 							</c:forEach>
 						</c:when>
 						<c:when test="${curpage+2>=5&&curpage-2>=talpage-3&&talpage>5}">
 							<c:forEach begin="${curpage-2<1?1:talpage-5}" end="${curpage+2>=talpage?talpage:curpage+2}" var = "page">
-								<li class="active"><a href="${basePath}/admin/scene/list?curpage=${page}">${page}</a></li> 
+								<li class="${curpage==page?'active':''}"><a href="${basePath}/admin/scene/list?curpage=${page}">${page}</a></li> 
 							</c:forEach>
 						</c:when>
 					 <c:otherwise> 
 							 <c:forEach begin="${curpage-2<1?1:curpage-2}" end="${curpage+2>=talpage?talpage:curpage+2}" var = "page">
-								<li class="active"><a href="${basePath}/admin/scene/list?curpage=${page}">${page}</a></li> 
+								<li class="${curpage==page?'active':''}"><a href="${basePath}/admin/scene/list?curpage=${page}">${page}</a></li> 
 							</c:forEach>
 					</c:otherwise>
 				</c:choose>

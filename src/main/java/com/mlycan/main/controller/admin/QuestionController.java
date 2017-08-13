@@ -23,20 +23,25 @@ public class QuestionController {
 	
 	@RequestMapping(value = { "/list"})
 	public String list(HttpServletRequest request,HttpServletResponse response, ModelMap model,
-			Integer count,Integer curpage) {
+			Integer count,Integer curpage,String startTime,String endTime,String keywords,String command,String semantic) {
 		if(count ==null){
 			count = 10;
 		}
 		if(curpage ==null){
 			curpage = 1;
 		}
-		List<Question> questions = questionService.findAll(count, curpage);
+		List<Question> questions = questionService.findAll(keywords,command,semantic,startTime,endTime,count, curpage);
 
-		Integer  total = questionService.findAllCount();
+		Integer  total = questionService.findAllCount(keywords,command,semantic,startTime,endTime);
 		
 		model.addAttribute(Constants.BEANS, questions);
         
 		model.addAttribute(Constants.CURPAGE, curpage);
+		model.addAttribute("keywords", keywords!=null?keywords:"");
+		model.addAttribute("command", command!=null?command:"");
+		model.addAttribute("semantic", semantic!=null?semantic:"");
+		model.addAttribute("startTime", startTime!=null?startTime:"");
+		model.addAttribute("endTime", endTime!=null?endTime:"");
 		
 		model.addAttribute(Constants.TALPAGE, (int)Math.ceil((double)total/count));
 

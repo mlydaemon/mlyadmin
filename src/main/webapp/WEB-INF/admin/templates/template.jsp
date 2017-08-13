@@ -59,19 +59,19 @@
 						<li class="${channel eq 'repository'?'active':''}"><a href="${basePath}/admin/repository/list.html">知识库管理</a></li>
 					</ul>
 				</li>
-				<li class=" ${((channel eq 'question')or(channel eq 'logic')or(channel eq 'scene')or(channel eq 'robot')or(channel eq 'answer'))?'active':''}">
+				<li class=" ${((channel eq 'rdialog')or(channel eq 'question')or(channel eq 'logic')or(channel eq 'scene')or(channel eq 'robot')or(channel eq 'answer'))?'active':''}">
 					<a href="charts.html">
 					<!-- <a href="${basePath}/admin/task/list.html"> -->
 					<i class="icon-group"></i> 
 					<span class="title">机器人管理</span>
 					<span class=" arrow "></span>
 					</a>
-						 <ul class="sub-menu">
+						<ul class="sub-menu">
 						<li class="${channel eq 'robot'?'active':''}"><a href="${basePath}/admin/robot/list.html">信息管理</a></li>
 						<li class="${channel eq 'scene'?'active':''}"><a href="${basePath}/admin/scene/list.html">场景管理</a></li>
 						<li class="${channel eq 'logic'?'active':''}"><a href="${basePath}/admin/logic/list.html">逻辑管理</a></li>
-						<%-- <li class="${channel eq 'sceneLogic'?'active':''}"><a href="${basePath}/admin/sceneLogic/list.html">场景逻辑管理</a></li> --%>
-						<li class="${channel eq 'question'?'active':''}"><a href="${basePath}/admin/question/list.html">语义管理</a></li>
+                        <li class="${channel eq 'rdialog'?'active':''}"><a href="${basePath}/admin/robot/rdialog.html">对白管理</a></li>            					
+                        <li class="${channel eq 'question'?'active':''}"><a href="${basePath}/admin/question/list.html">语义管理</a></li>
 						<li class="${channel eq 'answer'?'active':''}"><a href="${basePath}/admin/answer/list.html">应答管理</a></li>
 						<%-- <li class="${channel eq 'application'?'active':''}"><a href="${basePath}/admin/application/list.html">应用管理</a></li> --%>
 					    </ul> 

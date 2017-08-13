@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.mlycan.common.web.Constants;
 import com.mlycan.common.web.SessionProvider;
 import com.mlycan.main.controller.BaseController;
 import com.mlycan.main.entity.Knowledge;
@@ -28,7 +29,7 @@ import com.mlycan.main.service.RobotService;
 public class QATrainController extends BaseController {
 	@RequestMapping(value = { "/achieve" },method = RequestMethod.POST)
 	public void achieve(HttpServletRequest request,HttpServletResponse response, ModelMap model,
-			 String robotAccount, String application, String semantic, String questionCommand) {
+			Integer count,Integer curpage,String robotAccount, String application, String semantic, String questionCommand) {
 		Map<String,Object> remap = new HashMap<String,Object>();
 		if(StringUtils.isBlank(robotAccount)||StringUtils.isBlank(application)||StringUtils.isBlank(semantic)){
 			remap.put("success", 0);
@@ -37,8 +38,12 @@ public class QATrainController extends BaseController {
 			questionCommand = null;
 		}
 		remap.put("success", 1);
-		List<Knowledge>  knowledges = knowledgeService.findKnowledges(robotAccount, application, semantic,questionCommand);
+		List<Knowledge>  knowledges = knowledgeService.findKnowledges(count,curpage,robotAccount, application, semantic,questionCommand);
+		Integer  total = knowledgeService.findKnowledgesCount(robotAccount, application, semantic,questionCommand);
 		remap.put("knowledges", knowledges);
+		if(total!=null&&count !=null){
+			remap.put("totalPage", (int)Math.ceil((double)total/count));
+		}
 		writeObject(response,remap);
 	}
 	/**
@@ -73,7 +78,7 @@ public class QATrainController extends BaseController {
 			String robotAccount,String application,String semantic,String  questionContent,
 			String  answerContent,String  answerCommand) {
 
-		answerService.saveAnswer(robotAccount,application,questionContent,answerContent,answerCommand,0);
+		answerService.saveAnswer(robotAccount,application,questionContent,answerContent,semantic,0);
 		Map<String,Object> remap = new HashMap<String,Object>();
 		remap.put("success", 1);
 	    writeObject(response,remap);

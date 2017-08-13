@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace必须是DAO接口的全类名  -->
+<mapper namespace="com.mlycan.main.mapper.ReplyMapper">
+	<resultMap type="com.mlycan.main.entity.Reply" id="replyResultMap"> 
+        <id property="replyId" column="reply_id"/> 
+        <result property="application" column="application"/> 
+        <result property="semantic" column="semantic"/> 
+        <result property="keyword" column="keyword"   /> 
+        <result property="content" column="content"   /> 
+        <result property="precision" column="sprecision"/> 
+        <result property="remark" column="remark"/> 
+    </resultMap>
+	<select id="findList"  resultMap="replyResultMap">
+		   select reply.reply_id,
+		          reply.application,
+		          reply.semantic,
+		          reply.keyword,
+		          reply.content,
+		          reply.sprecision,
+		          reply.remark
+		      from  mly_robot_reply reply 
+		       where reply.application = #{application}
+	            AND reply.semantic = #{semantic}
+	</select>
+	<insert id="replaceReply">
+		<![CDATA[
+          replace into mly_robot_reply(application,semantic,keyword,content,sprecision,remark,create_time) 
+           VALUES( #{application},#{semantic},#{keyword},#{content},#{precision},#{remark},now())
+	    ]]>
+	</insert>
+	<insert id="deleteReply">
+		<![CDATA[
+	         delete 
+	         from mly_robot_reply 
+	         where reply_id=#{replyId} 
+			]]>
+	</insert>
+</mapper>

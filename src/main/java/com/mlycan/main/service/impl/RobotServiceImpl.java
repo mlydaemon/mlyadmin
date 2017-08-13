@@ -110,4 +110,10 @@ public class RobotServiceImpl implements RobotService{
 		return robotMapper.replaceRobotApp(robotId, robotSceneId, status);
 	}
 
+	@Override
+	public Robot findRobotByAccount(String account) {
+		// TODO Auto-generated method stub
+		return robotMapper.findRobotByAccount(account);
+	}
+
 }

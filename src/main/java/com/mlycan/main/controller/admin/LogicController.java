@@ -48,6 +48,18 @@ public class LogicController extends BaseController{
 		logger.debug("Exit LogicController:list");
 		return "admin/logic/list";
 	}
+	@RequestMapping(value = { "/preview"})
+	public String preview(HttpServletRequest request,HttpServletResponse response, ModelMap model,
+			Integer logicId) {
+		
+		Logic logic = logicService.findLogicForConfig(logicId);
+
+		model.addAttribute(Constants.BEAN, logic);
+
+		session.setAttribute(request, response, Constants.CHANNEL, "logic");
+		
+		return "admin/logic/preview";
+	}
 	@RequestMapping(value = { "/edit"})
 	public String edit(HttpServletRequest request,HttpServletResponse response, ModelMap model,
 			Integer logicId) {
@@ -108,6 +120,30 @@ public class LogicController extends BaseController{
 		
 		logger.debug("Exit LogicController:delete");
 		return "redirect:/admin/logic/list";
+	}
+	@RequestMapping(value = { "/config/keywords"})
+	public String configKeywords(HttpServletRequest request,HttpServletResponse response, ModelMap model,
+			Integer logicId) {
+		
+		Logic logic = logicService.findLogicForConfig(logicId);
+
+		model.addAttribute(Constants.BEAN, logic);
+
+		session.setAttribute(request, response, Constants.CHANNEL, "logic");
+		
+		return "admin/logic/config/keywords";
+	}
+	@RequestMapping(value = { "/config/replys"})
+	public String configReply(HttpServletRequest request,HttpServletResponse response, ModelMap model,
+			Integer logicId) {
+		
+		Logic logic = logicService.findLogicForConfig(logicId);
+
+		model.addAttribute(Constants.BEAN, logic);
+
+		session.setAttribute(request, response, Constants.CHANNEL, "logic");
+		
+		return "admin/logic/config/reply";
 	}
 	@Autowired
 	private LogicService logicService;

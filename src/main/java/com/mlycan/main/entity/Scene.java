@@ -25,6 +25,7 @@ public class Scene implements Serializable{
 	private Integer  active;//是否启用
 	private String  comment;//备注
 	private String  level;//等级
+	private String  major;//等级
 	private String  performer;//执行者
 	private String  processor;//处理者
 	private String  keywords;//关键字
@@ -113,6 +114,12 @@ public class Scene implements Serializable{
 	}
 	public void setKeywords(String keywords) {
 		this.keywords = keywords;
+	}
+	public String getMajor() {
+		return major;
+	}
+	public void setMajor(String major) {
+		this.major = major;
 	}
 	
 }

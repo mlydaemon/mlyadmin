@@ -54,6 +54,8 @@ public interface RobotService {
 		 */
 		public Integer saveRobotApp(Integer robotId,Integer robotSceneId,Integer status);
 		
+		public Robot  findRobotByAccount(String account);
+		
 }
 
 

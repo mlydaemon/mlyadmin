@@ -58,9 +58,20 @@
 							<td>${logic.semantic}</td>
 							 <td>${logic.code}</td> 
 							 <td>${logic.comment}</td> 
-							 <td>${logic.keywords}</td> 
-							<td><a class="btn mini green-stripe" href="${basePath}/admin/logic/edit?logicId=${logic.logicId}">编辑</a>|
-							<a class="btn mini green-stripe" href="${basePath}/admin/logic/delete?logicId=${logic.logicId}">删除</a></td>
+							 <td>${logic.keywords}</td>
+							 <td>
+							     <div class="btn-group">
+									  <button class="btn red dropdown-toggle" data-toggle="dropdown">操作 <i class="icon-angle-down"></i></button>
+									  <ul class="dropdown-menu" >
+									      <li><a href="${basePath}/admin/logic/preview?logicId=${logic.logicId}">预览</a></li>
+										  <li><a href="${basePath}/admin/logic/edit?logicId=${logic.logicId}">编辑</a></li>
+										  <li><a href="${basePath}/admin/logic/delete?logicId=${logic.logicId}">删除</a></li>
+										  <li class="divider"></li>
+										  <li><a href="${basePath}/admin/logic/config/keywords?logicId=${logic.logicId}">语义配置</a></li>
+										  <li><a href="${basePath}/admin/logic/config/replys?logicId=${logic.logicId}">应答配置</a></li>
+									  </ul>
+								  </div>
+							</td>  
 						</tr>
 					</c:forEach>
 					
@@ -94,22 +105,22 @@
 				<c:choose>
 						<c:when test="${curpage+2<5&&curpage-2<talpage-5&&talpage>5}">
 							<c:forEach begin="${curpage-2<1?1:curpage-2}" end="${curpage+2>=talpage?talpage:5}" var = "page">
-								<li class="active"><a href="${basePath}/admin/logic/list?curpage=${page}">${page}</a></li> 
+								<li class="${curpage==page?'active':''}"><a href="${basePath}/admin/logic/list?curpage=${page}">${page}</a></li> 
 							</c:forEach>
 						</c:when>
 						<c:when test="${curpage+2>=5&&curpage-2>=talpage-3&&talpage>5}">
 							<c:forEach begin="${curpage-2<1?1:talpage-4}" end="${curpage+2>=talpage?talpage:curpage+2}" var = "page">
-								<li class="active"><a href="${basePath}/admin/logic/list?curpage=${page}">${page}</a></li> 
+								<li class="${curpage==page?'active':''}"><a href="${basePath}/admin/logic/list?curpage=${page}">${page}</a></li> 
 							</c:forEach>
 						</c:when>
 						<c:when test="${curpage+2>=5&&curpage-2>=talpage-3&&talpage>5}">
 							<c:forEach begin="${curpage-2<1?1:talpage-5}" end="${curpage+2>=talpage?talpage:curpage+2}" var = "page">
-								<li class="active"><a href="${basePath}/admin/logic/list?curpage=${page}">${page}</a></li> 
+								<li class="${curpage==page?'active':''}"><a href="${basePath}/admin/logic/list?curpage=${page}">${page}</a></li> 
 							</c:forEach>
 						</c:when>
 					 <c:otherwise> 
 							 <c:forEach begin="${curpage-2<1?1:curpage-2}" end="${curpage+2>=talpage?talpage:curpage+2}" var = "page">
-								<li class="active"><a href="${basePath}/admin/logic/list?curpage=${page}">${page}</a></li> 
+								<li class="${curpage==page?'active':''}"><a href="${basePath}/admin/logic/list?curpage=${page}">${page}</a></li> 
 							</c:forEach>
 					</c:otherwise>
 				</c:choose>
