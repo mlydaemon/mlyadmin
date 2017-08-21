@@ -70,7 +70,7 @@
 									<label class="control-label" >类型</label>
 									<div class="controls">
 										<select name="speciesId"  class="span12 m-wrap" tabindex="1">
-										<option value="0">选择类型</option>
+											<option value="0">选择类型</option>
 											<c:forEach var="species" items="${beans}"> 
 										       <option value="${species.speciesId}">${species.speciesName}(${species.parentName})</option>
 										　　</c:forEach>											

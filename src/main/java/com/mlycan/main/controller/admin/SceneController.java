@@ -38,7 +38,7 @@ public class SceneController   extends BaseController {
 	public String list(HttpServletRequest request,HttpServletResponse response, ModelMap model,
 			Integer count,Integer curpage) {
 		if(count ==null){
-			count = 10;
+			count = 50;
 		}
 		if(curpage ==null){
 			curpage = 1;
@@ -108,9 +108,9 @@ public class SceneController   extends BaseController {
 	}
 	@RequestMapping(value = { "/save"},method = RequestMethod.POST)
 	public String save(HttpServletRequest request,HttpServletResponse response, ModelMap model,
-			String sceneName,String application,String semantic,Integer active,String comment,String level,String perfomer,String processor,String keywords) {
+			String sceneName,String application,String semantic,Integer active,String comment,String level,String performer,String processor,String keywords) {
 		
-		sceneService.saveScene(sceneName,application,semantic,active,comment,level,perfomer,processor,keywords);
+		sceneService.saveScene(sceneName,application,semantic,active,comment,level,performer,processor,keywords);
 
 		session.setAttribute(request, response, Constants.CHANNEL, "scene");
 		

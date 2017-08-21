@@ -29,7 +29,7 @@ public class LogicController extends BaseController{
 			String sceneName,Integer count,Integer curpage) {
 		logger.debug("Enter LogicController:list;parameter:sceneName="+sceneName+",count="+count+",curpage="+curpage);
 		if(count ==null){
-			count = 10;
+			count = 50;
 		}
 		if(curpage ==null){
 			curpage = 1;

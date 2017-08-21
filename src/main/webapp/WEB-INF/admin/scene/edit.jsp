@@ -97,7 +97,12 @@
 								<div class="control-group">
 									<label class="control-label" >等级</label>
 									<div class="controls">
-										<input type="text"  name="level"  value="${bean.level}"  class="m-wrap span12" placeholder="例如：SLAVE">
+									     <select name="level" class="span12 m-wrap" tabindex="1">
+											<option <c:if test="${bean.level eq 'MASTER'}">selected="selected"</c:if> value="MASTER">MASTER</option>
+											<option <c:if test="${bean.level eq 'SLAVE'}">selected="selected"</c:if> value="SLAVE">SLAVE</option>
+											<option <c:if test="${bean.level eq 'DAEMON'}">selected="selected"</c:if>  value="DAEMON">DAEMON</option>
+											<option <c:if test="${bean.level eq 'DEMAND'}">selected="selected"</c:if>  value="DEMAND">DEMAND</option>
+										 </select>
 									</div>
 								</div>
 							</div> 

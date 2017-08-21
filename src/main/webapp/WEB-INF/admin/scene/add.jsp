@@ -95,7 +95,12 @@
 								<div class="control-group">
 									<label class="control-label" >等级</label>
 									<div class="controls">
-										<input type="text"  name="level"   class="m-wrap span12"  placeholder="例如：SLAVE">
+										   <select name="level" class="span12 m-wrap" tabindex="1">
+												<option  value="MASTER">MASTER</option>
+												<option value="SLAVE">SLAVE</option>
+												<option  value="DAEMON">DAEMON</option>
+												<option  value="DEMAND">DEMAND</option>
+											</select>
 									</div>
 								</div>
 							</div> 
@@ -103,7 +108,7 @@
 								<div class="control-group">
 									<label class="control-label" >主要逻辑</label>
 									<div class="controls">
-										<input type="text"  name="major"   class="m-wrap span12"  placeholder="例如：SLAVE">
+										<input type="text"  name="major"   class="m-wrap span12"  placeholder="例如：CNAME">
 									</div>
 								</div>
 							</div> 

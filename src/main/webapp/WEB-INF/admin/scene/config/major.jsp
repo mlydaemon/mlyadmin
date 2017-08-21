@@ -91,6 +91,7 @@
 								<label class="control-label" >MAJOR逻辑</label>
 								<div class="controls">
 								   <select name="logicode"  class="span12 m-wrap" tabindex="1">
+								       <option value="">选择逻辑</option>
 									   <c:forEach var="logic" items="${bean.logics}"> 
 										       <option <c:if test="${bean.major eq logic.code}" >selected="selected"</c:if> value="${logic.code}">${logic.logicName}(${logic.command}):${logic.comment}</option>
 										</c:forEach>	

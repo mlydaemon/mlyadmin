@@ -48,7 +48,7 @@
 		     <if test="sceneName!=null">  
                where sce.scene_name=#{sceneName}
              </if>
-               order by log.scene_id
+               order by log.create_time desc,log.logic_name
 	         <if test=" count!=null">  
                limit #{curpage},#{count}
              </if>

@@ -132,7 +132,7 @@
 				<c:choose>
 				    <c:when test="${curpage+2<talpage}">
 						<c:forEach begin="${curpage+2<talpage-4?talpage-4:curpage+3}" end="${talpage}" var = "page">
-							<li class="${curpage==page?'active':''}"><a href="${basePath}/admin/riddle/list?curpage=${page}">${page}</a></li> 
+							<li class="${curpage==page?'active':''}"><a href="${basePath}/admin/logic/list?curpage=${page}">${page}</a></li> 
 						</c:forEach>
 					</c:when>
 				</c:choose>
