@@ -1,6 +1,7 @@
 
 
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -22,8 +23,233 @@ import com.mlycan.main.service.UserService;
 import com.mlycan.main.util.ExcelUtil;
 
 public class InitKmowledgeMain {
-
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UnsupportedEncodingException {
+		 
+		initMonitor();
+	}
+	public static void initMonitor() throws UnsupportedEncodingException {
+		ApplicationContext context = new ClassPathXmlApplicationContext("appContext.xml");
+		 RepositoryService repositoryService = context.getBean("repositoryService", RepositoryService.class);
+		 // TODO Auto-generated method stub
+		 //4.语义库中场景关键词  有逻辑 有词库	
+	     InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream("monitor.xls");
+		 ExcelUtil eu = new ExcelUtil();
+	     List<Object> ls =  eu.importDataFromExcel(new MonitorBean(), in, "monitor.xls");
+		 int count=1;
+	     for(Object item : ls){
+	    	 MonitorBean pb = (MonitorBean) item; 
+	    	 repositoryService.saveRepository("smoon", "MONITOR", "MONITORRETRIEVE", "检索",
+		 			 pb.getTitle(), String.valueOf(pb.getTitle().hashCode()));
+	    	 repositoryService.saveRepository("smoon", "MONITOR", "MONITORREPLY", "应答",
+		 			 pb.getReply(), String.valueOf(pb.getTitle().hashCode()));
+	     }
+	}
+	public static void initPoetry() throws UnsupportedEncodingException {
+		ApplicationContext context = new ClassPathXmlApplicationContext("appContext.xml");
+		 RepositoryService repositoryService = context.getBean("repositoryService", RepositoryService.class);
+		 // TODO Auto-generated method stub
+		 //4.语义库中场景关键词  有逻辑 有词库	
+	     InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream("poetry.xls");
+		 ExcelUtil eu = new ExcelUtil();
+	     List<Object> ls =  eu.importDataFromExcel(new PoetryBean(), in, "poetry.xls");
+		 int count=1;
+	     for(Object item : ls){
+	    	 PoetryBean pb = (PoetryBean) item;
+		 	 System.out.println("古诗词"+(count++)+":"+pb.getTitle());
+		 	 repositoryService.saveRepository("smoon", "POETRY", "POETRYTITLE", "标题",
+		 			 pb.getTitle(), String.valueOf(pb.getTitle().hashCode()));
+		 	if(StringUtils.isNotBlank(pb.getAuthor())){
+		 		repositoryService.saveRepository("smoon", "POETRY", "POETRYAUTHOR", "作者",
+			 			 pb.getAuthor(), String.valueOf(pb.getTitle().hashCode()));
+		 	 }
+		 	if(StringUtils.isNotBlank(pb.getType())){
+		 		repositoryService.saveRepository("smoon", "POETRY", "POETRYTYPE", "类型",
+			 			 pb.getType(), String.valueOf(pb.getTitle().hashCode()));
+		 	 }
+		 	if(StringUtils.isNotBlank(pb.getOriginal())){
+		 		repositoryService.saveRepository("smoon", "POETRY", "POETRYORIGINAL", "原文",
+			 			 pb.getOriginal(), String.valueOf(pb.getTitle().hashCode()));
+		 	 }
+		 	if(StringUtils.isNotBlank(pb.getAnnotation())){
+		 		repositoryService.saveRepository("smoon", "POETRY", "POETRYANNOTATION", "注释",
+			 			 pb.getAnnotation(), String.valueOf(pb.getTitle().hashCode()));
+		 	 }
+		 	if(StringUtils.isNotBlank(pb.getTranslation())){
+		 		repositoryService.saveRepository("smoon", "POETRY", "POETRYTRANSLATION", "译文",
+			 			 pb.getTranslation(), String.valueOf(pb.getTitle().hashCode()));
+		 	 }
+		 	if(StringUtils.isNotBlank(pb.getAppreciation())){
+		 		repositoryService.saveRepository("smoon", "POETRY", "POETRYAPPRECIATION", "鉴赏",
+			 			 pb.getAppreciation(), String.valueOf(pb.getTitle().hashCode()));
+		 	 }
+	     }
+	}
+	public static void initIdiom() throws UnsupportedEncodingException {
+		ApplicationContext context = new ClassPathXmlApplicationContext("appContext.xml");
+		 RepositoryService repositoryService = context.getBean("repositoryService", RepositoryService.class);
+		 // TODO Auto-generated method stub
+		 //4.语义库中场景关键词  有逻辑 有词库	
+	     InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream("idoim.xls");
+		 ExcelUtil eu = new ExcelUtil();
+	     List<Object> ls =  eu.importDataFromExcel(new IdiomBean(), in, "idoim.xls");
+		 int count=1;
+	     for(Object item : ls){
+	    	 IdiomBean pb = (IdiomBean) item;
+		 	 System.out.println("成语"+(count++)+":"+pb.getCname());
+		 	 repositoryService.saveRepository("smoon", "IDIOM", "IDIOMCNAME", "名称",
+		 			 pb.getCname(), String.valueOf(pb.getCname().hashCode()));
+		 	if(StringUtils.isNotBlank(pb.getSpell())){
+		 		repositoryService.saveRepository("smoon", "IDIOM", "IDIOMSPELL", "拼音",
+			 			 pb.getSpell(), String.valueOf(pb.getCname().hashCode()));
+		 	 }
+		 	if(StringUtils.isNotBlank(pb.getJspell())){
+		 		repositoryService.saveRepository("smoon", "IDIOM", "IDIOMJSPELL", "简拼",
+			 			 pb.getJspell(), String.valueOf(pb.getCname().hashCode()));
+		 	 }
+		 	 if(StringUtils.isNotBlank(pb.getSynonyms())){
+		 		repositoryService.saveRepository("smoon", "IDIOM", "IDIOMSYNONYMS", "近义词",
+		 				pb.getSynonyms().replace("&nbsp;", "").substring(0,pb.getSynonyms().replace("&nbsp;", "").length()-1>8000?8000:pb.getSynonyms().replace("&nbsp;", "").length()-2), String.valueOf(pb.getCname().hashCode()));
+		 	 }
+		 	if(StringUtils.isNotBlank(pb.getAntonym())){
+		 		repositoryService.saveRepository("smoon", "IDIOM", "IDIOMANTONYM", "反义词",
+			 			 pb.getAntonym().replace("&nbsp;", "").trim(), String.valueOf(pb.getCname().hashCode()));
+		 	 };//
+		 	if(StringUtils.isNotBlank(pb.getExplain())){
+		 		repositoryService.saveRepository("smoon", "IDIOM", "IDIOMEXPLAIN", "解释",
+			 			 pb.getExplain().replace("&nbsp;", "").trim(), String.valueOf(pb.getCname().hashCode()));
+		 	 }
+		 	
+		 	if(StringUtils.isNotBlank(pb.getProvenance())){
+		 		repositoryService.saveRepository("smoon", "IDIOM", "IDIOMPROVENANCE", "出处",
+			 			 pb.getProvenance().replace("&nbsp;", "").trim(), String.valueOf(pb.getCname().hashCode()));
+		 	 }
+		 	if(StringUtils.isNotBlank(pb.getExamples())){
+		 		repositoryService.saveRepository("smoon", "IDIOM", "IDIOMEXAMPLES", "例子",
+			 			 pb.getExamples().replace("&nbsp;", "").trim(), String.valueOf(pb.getCname().hashCode()));
+		 	 }
+		 	if(StringUtils.isNotBlank(pb.getDialect())){
+		 		repositoryService.saveRepository("smoon", "IDIOM", "IDIOMDIALECT", "歇后语",
+			 			 pb.getDialect().replace("&nbsp;", "").trim(), String.valueOf(pb.getCname().hashCode()));
+		 	 }
+		 	if(StringUtils.isNotBlank(pb.getRiddle())){
+		 		repositoryService.saveRepository("smoon", "IDIOM", "IDIOMRIDDLE", "谜语",
+			 			 pb.getRiddle().replace("&nbsp;", "").trim(), String.valueOf(pb.getCname().hashCode()));
+		 	 }
+		 	if(StringUtils.isNotBlank(pb.getStory())){
+		 		repositoryService.saveRepository("smoon", "IDIOM", "IDIOMSTORY", "成语故事",
+			 			 pb.getStory().replace("&nbsp;", "").trim(), String.valueOf(pb.getCname().hashCode()));
+		 	 }
+		 }
+	}
+	public static void initFastival() throws UnsupportedEncodingException {
+		ApplicationContext context = new ClassPathXmlApplicationContext("appContext.xml");
+		 RepositoryService repositoryService = context.getBean("repositoryService", RepositoryService.class);
+		 // TODO Auto-generated method stub
+		 //4.语义库中场景关键词  有逻辑 有词库	
+	     InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream("festival.xls");
+		 ExcelUtil eu = new ExcelUtil();
+	     List<Object> ls =  eu.importDataFromExcel(new FestivalBean(), in, "festival.xls");
+		 int count=1;
+	     for(Object item : ls){
+	    	 FestivalBean pb = (FestivalBean) item;
+		 	 System.out.println("节日"+(count++)+":"+pb.getCname());
+		 	 repositoryService.saveRepository("smoon", "FESTIVAL", "FESTIVALCNAME", "名称",
+		 			 pb.getCname(), String.valueOf(pb.getCname().hashCode()));
+		 	if(StringUtils.isNotBlank(pb.getType())){
+		 		repositoryService.saveRepository("smoon", "FESTIVAL", "FESTIVALTYPE", "类型",
+			 			 pb.getType(), String.valueOf(pb.getCname().hashCode()));
+		 	 }
+		 	if(StringUtils.isNotBlank(pb.getDates())){
+		 		repositoryService.saveRepository("smoon", "FESTIVAL", "FESTIVALDATES", "日期",
+			 			 pb.getDates(), String.valueOf(pb.getCname().hashCode()));
+		 	 }
+		 	 if(StringUtils.isNotBlank(pb.getSummary())){
+		 		repositoryService.saveRepository("smoon", "FESTIVAL", "FESTIVALSUMMARY", "简介",
+		 				pb.getSummary().replace("&nbsp;", "").substring(0,pb.getSummary().replace("&nbsp;", "").length()-1>8000?8000:pb.getSummary().replace("&nbsp;", "").length()-2), String.valueOf(pb.getCname().hashCode()));
+		 	 }
+		 	if(StringUtils.isNotBlank(pb.getOrigin())){
+		 		repositoryService.saveRepository("smoon", "FESTIVAL", "FESTIVALORIGIN", "由来",
+			 			 pb.getOrigin(), String.valueOf(pb.getCname().hashCode()));
+		 	 }
+		 	if(StringUtils.isNotBlank(pb.getCustom())){
+		 		repositoryService.saveRepository("smoon", "FESTIVAL", "FESTIVALCUSTOM", "习俗",
+			 			 pb.getCustom(), String.valueOf(pb.getCname().hashCode()));
+		 	 }
+		 	if(StringUtils.isNotBlank(pb.getLegend())){
+		 		repositoryService.saveRepository("smoon", "FESTIVAL", "FESTIVALLEGEND", "传说",
+			 			 pb.getLegend(), String.valueOf(pb.getCname().hashCode()));
+		 	 }
+		 	if(StringUtils.isNotBlank(pb.getHoliday())){
+		 		repositoryService.saveRepository("smoon", "FESTIVAL", "FESTIVALHOLIDAY", "放假安排",
+			 			 pb.getHoliday(), String.valueOf(pb.getCname().hashCode()));
+		 	 }
+		 }
+	}
+	public static void initScenicattractions() throws UnsupportedEncodingException {
+		ApplicationContext context = new ClassPathXmlApplicationContext("appContext.xml");
+		 RepositoryService repositoryService = context.getBean("repositoryService", RepositoryService.class);
+		 // TODO Auto-generated method stub
+		 //4.语义库中场景关键词  有逻辑 有词库	
+	     InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream("scenicSpots.xls");
+		 ExcelUtil eu = new ExcelUtil();
+	     List<Object> ls =  eu.importDataFromExcel(new ScenicSpotBean(), in, "scenicSpots.xls");
+		 int count=1;
+	     for(Object item : ls){
+			 ScenicSpotBean pb = (ScenicSpotBean) item;
+		 	 System.out.println("景点"+(count++)+":"+pb.getCname()+pb.getScenic());
+		 	 repositoryService.saveRepository("smoon", "SCENICATTRACTIONS", "SCENICATTRACTIONSCNAME", "名称",
+		 			 pb.getCname(), String.valueOf(pb.getCname().hashCode()));
+		 	if(StringUtils.isNotBlank(pb.getScenic())){
+		 		repositoryService.saveRepository("smoon", "SCENICATTRACTIONS", "SCENICATTRACTIONSSCENIC", "景区",
+			 			 pb.getScenic(), String.valueOf(pb.getCname().hashCode()));
+		 	 }
+		 	 if(StringUtils.isNotBlank(pb.getSummary())){
+		 		repositoryService.saveRepository("smoon", "SCENICATTRACTIONS", "SCENICATTRACTIONSSUMMARY", "简介",
+		 				pb.getSummary().replace("&nbsp;", "").substring(0,pb.getSummary().replace("&nbsp;", "").length()-1>8000?8000:pb.getSummary().replace("&nbsp;", "").length()-2), String.valueOf(pb.getCname().hashCode()));
+		 	 }
+		 }
+	}
+	public static void initScenic() throws UnsupportedEncodingException {
+		 ApplicationContext context = new ClassPathXmlApplicationContext("appContext.xml");
+		 RepositoryService repositoryService = context.getBean("repositoryService", RepositoryService.class);
+		 // TODO Auto-generated method stub
+		 //4.语义库中场景关键词  有逻辑 有词库	
+	     InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream("scenics.xls");
+		 ExcelUtil eu = new ExcelUtil();
+	     List<Object> ls =  eu.importDataFromExcel(new ScenicBean(), in, "scenics.xls");
+	     int count=1;
+	     for(Object item : ls){
+			 ScenicBean pb = (ScenicBean) item;
+		 	 System.out.println("景区:"+(count++)+":"+pb.getSummary().getBytes("UTF-8").length+":"+pb.getCname()+pb.getLevel()+pb.getQualification()+pb.getSuitable()+pb.getType());
+		 	 repositoryService.saveRepository("smoon", "SCENIC", "SCENICCNAME", "名称",
+		 			 pb.getCname(), String.valueOf(pb.getCname().hashCode()));
+		 	 if(StringUtils.isNotBlank(pb.getSummary())){
+		 		repositoryService.saveRepository("smoon", "SCENIC", "SCENICSUMMARY", "简介",
+			 			 pb.getSummary().replace("&nbsp;", "").substring(0,pb.getSummary().replace("&nbsp;", "").length()-1>8000?8000:pb.getSummary().replace("&nbsp;", "").length()-2), String.valueOf(pb.getCname().hashCode()));
+		 	 }
+		 	if(StringUtils.isNotBlank(pb.getType())){
+		 		repositoryService.saveRepository("smoon", "SCENIC", "SCENICTYPE", "类型",
+			 			 pb.getType(), String.valueOf(pb.getCname().hashCode()));
+		 	 }
+		 	if(StringUtils.isNotBlank(pb.getQualification())){
+		 		repositoryService.saveRepository("smoon", "SCENIC", "SCENICQUALIFICATION", "资质",
+			 			 pb.getQualification(), String.valueOf(pb.getCname().hashCode()));
+		 	 }
+		 	if(StringUtils.isNotBlank(pb.getLevel())){
+		 		repositoryService.saveRepository("smoon", "SCENIC", "SCENICLEVEL", "级别",
+			 			 pb.getLevel(), String.valueOf(pb.getCname().hashCode()));
+		 	 }
+		 	if(StringUtils.isNotBlank(pb.getSuitable())){
+		 		repositoryService.saveRepository("smoon", "SCENIC", "SCENICSUITABLE", "适合季节",
+			 			 pb.getSuitable(), String.valueOf(pb.getCname().hashCode()));
+		 	 }
+		 	if(StringUtils.isNotBlank(pb.getAttractions())){
+		 		repositoryService.saveRepository("smoon", "SCENIC", "SCENICATTRACTIONS", "分景点",
+			 			 pb.getAttractions().substring(0,pb.getAttractions().length()-2), String.valueOf(pb.getCname().hashCode()));
+		 	 }
+		 }
+	}
+	public static void initFlower() {
 		
 		 //initRiddle();    
 		 ApplicationContext context = new ClassPathXmlApplicationContext("appContext.xml");
@@ -34,9 +260,10 @@ public class InitKmowledgeMain {
 			
 		 ExcelUtil eu = new ExcelUtil();
 	     List<Object> ls =  eu.importDataFromExcel(new PlantBean(), in, "flowers.xls");
-		 for(Object item : ls){
+		int count = 1;
+	     for(Object item : ls){
 		 	   PlantBean pb = (PlantBean) item;
-		 	   System.out.println(pb.getCname()+pb.getLaname()+pb.getNickname()+pb.getKingdom()+pb.getPhylum()
+		 	   System.out.println("count="+(count++)+pb.getCname()+pb.getLaname()+pb.getNickname()+pb.getKingdom()+pb.getPhylum()
 		 	   +pb.getClassify()+pb.getOrder());
 		 	  repositoryService.saveRepository("smoon", "FLOWER", "FLOWERCNAME", "中文名称",
 		 			 pb.getCname(), String.valueOf(pb.getCname().hashCode()));

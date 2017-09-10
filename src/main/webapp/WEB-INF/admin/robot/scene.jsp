@@ -104,11 +104,11 @@
 								<h3>${scene.sceneName}<span>${scene.comment}</span></h3>
 							</div>
 							<ul class="pricing-content unstyled">
-								<li><i class="icon-tags"></i>${scene.application}</li>
-								<li><i class="icon-asterisk"></i>${scene.semantic}</li>
-								<li><i class="icon-heart"></i> 逻辑数量</li>
-								<li><i class="icon-star"></i> ${(scene.active eq 1)?"启用":"禁用"}</li>
-								<li><i class="icon-shopping-cart"></i>受欢迎程度</li>
+								<li class="text-nowrap"><i class="icon-tags"></i>${scene.application}</li>
+								<li class="text-nowrap"><i class="icon-asterisk"></i>${scene.semantic}</li>
+								<li class="text-nowrap"><i class="icon-heart"></i> 逻辑数量</li>
+								<li class="text-nowrap"><i class="icon-star"></i> ${(scene.active eq 1)?"启用":"禁用"}</li>
+								<li class="text-nowrap"><i class="icon-shopping-cart"></i>受欢迎程度</li>
 							</ul>
 							<div class="pricing-footer">
 								<c:choose>
